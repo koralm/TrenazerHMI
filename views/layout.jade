@@ -1,7 +1,75 @@
 doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/css/style.css')
-  body
-    block content
+html(lang='pl')
+    head
+        meta(charset='UTF-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes')
+        // The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+        meta(name='description', content='')
+        meta(name='author', content='')
+        link(rel='icon', href='../../favicon.ico')
+        title Trenazer WebApp
+        // Bootstrap core CSS
+        link(href="../css/bootstrap/bootstrap.css", rel='stylesheet')
+        // Custom styles for this template
+        link(href='../css/style.css', rel='stylesheet')
+        link(type='text/css', rel='stylesheet', href='../css/demo.css')
+        link(type='text/css', rel='stylesheet', href='../css/scroll.css')
+        link(type='text/css', rel='stylesheet', href='../css/jquery.mmenu.all.css')
+        link(type='text/css', rel='stylesheet', href='../css/jquery.mmenu.iconbar.css')
+
+    body
+        #page
+            .header.Fixed
+                a(href='#menu')
+                |                Trenażer WebApp
+            #content.content
+              block content
+            nav#menu
+                ul
+                    li
+                        a(href='/')
+                            .table
+                                .col-xs-1
+                                    i.glyphicon.glyphicon-info-sign
+                                .col-xs-1
+                                h4 Informacje
+                    li
+                        a(href='exercise')
+                            .table
+                                .col-xs-1
+                                    i.glyphicon.glyphicon-play-circle
+                                .col-xs-1
+                                h4 Ćwiczenie
+                    li
+                        a(href='settings')
+                            .table
+                                .col-xs-1
+                                    i.glyphicon.glyphicon-cog
+                                .col-xs-1
+                                h4 Ustawienia
+                    li
+                        a(href='#third')
+                            .table
+                                .col-xs-1
+                                    i.glyphicon.glyphicon-question-sign
+                                .col-xs-1
+                                h4 Inne
+        // Scripts
+        //
+        script(src='../js/jquery.js')
+        script(src='../js/bootstrap.js')
+        script(type='text/javascript', src='../js/mmenu/jquery.mmenu.min.all.js')
+        script(type='text/javascript', src='../js/mmenu/fix_foot.js')
+        // IE10 viewport hack for Surface/desktop Windows 8 bug
+        script(src='../../assets/js/ie10-viewport-bug-workaround.js')
+        script.
+          window.onbeforeunload = function (e) {
+            var e = e || window.event;
+            // For IE and Firefox prior to version 4
+            if (e) {
+              e.returnValue = 'Any string';
+            }
+            // For Safari
+            return 'Any string';
+          };
