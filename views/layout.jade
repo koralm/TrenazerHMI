@@ -17,44 +17,51 @@ html(lang='pl')
         link(type='text/css', rel='stylesheet', href='../css/scroll.css')
         link(type='text/css', rel='stylesheet', href='../css/jquery.mmenu.all.css')
         link(type='text/css', rel='stylesheet', href='../css/jquery.mmenu.iconbar.css')
+        link(type='text/css', rel='stylesheet', href='../css/inne.css')
 
+        block layouts
+
+        script(src='../js/socket.io.js')
+        script.
+            var liczba = 0;
+            var socket = io().connect('http://localhost:3000');
+            socket.on('message', function (message) {
+                //console.log(data);
+                liczba = message;
+            });
+
+        script.
+            function sendx() {
+                socket.emit('message', 'Hi server, how are you?');
+            }
+        block scripts_top
     body
         #page
             .header.Fixed
                 a(href='#menu')
                 |                Trenażer WebApp
             #content.content
-              block content
+                p.button.btn.btn-warning(onclick='sendx()') konik
+                block content
+
             nav#menu
                 ul
                     li
                         a(href='/')
-                            .table
-                                .col-xs-1
-                                    i.glyphicon.glyphicon-info-sign
-                                .col-xs-1
-                                h4 Informacje
+                            p.glyphicon.glyphicon-info-sign
+                            span(style='font-size: 25px') Informacje
                     li
                         a(href='exercise')
-                            .table
-                                .col-xs-1
-                                    i.glyphicon.glyphicon-play-circle
-                                .col-xs-1
-                                h4 Ćwiczenie
+                            p.glyphicon.glyphicon-play-circle
+                            span(style='font-size: 25px') Trening
                     li
                         a(href='settings')
-                            .table
-                                .col-xs-1
-                                    i.glyphicon.glyphicon-cog
-                                .col-xs-1
-                                h4 Ustawienia
+                            p.glyphicon.glyphicon.glyphicon-cog
+                            span(style='font-size: 25px') Ustawienia
                     li
                         a(href='#third')
-                            .table
-                                .col-xs-1
-                                    i.glyphicon.glyphicon-question-sign
-                                .col-xs-1
-                                h4 Inne
+                            p.glyphicon.glyphicon.glyphicon-question-sign
+                            span(style='font-size: 25px') Inne
         // Scripts
         //
         script(src='../js/jquery.js')
@@ -63,13 +70,5 @@ html(lang='pl')
         script(type='text/javascript', src='../js/mmenu/fix_foot.js')
         // IE10 viewport hack for Surface/desktop Windows 8 bug
         script(src='../../assets/js/ie10-viewport-bug-workaround.js')
-        script.
-          window.onbeforeunload = function (e) {
-            var e = e || window.event;
-            // For IE and Firefox prior to version 4
-            if (e) {
-              e.returnValue = 'Any string';
-            }
-            // For Safari
-            return 'Any string';
-          };
+
+        block scripts bottom
