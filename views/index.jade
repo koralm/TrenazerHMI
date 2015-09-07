@@ -1,4 +1,27 @@
 extends layout
 
 block content
-    h1 Tutaj będzie strona wstępna oraz wskazówki dotyczące klabiracji
+
+    p.col-xs-2
+        label(for='ex1') dlugosc linki
+            input#ex1.form-control(type='text')
+            button.btn.btn-warning(onclick='line(document.getElementById("ex1").value)') Zatiwerdz
+    p.col-xs-2
+        a.button.btn.btn-warning(onclick='kalib(0)') 0
+        a.button.btn.btn-warning(onclick='kalib(1)') 1
+        a.button.btn.btn-warning(onclick='kalib(2)') 2
+        a.button.btn.btn-warning(onclick='kalib(3)') 3
+        a.button.btn.btn-warning(onclick='kalib(4)') 4
+
+
+    script.
+        function kalib(data) {
+            socket.emit('message', data);
+        };
+    script.
+        function line(data) {
+            socket.emit('message1', data);
+        };
+
+
+

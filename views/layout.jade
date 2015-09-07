@@ -26,14 +26,9 @@ html(lang='pl')
             var liczba = 0;
             var socket = io().connect('http://localhost:3000');
             socket.on('message', function (message) {
-                //console.log(data);
                 liczba = message;
             });
 
-        script.
-            function sendx() {
-                socket.emit('message', 'Hi server, how are you?');
-            }
         block scripts_top
     body
         #page
@@ -41,7 +36,6 @@ html(lang='pl')
                 a(href='#menu')
                 |                Trenażer WebApp
             #content.content
-                p.button.btn.btn-warning(onclick='sendx()') konik
                 block content
 
             nav#menu

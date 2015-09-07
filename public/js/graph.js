@@ -1,4 +1,4 @@
-var tv = 10;
+var tv = 500;
 // instantiate our graph!
 var graph = new Rickshaw.Graph( {
     element: document.getElementById("graph_exercise"),
@@ -18,7 +18,7 @@ graph.render();
 
 var i = 0;
 var iv = setInterval( function() {
-    var data = { one: liczba };
+    var data = { one: 12 + Math.floor(Math.random()*100)};
     //var randInt = Math.floor(Math.random()*100);
     //data.two = liczba;
     //data.three = liczba;

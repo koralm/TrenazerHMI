@@ -97,7 +97,6 @@ function onListening() {
  */
 
 var io = require('socket.io')(server);
-
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('disconnect', function(){
@@ -112,11 +111,22 @@ server.listen(3000, function(){
 var i = 0;
 
 
-io.on('connection', function (socket) {
-    setInterval( function() {
-      socket.emit('message', rs232.rsout());
-    }, 1 );
-    socket.on('message', function (data) {
-      console.log(data);
-    });
-});
+//io.on('connection', function (socket) {
+//    setInterval( function() {
+//      socket.emit('message', rs232.rsout());
+//    }, 1 );
+//});
+
+//io.on('connection', function (socket) {
+//  socket.on('message', function (data) {
+//    rs232.rs_stat(data);
+//    console.log(data);
+//  });
+//});
+
+//io.on('connection', function (socket) {
+//  socket.on('message1', function (data) {
+//    rs232.rs_statl(data);
+//    console.log(data);
+//  });
+//});
