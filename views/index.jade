@@ -3,9 +3,13 @@ extends layout
 block content
 
     p.col-xs-2
-        label(for='ex1') dlugosc linki
+        label(for='ex1') moment bezwladnosci
             input#ex1.form-control(type='text')
-            button.btn.btn-warning(onclick='line(document.getElementById("ex1").value)') Zatiwerdz
+            button.btn.btn-warning(onclick='interia(document.getElementById("ex1").value)') Zatiwerdz
+    p.col-xs-2
+        label(for='ex2') dlugosc linki
+            input#ex2.form-control(type='text')
+            button.btn.btn-warning(onclick='line(document.getElementById("ex2").value)') Zatiwerdz
     p.col-xs-2
         a.button.btn.btn-warning(onclick='kalib(0)') 0
         a.button.btn.btn-warning(onclick='kalib(1)') 1
@@ -15,13 +19,18 @@ block content
 
 
     script.
-        function kalib(data) {
-            socket.emit('message', data);
+        function interia(data) {
+            socket.emit('interia', data);
         };
     script.
         function line(data) {
-            socket.emit('message1', data);
+            socket.emit('line_length', data);
         };
+    script.
+        function kalib(data) {
+            socket.emit('status', data);
+        };
+
 
 
 

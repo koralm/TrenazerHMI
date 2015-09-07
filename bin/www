@@ -108,25 +108,29 @@ server.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
-var i = 0;
-
-
 //io.on('connection', function (socket) {
 //    setInterval( function() {
 //      socket.emit('message', rs232.rsout());
 //    }, 1 );
 //});
 
-//io.on('connection', function (socket) {
-//  socket.on('message', function (data) {
-//    rs232.rs_stat(data);
-//    console.log(data);
-//  });
-//});
+io.on('connection', function (socket) {
+  socket.on('status', function (data) {
+    rs232.rs_status(data);
+    console.log(data);
+  });
+});
 
-//io.on('connection', function (socket) {
-//  socket.on('message1', function (data) {
-//    rs232.rs_statl(data);
-//    console.log(data);
-//  });
-//});
+io.on('connection', function (socket) {
+  socket.on('line_length', function (data) {
+    rs232.rs_line_length(data);
+    console.log(data);
+  });
+});
+
+io.on('connection', function (socket) {
+  socket.on('interia', function (data) {
+    rs232.rs_interia(data);
+    console.log(data);
+  });
+});
