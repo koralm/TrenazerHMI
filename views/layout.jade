@@ -11,12 +11,18 @@ html(lang='pl')
         title Trenazer WebApp
         // Bootstrap core CSS
         link(href="../css/bootstrap/bootstrap.css", rel='stylesheet')
-        // Custom styles for this template
-        link(href='../css/style.css', rel='stylesheet')
-        link(type='text/css', rel='stylesheet', href='../css/demo.css')
+
+        // MMenu core nd extend CSS
+        link(type='text/css', rel='stylesheet', href='../css/mmenu_fix_head.css')
         link(type='text/css', rel='stylesheet', href='../css/scroll.css')
         link(type='text/css', rel='stylesheet', href='../css/jquery.mmenu.all.css')
         link(type='text/css', rel='stylesheet', href='../css/jquery.mmenu.iconbar.css')
+
+        //Modal Bootstrap CSS
+        link(href="../css/bootstrap/bootstrap-modal-bs3patch.css", rel='stylesheet')
+        link(href="../css/bootstrap/bootstrap-modal.css", rel='stylesheet')
+
+        //Custom Css
         link(type='text/css', rel='stylesheet', href='../css/inne.css')
 
         block layouts
@@ -31,35 +37,39 @@ html(lang='pl')
 
         block scripts_top
     body
-        #page
-            .header.Fixed
-                a(href='#menu')
-                |                Trenażer WebApp
-            #content.content
-                block content
+        #test
+            #control
+                .header.Fixed
+                    a(href='#menu')
+                    |                Trenażer WebApp
+             #content
+                .content
+                    block content
+             nav#menu
+                    ul
+                        li
+                            a(href='/')
+                                p.glyphicon.glyphicon-info-sign
+                                span(style='font-size: 25px') Informacje
+                        li
+                            a(href='exercise')
+                                p.glyphicon.glyphicon-play-circle
+                                span(style='font-size: 25px') Trening
+                        li
+                            a(href='settings')
+                                p.glyphicon.glyphicon.glyphicon-cog
+                                span(style='font-size: 25px') Ustawienia
+                        li
+                            a(href='#third')
+                                p.glyphicon.glyphicon.glyphicon-question-sign
+                                span(style='font-size: 25px') Inne
 
-            nav#menu
-                ul
-                    li
-                        a(href='/')
-                            p.glyphicon.glyphicon-info-sign
-                            span(style='font-size: 25px') Informacje
-                    li
-                        a(href='exercise')
-                            p.glyphicon.glyphicon-play-circle
-                            span(style='font-size: 25px') Trening
-                    li
-                        a(href='settings')
-                            p.glyphicon.glyphicon.glyphicon-cog
-                            span(style='font-size: 25px') Ustawienia
-                    li
-                        a(href='#third')
-                            p.glyphicon.glyphicon.glyphicon-question-sign
-                            span(style='font-size: 25px') Inne
         // Scripts
         //
         script(src='../js/jquery.js')
         script(src='../js/bootstrap.js')
+        script(src='../js/modal_manager/bootstrap-modalmanager.js')
+        script(src='../js/modal_manager/bootstrap-modal.js ')
         script(type='text/javascript', src='../js/mmenu/jquery.mmenu.min.all.js')
         script(type='text/javascript', src='../js/mmenu/fix_foot.js')
         // IE10 viewport hack for Surface/desktop Windows 8 bug

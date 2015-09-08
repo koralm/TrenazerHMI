@@ -2,8 +2,8 @@ var tv = 500;
 // instantiate our graph!
 var graph = new Rickshaw.Graph( {
     element: document.getElementById("graph_exercise"),
-    width: 900,
-    height: 500,
+    width: window.innerWidth *0.2,
+    height: window.innerHeight * 0.2,
     renderer: 'line',
     series: new Rickshaw.Series.FixedDuration([{ name: 'one' }], undefined, {
         timeInterval: tv,

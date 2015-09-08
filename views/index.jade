@@ -1,22 +1,37 @@
 extends layout
 
 block content
-
-    p.col-xs-2
-        label(for='ex1') moment bezwladnosci
-            input#ex1.form-control(type='text')
-            button.btn.btn-warning(onclick='interia(document.getElementById("ex1").value)') Zatiwerdz
-    p.col-xs-2
-        label(for='ex2') dlugosc linki
-            input#ex2.form-control(type='text')
-            button.btn.btn-warning(onclick='line(document.getElementById("ex2").value)') Zatiwerdz
-    p.col-xs-2
-        a.button.btn.btn-warning(onclick='kalib(0)') 0
-        a.button.btn.btn-warning(onclick='kalib(1)') 1
-        a.button.btn.btn-warning(onclick='kalib(2)') 2
-        a.button.btn.btn-warning(onclick='kalib(3)') 3
-        a.button.btn.btn-warning(onclick='kalib(4)') 4
-
+    row
+        p.col-xs-2
+            label(for='ex1') moment bezwladnosci
+                input#ex1.form-control(type='text')
+                button.btn.btn-warning(onclick='interia(document.getElementById("ex1").value)') Zatiwerdz
+        p.col-xs-2
+            label(for='ex2') dlugosc linki
+                input#ex2.form-control(type='text')
+                button.btn.btn-warning(onclick='line(document.getElementById("ex2").value)') Zatiwerdz
+        p.col-xs-2
+            a.button.btn.btn-warning(onclick='kalib(0)') 0
+            a.button.btn.btn-warning(onclick='kalib(1)') 1
+            a.button.btn.btn-warning(onclick='kalib(2)') 2
+            a.button.btn.btn-warning(onclick='kalib(3)') 3
+            a.button.btn.btn-warning(onclick='kalib(4)') 4
+        p.col-xs-2
+            label(for='ex3') Identyfikator
+                input#ex3.form-control(type='text')
+                button.btn.btn-warning(onclick='line(document.getElementById("ex3").value)') Zatiwerdz
+        p.col-xs-2
+            label(for='ex4') Ściezka
+                input#ex4.form-control(type='text', placeholder="C:/Cwiczenia")
+                button.btn.btn-warning(onclick='line(document.getElementById("ex4).value)') Zatiwerdz
+        p.button.btn.btn-primary.btn-lg#myButton()
+            | Uruchom okienko Pop-up
+        #welcome_static_modal.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+            .modal-body
+                h1.text-center Witamy w apliacji trenażer WebApp
+            .modal-footer
+                button.btn.btn-default(type='button', data-dismiss='modal') Wyjdź
+                button.btn.btn-primary(type='button', data-dismiss='modal') Potwierdź
 
     script.
         function interia(data) {
@@ -31,6 +46,15 @@ block content
             socket.emit('status', data);
         };
 
+    block scripts bottom
+        script.
+            $('#myButton').click(function () {
+                $('#static').modal();
+            });
 
+        script(type='text/javascript').
+            $(window).load(function () {
+                $('#welcome_static_modal').modal('show');
+            });
 
 
