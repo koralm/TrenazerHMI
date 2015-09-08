@@ -1,6 +1,5 @@
 var serialport = require('serialport');
 var SerialPort = serialport.SerialPort;
-
 /*
 * INITIALIZE VARIABLES AND COM
  */
@@ -21,14 +20,15 @@ var sp_ov_USB = new SerialPort(COM_port, {
  * INITIALIZE VARIABLES FOR COMMUNICATION BETWEEN MODULES
  */
 //Recieved from COM
-var decoded_data = 0;
+var decoded_data = 14;
 
 //SEND over COM
 var time_interval = 1000;        //Send data interval
 var frame_header = '7E7E';      //Frame header
-var rs_status = 0;              //For calibration status 0,4,1
-var rs_line_length = 0;         //Line length
-var rs_interia = 0;             //Interia moment x*0.001 eg: 1000*0.001=1
+var rs_status = '1';              //For calibration status 0,4,1
+var rs_line_length = '150';         //Line length
+var rs_interia = '1000';             //Interia moment x*0.001 eg: 1000*0.001=1
+var calib_force = '100';            //Calibration Force
 var frame_terminator = '0303';  //Frame terminator
 
 sp_ov_USB.open(function (error) {
@@ -50,13 +50,13 @@ sp_ov_USB.open(function (error) {
         //SEND DATA
             setInterval( function() {
                 // SendFrame
-                var send_frame = [frame_header,rs_status,rs_line_length,rs_interia,frame_terminator]; //Full Frame
+                var send_frame = [frame_header,rs_status,rs_line_length,rs_interia,calib_force,frame_terminator]; //Full Frame
 
                 //Push_data
                 sp_ov_USB.write(code_send_data(send_frame));
 
                 //CONSOLE display send data
-                console.log(code_send_data(send_frame));
+                //console.log(code_send_data(send_frame));
             }, time_interval );
         //};
 
@@ -82,26 +82,30 @@ function disp_recev_data(data){
 
 function code_send_data(send_frame){
     var header = new Buffer(send_frame[0] ,'hex');
-    var send_buffer = new Buffer(4);
-        send_buffer.writeUInt8('0x' + send_frame[1].toString(16),0,'hex');
-        send_buffer.writeUInt8('0x' + send_frame[2].toString(16),1,'hex');
-        send_buffer.writeUInt16LE('0x' + send_frame[3].toString(16),2,'hex');
-    var terminator = new Buffer(send_frame[4] ,'hex');
+    var send_buffer = new Buffer(6);
+        send_buffer.writeUInt8(send_frame[1].toString(16),0,'hex');
+        send_buffer.writeUInt8(send_frame[2].toString(16),1,'hex');
+        send_buffer.writeUInt16LE(send_frame[3].toString(16),2,'hex');
+        send_buffer.writeUInt16LE(send_frame[4].toString(16),4,'hex');
+    var terminator = new Buffer(send_frame[5] ,'hex');
     var rs_frameout = Buffer.concat([header,send_buffer,terminator]);
     return(rs_frameout);
 }
 
 
-exports.rs_status = function (data) {
+exports.rs_statusSET = function (data) {
     rs_status = data;
 };
 
-exports.rs_line_length = function (data) {
+exports.rs_line_lengthSET = function (data) {
     rs_line_length = data;
 };
 
-exports.rs_interia = function (data) {
+exports.rs_interiaSET = function (data) {
     rs_interia = data;
 };
 
+exports.rs_receivedREAD = function () {
+    return decoded_data;
+};
 
