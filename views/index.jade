@@ -9,7 +9,7 @@ block content
             .h1 Polewej stornie znajduję się menu
             .h1 Za każdym razem gdy przejdziesz do zakłądki ćwiczenie zostaniesz poproszony o kalibrację urządzenia
 
-        //MODALS
+     //MODALS
     #welcome_static_modal.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
             .modal-header
                 h1.text-center Witamy w apliacji trenażer WebApp
@@ -28,21 +28,11 @@ block content
                 h2#warn_modal.text-center !!
                 h3.text-center  Pamiętaj, że jest to rozwoja wersja użądzenia i należy używać jej tylko pod nazdorem przeszkolonego instrukotra!!
             .modal-footer
-                button.btn.btn-danger(type='button', data-dismiss='modal', onclick='wlec_conf_session()') Zgadzam się
+                button.btn.btn-danger(type='button', data-dismiss='modal', onclick='welc_conf_session()') Zgadzam się
 
 
 
     block scripts bottom
-        //WEBSOCKETS
-        script.
-            function interia(data) {
-                socket.emit('interia', data);};
-        script.
-            function line(data) {
-                socket.emit('line_length', data);};
-        script.
-            function kalib(data) {
-                socket.emit('status', data);};
 
         //ON LOAD
         script(type='text/javascript').
@@ -63,6 +53,7 @@ block content
                 }
             }
 
+
         //BUTTONS
         script.
             $('#myButton').click(function () {
@@ -74,7 +65,7 @@ block content
                 $('#welcome_warning').modal('show');}
 
         script.
-            function wlec_conf_session() {
+            function welc_conf_session() {
                 sessionStorage.setItem('welcome_once', 'true')
             };
 

@@ -1,26 +1,16 @@
 extends layout
 
 block layouts
-    link(type='text/css', rel='stylesheet', href='../css/rickshaw/graph.css')
-    link(type='text/css', rel='stylesheet', href='../css/rickshaw/lines.css')
+
 
 block content
-    #graph_exercise
-        script(src='../js/graph.js')
+    .container
 
-block scripts_top
-    script(src='../js/rickshaw/d3.js')
-    script(src='../js/rickshaw/d3.layout.min.js')
-    script(src='../js/rickshaw/rickshaw.js')
+
+
+
+
+    include exercise/ex_modals.jade
 
 block scripts bottom
-    script.
-        window.onbeforeunload = function (e) {
-            var e = e || window.event;
-            // For IE and Firefox prior to version 4
-            if (e) {
-                e.returnValue = 'Czy na pewno chcesz opuścic tryb treningu ?';
-            }
-            // For Safari
-            return 'Czy na pewno chcesz opuścic tryb treningu ?';
-        };
+    include exercise/ex_scripts.jade

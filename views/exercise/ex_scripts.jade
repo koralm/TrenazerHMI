@@ -1,0 +1,52 @@
+//ON LOAD
+script(type='text/javascript').
+    if (sessionStorage.getItem('callib_modal') !== 'true') {
+        $(window).load(function () {
+            $('#calibration_modal_1').modal('show');
+        });
+    }
+
+//Exit Event
+script.
+   window.onbeforeunload = function (e) {
+      var e = e || window.event;
+      // For IE and Firefox prior to version 4
+      if (e) {
+         e.returnValue = 'Czy na pewno chcesz opuścic tryb treningu ?';
+      }
+      // For Safari
+      return 'Czy na pewno chcesz opuścic tryb treningu ?';
+   };
+
+//Mod invite calib
+script.
+    function calib_mod2_line(data) {
+        $('#calibration_modal_2').modal('show')
+        socket.emit('status', data);
+        socket.emit('line_length',0);
+        socket.emit('interia', 0);
+    };
+
+//LINE LENGTH
+//Line length button --> In range chagnes check in modals code
+script.
+    function cal_mod_checkLI() {
+        if ((document.getElementById("line_length").value > 10 && document.getElementById("line_length").value < 100) && (document.getElementById("interia_moment").value > 100 && document.getElementById("interia_moment").value < 2000)){
+            document.getElementById("btn_llength_conf").disabled = false;
+        }
+        else {
+            document.getElementById("btn_llength_conf").disabled = true;
+        }};
+
+//Line buton confirm
+script.
+    function calib_mod3_line_interia(){
+        //$('#calibration_modal_3').modal('show');
+        socket.emit('line_length', document.getElementById("line_length").value);
+        socket.emit('interia', document.getElementById("interia_moment").value);}
+
+//Calibration last
+script.
+    function calib_session_last() {
+        sessionStorage.setItem('#calibration_modal_1', 'true')
+    };

@@ -4,7 +4,7 @@ var SerialPort = serialport.SerialPort;
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM5"
+var COM_port = "COM6";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -56,7 +56,7 @@ sp_ov_USB.open(function (error) {
                 sp_ov_USB.write(code_send_data(send_frame));
 
                 //CONSOLE display send data
-                //console.log(code_send_data(send_frame));
+                console.log(code_send_data(send_frame));
             }, time_interval );
         //};
 

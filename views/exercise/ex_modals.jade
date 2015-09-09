@@ -1,0 +1,34 @@
+#calibration_modal_1.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    .modal-header
+        h1.text-center Proces kalibracji
+    .modal-body.text-center
+        p Witamy w procesie kalibracji.
+        p Jeśli chcesz przejść do klabiracji urządzenia wciśnij przycisk Dalej.
+    .modal-footer
+      a(href='/')
+         button.btn(type='button') Wróć
+      button.btn.btn-primary#cal_mod_conf_1(type='button', data-dismiss='modal', onclick='calib_mod2_line(0)') Dalej
+#calibration_modal_2.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    form(data-toggle='validator', role='form')
+        .modal-header
+                h1.text-center Długość liny i moment bezwładności
+        .modal-body
+            h4.text-center  Proszę ustawienia z jakimi chcesz ćwiczyć
+            .form-group.has-feedback
+                label.control-label(for='line_length')  Długość
+                .input-group
+                    span.input-group-addon cm
+                    input#line_length.form-control(type='number', min='10',max='100', placeholder='10-100', oninput='cal_mod_checkLI()')
+                    span.glyphicon.form-control-feedback(aria-hidden='true')
+                span.help-block.with-errors.text-center Proszę podać długość linki w cm
+            .form-group.has-feedback
+                label.control-label(for='interia_moment') Moment bezwładności
+                .input-group
+                    span.input-group-addon N
+                    input#interia_moment.form-control(type='number', min='100',max='2000', placeholder='100-2000', oninput='cal_mod_checkLI()')
+                    span.glyphicon.form-control-feedback(aria-hidden='true')
+                span.help-block.with-errors.text-center Proszę podać moment bezwładności w N
+        .modal-footer
+            a(href='/')
+                button.btn(type='button') Wróć
+            button.btn.btn-primary#btn_llength_conf(type='submit', data-dismiss='modal', onclick='calib_mod3_line_interia()', disabled='true') Potwierdzam

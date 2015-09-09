@@ -1,8 +1,4 @@
-//extends layout
-
-block content
-    .container
-
+.container
 .row
    p.col-xs-2
       label(for='ex1') moment bezwladnosci
@@ -44,8 +40,16 @@ block content
       p X
    //.row
      button.btn-lg.btn-warning(onclick='kalib(5)') 5
+//////
 
+block layouts
+   link(type='text/css', rel='stylesheet', href='../css/rickshaw/graph.css')
+   link(type='text/css', rel='stylesheet', href='../css/rickshaw/lines.css')
+block content
+   #graph_exercise
+      script(src='../js/graph.js')
 
-
-
-block scripts bottom
+block scripts_top
+   script(src='../js/rickshaw/d3.js')
+   script(src='../js/rickshaw/d3.layout.min.js')
+   script(src='../js/rickshaw/rickshaw.js')
