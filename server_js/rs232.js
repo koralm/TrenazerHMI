@@ -4,7 +4,7 @@ var SerialPort = serialport.SerialPort;
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM4"
+var COM_port = "COM5"
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -25,10 +25,10 @@ var decoded_data = 14;
 //SEND over COM
 var time_interval = 1000;        //Send data interval
 var frame_header = '7E7E';      //Frame header
-var rs_status = '1';              //For calibration status 0,4,1
-var rs_line_length = '150';         //Line length
-var rs_interia = '1000';             //Interia moment x*0.001 eg: 1000*0.001=1
-var calib_force = '100';            //Calibration Force
+var rs_status = '0';              //For calibration status 0,4,1
+var rs_line_length = '0';         //Line length
+var rs_interia = '0';             //Interia moment x*0.001 eg: 1000*0.001=1
+var calib_force = '0';            //Calibration Force
 var frame_terminator = '0303';  //Frame terminator
 
 sp_ov_USB.open(function (error) {

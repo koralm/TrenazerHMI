@@ -9,7 +9,7 @@ var debug = require('debug')('TrenazerHMI:server');
 var http = require('http');
 var d3 = require('d3');
 var rs232 = require('../server_js/rs232');
-var writetxt = require('../server_js/str_write');
+//var writetxt = require('../server_js/str_write');
 
 /**
  * Get port from environment and store in Express.

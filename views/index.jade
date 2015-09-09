@@ -1,69 +1,80 @@
 extends layout
 
 block content
-    row
-        p.col-xs-2
-            label(for='ex1') moment bezwladnosci
-                input#ex1.form-control(type='text')
-                button.btn.btn-warning(onclick='interia(document.getElementById("ex1").value)') Zatiwerdz
-        p.col-xs-2
-            label(for='ex2') dlugosc linki
-                input#ex2.form-control(type='text')
-                button.btn.btn-warning(onclick='line(document.getElementById("ex2").value)') Zatiwerdz
-        p.col-xs-2
-            a.button.btn.btn-warning(onclick='kalib(0)') 0
-            a.button.btn.btn-warning(onclick='kalib(1)') 1
-            a.button.btn.btn-warning(onclick='kalib(2)') 2
-            a.button.btn.btn-warning(onclick='kalib(4)') 4
-            a.button.btn.btn-warning(onclick='kalib(5)') 5
-        p.col-xs-2
-            label(for='ex3') Identyfikator
-                input#ex3.form-control(type='text')
-                button.btn.btn-warning(onclick='line(document.getElementById("ex3").value)') Zatiwerdz
-        p.col-xs-2
-            label(for='ex4') Ściezka
-                input#ex4.form-control(type='text', placeholder="C:/Cwiczenia")
-                button.btn.btn-warning(onclick='line(document.getElementById("ex4).value)') Zatiwerdz
-        p.button.btn.btn-primary.btn-lg#myButton()
-            | Uruchom okienko Pop-up
-        #welcome_static_modal.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
-            .modal-body
-                h1.text-center Witamy w apliacji trenażer WebApp
-                p.text-center Proszę wipsz swoj identyfikator w odpowiednie pole i zatwierdź przyciskiem aby przejść do ekranu startowego
-            .modal-footer
-                button.btn.btn-default(type='button', data-dismiss='modal') Wyjdź
-                button.btn.btn-primary(type='button', data-dismiss='modal', onclick='wlecom_conf()') Potwierdź
+    .container
+        //CONTENT
+        #id_content.text-left
+            .h1 Tutaj będzie się zanjdowała instrukcja i inne opisy
+            .h1 Jeśli chcesz się wylogować lub zmienić nic proszę otwórz aplikajcję w nowej karcie przeglądarki
+            .h1 Polewej stornie znajduję się menu
+            .h1 Za każdym razem gdy przejdziesz do zakłądki ćwiczenie zostaniesz poproszony o kalibrację urządzenia
 
-    script.
-        function interia(data) {
-            socket.emit('interia', data);
-        };
-    script.
-        function line(data) {
-            socket.emit('line_length', data);
-        };
-    script.
-        function kalib(data) {
-            socket.emit('status', data);
-        };
+        //MODALS
+    #welcome_static_modal.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+            .modal-header
+                h1.text-center Witamy w apliacji trenażer WebApp
+            .modal-body.text-center
+                p Proszę wipsz swoj identyfikator w pole Identyfikator poniżej i zatwierdź przyciskiem aby przejść do ekranu startowego
+                .form-group
+                    label(for='in_userID') Identyfikator:
+                        input#in_userID.input-lg.form-control.text-center(type='text', placeholder="Tutaj wpisz ID", oninput="warn_brn_enable()")
+            .modal-footer
+                button.btn.btn-primary#welcome_conf(type='button', data-dismiss='modal', onclick='wlecom_conf()', disabled="true") Potwierdź
+
+    #welcome_warning.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+            .modal-header
+                h1.text-center.text-danger UWAGA!!!
+            .modal-body.bg-danger
+                h2#warn_modal.text-center !!
+                h3.text-center  Pamiętaj, że jest to rozwoja wersja użądzenia i należy używać jej tylko pod nazdorem przeszkolonego instrukotra!!
+            .modal-footer
+                button.btn.btn-danger(type='button', data-dismiss='modal', onclick='wlec_conf_session()') Zgadzam się
+
 
 
     block scripts bottom
+        //WEBSOCKETS
         script.
-            $('#myButton').click(function () {
-                $('#static').modal();
-            });
+            function interia(data) {
+                socket.emit('interia', data);};
+        script.
+            function line(data) {
+                socket.emit('line_length', data);};
+        script.
+            function kalib(data) {
+                socket.emit('status', data);};
 
+        //ON LOAD
         script(type='text/javascript').
             if (sessionStorage.getItem('welcome_once') !== 'true') {
                 $(window).load(function () {
                     $('#welcome_static_modal').modal('show');
-                });
-            };
+                });}
 
+        //CONDITIONS
+        script.
+            function warn_brn_enable() {
+                //document.getElementById("welcome_conf").disabled = false;
+                if (document.getElementById("in_userID").value.length > 0){
+                    document.getElementById("welcome_conf").disabled = false;
+                    }
+                else{
+                    document.getElementById("welcome_conf").disabled = true;
+                }
+            }
+
+        //BUTTONS
+        script.
+            $('#myButton').click(function () {
+                $('#welcome_static_modal').modal();});
         script.
             function wlecom_conf(){
-                sessionStorage.setItem('welcome_once','true')};
+                document.getElementById("warn_modal").innerHTML = document.getElementById("in_userID").value;
+                //document.getElementById("ex4").placeholder = "C:/Trenazer/" + document.getElementById("in_userID").value;
+                $('#welcome_warning').modal('show');}
 
-
+        script.
+            function wlec_conf_session() {
+                sessionStorage.setItem('welcome_once', 'true')
+            };
 

@@ -1,0 +1,51 @@
+//extends layout
+
+block content
+    .container
+
+.row
+   p.col-xs-2
+      label(for='ex1') moment bezwladnosci
+         input#ex1.input-lg.form-control(type='text')
+         button.btn-lg.btn-warning(onclick='interia(document.getElementById("ex1").value)') Zatiwerdz
+   p.col-xs-2
+      label(for='ex2') dlugosc linki
+         input#ex2.input-lg.form-control(type='text')
+         button.btn-lg.btn-warning(onclick='line(document.getElementById("ex2").value)') Zatiwerdz
+   p.col-xs-2
+      label(for='ex3') Identyfikator
+         input#ex3.input-lg.form-control(type='text')
+         button.btn.btn-warning(onclick='line(document.getElementById("ex3").value)') Zatiwerdz
+   p.col-xs-2
+      label(for='ex4') Ściezka
+         input#ex4.input-lg.form-control(type='text', placeholder="")
+         button.btn.btn-warning(onclick='line(document.getElementById("ex4").value)') Zatiwerdz
+   p.button.btn.btn-primary.btn-lg#myButton()
+      | Uruchom okienko Pop-up
+.row
+   p X
+   h1 Kolejność: Zeruj(0)   Zatwierdz(4)   Zeruj(0)   Zwijaj(1)   Start(2)
+   p X
+.row
+   .row
+      button.btn-lg.btn-primary(onclick='kalib(0)') Zeruj(0)
+      p X
+   .row
+      button.btn-lg.btn-success(onclick='kalib(4)') Zatwierdz(4)
+      p X
+   .row
+      button.btn-lg.btn-primary(onclick='kalib(0)') Zeruj(0)
+      p X
+   .row
+      button.btn-lg.btn-danger(onclick='kalib(1)') Zwijaj(1)
+      p X
+   .row
+      button.btn-lg.btn-warning(onclick='kalib(2)') Start(2)
+      p X
+   //.row
+     button.btn-lg.btn-warning(onclick='kalib(5)') 5
+
+
+
+
+block scripts bottom
