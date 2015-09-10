@@ -41,12 +41,32 @@ script.
 //Line buton confirm
 script.
     function calib_mod3_line_interia(){
-        //$('#calibration_modal_3').modal('show');
         socket.emit('line_length', document.getElementById("line_length").value);
-        socket.emit('interia', document.getElementById("interia_moment").value);}
+        socket.emit('interia', document.getElementById("interia_moment").value);
+        document.getElementById("btn_llength_next").disabled = false;
+    }
+
+//Line Next
+script.
+    function calib_mod3_next(data) {
+        socket.emit('status', data);
+        $('#calibration_modal_3').modal('show');
+    }
+//Line fold
+script.
+    function line_fold(data){
+        socket.emit('status', data);
+        $('#modal_waiting').modal('show');
+        setTimeout(function () {
+            $('#modal_waiting').modal('hide');
+            document.getElementById("line_fold").disabled = true;
+            document.getElementById("cal_mod_conf_last").disabled = false;
+        }, 5000);}
+
 
 //Calibration last
 script.
-    function calib_session_last() {
-        sessionStorage.setItem('#calibration_modal_1', 'true')
+    function calib_session_last(data) {
+        socket.emit('status', data);
+        sessionStorage.setItem('callib_modal', 'true')
     };
