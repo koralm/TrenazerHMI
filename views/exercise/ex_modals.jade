@@ -6,34 +6,34 @@
         p Jeśli chcesz przejść do klabiracji urządzenia wciśnij przycisk Dalej.
     .modal-footer
       a(href='/')
-         button.btn(type='button') Wróć
-      button.btn.btn-primary#cal_mod_conf_1(type='button', data-dismiss='modal', onclick='calib_mod2_line(0)') Dalej
+         button.btn.btn-lg(type='button') Wróć
+      button.btn.btn-lg.btn-primary#cal_mod_conf_1(type='button', data-dismiss='modal', onclick='calib_mod2_line(0)') Dalej
 #calibration_modal_2.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
     form(data-toggle='validator', role='form')
         .modal-header
-                h1.text-center Długość liny i moment bezwładności
+            h1.text-center Długość liny i moment bezwładności
         .modal-body
-            h4.text-center  Proszę wpisz ustawienia z jakimi chcesz ćwiczyć i klikinj dalej
+            h2.text-center  Proszę wpisz ustawienia z jakimi chcesz ćwiczyć i klikinj dalej
             .form-group.has-feedback
                 label.control-label(for='line_length')  Długość
-                .input-group
+                .input-group.input-group-lg
                     span.input-group-addon cm
-                    input#line_length.form-control(type='number', min='10',max='100', placeholder='10-100', oninput='cal_mod_checkLI()')
-                    span.glyphicon.form-control-feedback(aria-hidden='true')
+                    input#line_length.form-control(type='number', min='10',max='100', placeholder='10-100', required='', oninput='cal_mod_checkLI()')
+                span.glyphicon.form-control-feedback(aria-hidden='true')
                 span.help-block.with-errors.text-center Proszę podać długość linki w cm
             .form-group.has-feedback
                 label.control-label(for='interia_moment') Moment bezwładności
-                .input-group
+                .input-group.input-group-lg
                     span.input-group-addon N
-                    input#interia_moment.form-control(type='number', min='100',max='2000', placeholder='100-2000', oninput='cal_mod_checkLI()')
-                    span.glyphicon.form-control-feedback(aria-hidden='true')
+                    input#interia_moment.form-control(type='number', min='100',max='2000', placeholder='100-2000', required='', oninput='cal_mod_checkLI()')
+                span.glyphicon.form-control-feedback(aria-hidden='true')
                 span.help-block.with-errors.text-center Proszę podać moment bezwładności w N
             .form-group.text-center
-                button.btn.btn-success#btn_llength_conf(type='button', onclick='calib_mod3_line_interia()', disabled='true') Potwierdzam
+                button.btn.btn-lg.btn-success#btn_llength_conf(type='button', onclick='calib_mod3_line_interia()', disabled='true') Potwierdzam
         .modal-footer
             a(href='/')
-                button.btn(type='button') Wróć
-                button.btn.btn-primary#btn_llength_next(type='submit', data-dismiss='modal', onclick='calib_mod3_next(4)', disabled='true') Dalej
+                button.btn.btn-lg(type='button') Wróć
+                button.btn.btn-lg.btn-primary#btn_llength_next(type='submit', data-dismiss='modal', onclick='calib_mod3_next(4)', disabled='true') Dalej
 
 #calibration_modal_3.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
     .modal-header
@@ -44,17 +44,27 @@
         p Gdy wykonasz powyższe czynności wciśnij przycisk poniżej "Nawiń linę"
         p Spowoduje to wciągnięcie liny i skrócenie jej do wcześniej wybranej długości
         p Jeśli długość liny jest nieodpowiednie ponów proces kalibracji
-        button.btn.btn-warning#line_fold(type='button',data-toggle="modal", onclick='line_fold(1)') Nawiń linę
+        button.btn.btn-lg.btn-warning#line_fold(type='button',data-toggle='modal', href='#modal_warning') Nawiń linę
     .modal-footer
         a(href='/')
-            button.btn(type='button') Wróć
-        button.btn.btn-primary#cal_mod_conf_last(type='button', data-dismiss='modal', onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
+            button.btn.btn-lg(type='button') Wróć
+        button.btn.btn-lg.btn-primary#cal_mod_conf_last(type='button', data-dismiss='modal' onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
 
 #modal_waiting.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
-    .modal-header
+    .modal-header.bg-warning
         h1 Nawijanie...
     .modal-body.text-center
         .progress
-            .progress-bar.progress-bar-striped.active(role='progressbar', aria-valuenow='40', aria-valuemin='0', aria-valuemax='100', style='width:100%')
+            .progress-bar.progress-bar-warning.progress-bar-striped.active(role='progressbar', aria-valuenow='40', aria-valuemin='0', aria-valuemax='100', style='width:100%')
                 | Nawijanie
     .modal-footer
+
+#modal_warning.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    .modal-header.bg-danger
+        h1.text-center.text-danger UWAGA !!!
+    .modal-body
+        h2.text-center.text-danger Czy na pewno wyciągnąłęś linę do końca ?
+        h2.text-center.text-danger Jeśli nie zrób to teraz !!!
+    .modal-footer
+        p.text-center
+            button.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)') Potwierdzam
