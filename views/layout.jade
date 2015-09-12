@@ -21,6 +21,7 @@ html(lang='pl')
         //Modal Bootstrap CSS
         link(href="../css/bootstrap/bootstrap-modal-bs3patch.css", rel='stylesheet')
         link(href="../css/bootstrap/bootstrap-modal.css", rel='stylesheet')
+        link(href="../css/bootstrap/bootstrap-select.css", rel='stylesheet')
 
         //Custom Css
         link(type='text/css', rel='stylesheet', href='../css/inne.css')
@@ -49,19 +50,19 @@ html(lang='pl')
                     ul
                         li
                             a(href='/')
-                                p.glyphicon.glyphicon-info-sign
+                                p.glyphicon.menu.glyphicon-info-sign
                                 span(style='font-size: 25px') Informacje
                         li
                             a(href='exercise')
-                                p.glyphicon.glyphicon-play-circle
+                                p.glyphicon.menu.glyphicon-play-circle
                                 span(style='font-size: 25px') Trening
                         li
                             a(href='settings')
-                                p.glyphicon.glyphicon.glyphicon-cog
+                                p.glyphicon.menu.glyphicon-cog
                                 span(style='font-size: 25px') Ustawienia
                         li
                             a(href='#third')
-                                p.glyphicon.glyphicon.glyphicon-question-sign
+                                p.glyphicon.menu.glyphicon-question-sign
                                 span(style='font-size: 25px') Inne
 
         // Scripts
@@ -70,6 +71,8 @@ html(lang='pl')
         script(src='../js/bootstrap.js')
         script(src='../js/modal_manager/bootstrap-modalmanager.js')
         script(src='../js/modal_manager/bootstrap-modal.js ')
+        script(src='../js/bootstrap-select.js ')
+        script(src='../js/bootstrap-progressbar.js ')
         script(src='../js/validator.js')
         script(type='text/javascript', src='../js/mmenu/jquery.mmenu.min.all.js')
         script(type='text/javascript', src='../js/mmenu/fix_foot.js')

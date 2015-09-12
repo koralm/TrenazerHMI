@@ -1,4 +1,50 @@
-.glyphicon {
+.glyphicon.menu {
     font-size: 25px;
     margin-right: 50px;
+}
+
+ h1.display {
+    margin-top: 4px;
+    font-size: 2em;
+    }
+
+@media screen and (min-device-width : 800px) {
+    h1.display {
+        margin-top: 4px;
+        font-size: 7em;
+    }
+}
+
+.bg-display {
+    background-color: #F0F5FF;
+}
+
+.progress {
+    background: rgba(245, 245, 245, 1);
+    border: 0px solid rgba(245, 245, 245, 1);
+    border-radius: 0px;
+    height: 60px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+
+.progress-bar-custom {
+    background: rgba(66, 139, 202, 1);
+}
+
+.warn_window{
+    width: 20%;
+    height: 38px;
+    float: left;
+}
+
+.tolerance_window{
+    width: 60%;
+    height: 38px;
+    float: left;
+}
+
+.row-buffer {
+    margin-top: 40px;
 }
