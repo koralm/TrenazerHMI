@@ -3,9 +3,23 @@
     margin-right: 50px;
 }
 
- h1.display {
+.glyphicon.phase{
+    font-size: 6em;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+}
+
+.glyphicon.button{
+    font-size: 4em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+}
+
+h1.display {
     margin-top: 4px;
-    font-size: 2em;
+    font-size: 3em;
     }
 
 @media screen and (min-device-width : 800px) {
@@ -15,22 +29,47 @@
     }
 }
 
-.bg-display {
-    background-color: #F0F5FF;
+h2.display {
+    margin-top: 4px;
+    font-size: 2em;
 }
 
-.progress {
+@media screen and (min-device-width : 800px) {
+    h2.display {
+        margin-top: 4px;
+        font-size: 6em;
+    }
+}
+
+h3.display {
+    margin-top: 2px;
+    font-size: 1em;
+}
+
+@media screen and (min-device-width : 800px) {
+    h3.display {
+        margin-top: 2px;
+        font-size: 2em;
+    }
+}
+
+.bg-display {
+    background-color: #E6E6E6;
+}
+
+.progress.progress-big {
     background: rgba(245, 245, 245, 1);
     border: 0px solid rgba(245, 245, 245, 1);
     border-radius: 0px;
     height: 60px;
     margin-top: 5px;
     margin-bottom: 5px;
+    width:100%
 
 }
 
 .progress-bar-custom {
-    background: rgba(66, 139, 202, 1);
+    background: rgba(151, 159, 166, 1);
 }
 
 .warn_window{
@@ -44,7 +83,26 @@
     height: 38px;
     float: left;
 }
+.button_window-lg{
+    width: 37.5%;
+    height: 150px;
+    float: left;
+}
+
+.button_window{
+    width: 25%;
+    height: 150px;
+    float: left;
+}
+
+.btn-block.block-full{
+    height: 100%;
+}
 
 .row-buffer {
-    margin-top: 40px;
+    margin-top: 60px;
+}
+
+.row-bufferx2 {
+    margin-top: 100px;
 }
