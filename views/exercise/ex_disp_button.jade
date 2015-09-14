@@ -1,43 +1,46 @@
 .row
    .col-md-12
-      .row.bg-display
-         .col-md-2.bg-display
-            .row
-               .btn-default.bg-display(type='button', data-toggle='collapse', data-target='#cycle_count_input', aria-expanded='false', aria-controls='#cycle_count_input')
-                  h2.display#cycle_count 888
-                  h3.display Liczba cykli
-         .col-md-1.bg-display
-            .row
-               i.glyphicon.phase.glyphicon-triangle-top
-               h3.display Faza
-         .col-md-3.bg-display
-            .row
-               .btn-default.bg-display(type='button', data-toggle='collapse', data-target='#time_cycle_count_input', aria-expanded='false', aria-controls='#time_cycle_count_input')
-                  h2.display#time_count 88 : 88
-                  h3.display Czas treningu
-         .col-md-6
-            .row
-               .button_window-lg
-                  button.btn.btn-success.btn-lg.btn-block.block-full(type='button')
-                     span.glyphicon.button.glyphicon-play
-                     h2 Start
-               .button_window
-                  button.btn.btn-default.btn-lg.btn-block.block-full(type='button')
-                     span.glyphicon.button.glyphicon-record
-                     h2 REC
-               .button_window-lg
-                  button.btn.btn-danger.btn-lg.btn-block.block-full(type='button')
-                     span.glyphicon.button.glyphicon-stop
-                     h2  Stop
-      #time_cycle_count_input.collapse
+      .col-md-6.bg-display
          .row
-            .col-md-3.bg-display
-               .input-group.input-group-lg
-                  span#time_count_input.input-group-addon Czas
-                  input.form-control(type='text', placeholder='Czas treningu', aria-describedby='#time_cycle_count_input')
-            .col-md-3.bg-display
-               .input-group.input-group-lg
-                  span#cycle_count_input.input-group-addon Cykle
-                  input.form-control(type='text', placeholder='Liczba cykli', aria-describedby='#cycle_count_input')
+            .col-md-5.bg-display
+               .row
+                  .btn-default.bg-display(type='button', data-toggle='collapse', data-target='#cycle_count_input', aria-expanded='false', aria-controls='#cycle_count_input')
+                     h2.display#cycle_count 888
+                     h3.display Liczba cykli
+            .col-md-2.bg-display
+               .row
+                  i.glyphicon.phase.glyphicon-triangle-top
+                  h3.display Faza
+            .col-md-5.bg-display
+               .row
+                  .btn-default.bg-display(type='button', data-toggle='collapse', data-target='#time_cycle_count_input', aria-expanded='false', aria-controls='#time_cycle_count_input')
+                     h2.display#time_count 88 : 88
+                        h3.display Czas treningu
+         #time_cycle_count_input.collapse
+            .row
+               .col-md-6.bg-display
+                  .input-group.input-group-lg
+                     span#time_count_input.input-group-addon Czas
+                     input.form-control(type='text', placeholder='Czas treningu', aria-describedby='#time_cycle_count_input')
+               .col-md-6.bg-display
+                  .input-group.input-group-lg
+                     span#cycle_count_input.input-group-addon Cykle
+                     input.form-control(type='text', placeholder='Liczba cykli', aria-describedby='#cycle_count_input')
+      .col-md-6
+                  .row
+                     .button_window-lg
+                        button.btn.btn-success.btn-lg.btn-block.block-full(type='button')
+                           span.glyphicon.button.glyphicon-play
+                           h2 Start
+                     .button_window
+                        button.btn.btn-default.btn-lg.btn-block.block-full(type='button')
+                           span.glyphicon.button.glyphicon-record
+                           h2 REC
+                     .button_window-lg
+                        button.btn.btn-danger.btn-lg.btn-block.block-full(type='button')
+                           span.glyphicon.button.glyphicon-stop
+                           h2  Stop
+
+
 
 
