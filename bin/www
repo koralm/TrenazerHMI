@@ -118,27 +118,32 @@ server.listen(3000, function(){
 io.on('connection', function (socket) {
   socket.on('status', function (data) {
     rs232.rs_statusSET(data);
-    console.log(data);
+    //console.log(data);
   });
 });
 
 io.on('connection', function (socket) {
   socket.on('line_length', function (data) {
     rs232.rs_line_lengthSET(data);
-    console.log(data);
+    //console.log(data);
   });
 });
 
 io.on('connection', function (socket) {
   socket.on('interia', function (data) {
     rs232.rs_interiaSET(data);
-    console.log(data);
+    //console.log(data);
   });
 });
 
 io.on('connection', function (socket) {
-  socket.on('interia1', function (data) {
-  console.log(data);
+  socket.on('rs232_start', function (data) {
+    rs232.rs_startSET(data)
   });
 });
+
+io.on('connection', function (socket) {
+    setInterval( function() {
+      socket.emit('phase',rs232.rs_inductionREAD());
+    }, 1000 );});
 

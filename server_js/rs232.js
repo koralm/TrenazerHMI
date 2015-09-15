@@ -4,7 +4,7 @@ var SerialPort = serialport.SerialPort;
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM6";
+var COM_port = "COM4";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -36,19 +36,31 @@ sp_ov_USB.open(function (error) {
         console.log('failed to open COM: '+error);
     } else {
         console.log('COM open');
-
-       //RECEIVE DATA
-        sp_ov_USB.on('data', function(data) {
-
-            //decode data
-            decoded_data = decode_recev_data(data);
-
-            //CONSOLE display received data
-            //disp_recev_data(decoded_data);
-        });
     }
 });
 
+
+function rs_start_F(data){
+    if (data == 65) {
+        //RECEIVE DATA
+        sp_ov_USB.on('data', function (data) {
+            sp_ov_USB.flush();
+            //decode data
+            decoded_data = decode_recev_data(data);
+            //CONSOLE display received data
+            disp_recev_data(decoded_data);
+        });
+    }
+    else if (data == 123){
+        sp_ov_USB.close(function (error) {
+            if ( error ) {
+                console.log('failed to close COM: '+error);
+            } else {
+                console.log('COM closed');
+            }
+        });
+    }
+};
 
 function decode_recev_data(data){
     var bufferek = new Buffer(data ,'hex');
@@ -101,7 +113,15 @@ exports.rs_interiaSET = function (data) {
     push_rs232();
 };
 
+exports.rs_startSET = function (data) {
+    rs_start_F(data);
+    console.log(data);
+};
+
 exports.rs_receivedREAD = function () {
     return decoded_data;
 };
 
+exports.rs_inductionREAD = function () {
+    return decoded_data[4];
+};
