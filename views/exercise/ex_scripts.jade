@@ -80,3 +80,20 @@ script.
 //BOOTSTRAP DISPLAY
 script.
     $('.progress .progress-bar').progressbar();
+
+//Stopwatch buttons
+script.
+    function stopwatch_start(){
+        var minutes = 0;
+        var seconds = 0;
+        intervalID = setInterval(function () {
+            seconds = seconds + 1;
+            if (seconds%10 == 0) {minutes = minutes + 1;}
+            document.getElementById("time_count_s").innerHTML = minutes + ":" + seconds;
+
+        }, 1000);
+    }
+
+    function stopwatch_stop(){
+        return 1;
+    }

@@ -14,14 +14,14 @@
             .col-md-5.bg-display
                .row
                   .btn-default.bg-display(type='button', data-toggle='collapse', data-target='#time_cycle_count_input', aria-expanded='false', aria-controls='#time_cycle_count_input')
-                     h2.display#time_count 88 : 88
+                     h2.display#time_count_s 00:00
                         h3.display Czas treningu
          #time_cycle_count_input.collapse
             .row
                .col-md-6.bg-display
                   .input-group.input-group-lg
                      span#time_count_input.input-group-addon Czas
-                     input.form-control(type='text', placeholder='Czas treningu', aria-describedby='#time_cycle_count_input')
+                     input.form-control(type='number', placeholder='Czas treningu', aria-describedby='#time_cycle_count_input')
                .col-md-6.bg-display
                   .input-group.input-group-lg
                      span#cycle_count_input.input-group-addon Cykle
@@ -29,7 +29,7 @@
       .col-md-6
                   .row
                      .button_window-lg
-                        button.btn.btn-success.btn-lg.btn-block.block-full(type='button')
+                        button.btn.btn-success.btn-lg.btn-block.block-full(type='button', onclick='stopwatch_start()')
                            span.glyphicon.button.glyphicon-play
                            h2 Start
                      .button_window

@@ -46,22 +46,9 @@ sp_ov_USB.open(function (error) {
             //CONSOLE display received data
             //disp_recev_data(decoded_data);
         });
-
-        //SEND DATA
-            setInterval( function() {
-                // SendFrame
-                var send_frame = [frame_header,rs_status,rs_line_length,rs_interia,calib_force,frame_terminator]; //Full Frame
-
-                //Push_data
-                sp_ov_USB.write(code_send_data(send_frame));
-
-                //CONSOLE display send data
-                console.log(code_send_data(send_frame));
-            }, time_interval );
-        //};
-
     }
 });
+
 
 function decode_recev_data(data){
     var bufferek = new Buffer(data ,'hex');
@@ -92,17 +79,26 @@ function code_send_data(send_frame){
     return(rs_frameout);
 }
 
+function push_rs232(){
+    var send_frame = [frame_header,rs_status,rs_line_length,rs_interia,calib_force,frame_terminator];
+    sp_ov_USB.write(code_send_data(send_frame));
+    console.log(code_send_data(send_frame));
+};
 
+//EXPORTS
 exports.rs_statusSET = function (data) {
     rs_status = data;
+    push_rs232();
 };
 
 exports.rs_line_lengthSET = function (data) {
     rs_line_length = data;
+    push_rs232();
 };
 
 exports.rs_interiaSET = function (data) {
     rs_interia = data;
+    push_rs232();
 };
 
 exports.rs_receivedREAD = function () {
