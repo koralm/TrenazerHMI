@@ -144,6 +144,17 @@ io.on('connection', function (socket) {
 
 io.on('connection', function (socket) {
     setInterval( function() {
-      socket.emit('phase',rs232.rs_inductionREAD());
-    }, 1000 );});
+      socket.emit('stop_RED',rs232.rs_stopRED());
+    }, 10 );
+});
 
+io.on('connection', function (socket) {
+  setInterval( function() {
+    socket.emit('induct_stat',rs232.rs_ind_sens());
+    //console.log(rs232.rs_ind_sens());
+    socket.emit('position',{pos: rs232.rs_positon_READ(), ind: rs232.rs_ind_sens()});
+    //console.log(rs232.rs_positon_READ());
+  }, 100 );
+});
+
+//Dorobic phase triangle

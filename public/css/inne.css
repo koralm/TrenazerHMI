@@ -4,8 +4,8 @@
 }
 
 .glyphicon.phase{
-    font-size: 6em;
-    margin-top: 8px;
+    font-size: 4em;
+    margin-top: 20px;
     margin-bottom: 0px;
     margin-right: 0px;
 }
@@ -36,8 +36,8 @@ h2.display {
 
 @media screen and (min-device-width : 800px) {
     h2.display {
-        margin-top: 4px;
-        font-size: 6em;
+        margin-top: 20px;
+        font-size: 4em;
     }
 }
 
@@ -49,7 +49,7 @@ h3.display {
 @media screen and (min-device-width : 800px) {
     h3.display {
         margin-top: 2px;
-        font-size: 2em;
+        font-size: 1.7em;
     }
 }
 

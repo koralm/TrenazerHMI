@@ -8,6 +8,9 @@ script(type='text/javascript').
             socket.emit('status', 0);
             socket.emit('line_length', 0);
             socket.emit('interia', 0);
+            socket.emit('status', 0);
+            socket.emit('status', 3);
+            socket.emit('status', 0);
             $('#calibration_modal_1').modal('show');
         });
     }
@@ -21,7 +24,6 @@ script.
          e.returnValue = 'Czy na pewno chcesz opuścic tryb treningu ?';
       }
       // For Safari
-       socket.emit('rs232_start', "0");
       return 'Czy na pewno chcesz opuścic tryb treningu ?';
    };
 
@@ -38,7 +40,7 @@ script.
 //Line length button --> In range chagnes check in modals code
 script.
     function cal_mod_checkLI() {
-        if ((document.getElementById("line_length").value > 10 && document.getElementById("line_length").value < 100) && (document.getElementById("interia_moment").value > 100 && document.getElementById("interia_moment").value < 2000)){
+        if ((document.getElementById("line_length").value >= 20 && document.getElementById("line_length").value <= 150) && (document.getElementById("interia_moment").value >= 500 && document.getElementById("interia_moment").value <= 50000)){
             document.getElementById("btn_llength_conf").disabled = false;
         }
         else {
@@ -62,21 +64,23 @@ script.
 //Line fold
 script.
     function line_fold(data){
+        socket.emit('status', 4);
         socket.emit('status', data);
         $('#modal_waiting').modal('show');
         setTimeout(function () {
             $('#modal_waiting').modal('hide');
             document.getElementById("line_fold").disabled = true;
             document.getElementById("cal_mod_conf_last").disabled = false;
-        }, 5000);}
+            document.getElementById("cal_mod_conf_last").click();
+        }, 7000);
+    }
 
 
 //Calibration last
 script.
     function calib_session_last(data) {
         socket.emit('status', data);
-        socket.emit('rs232_start', "65");
-        sessionStorage.setItem('callib_modal', 'true')
+        //sessionStorage.setItem('callib_modal', 'true')
     };
 
 //BOOTSTRAP DISPLAY
@@ -129,3 +133,44 @@ script.
             document.getElementById("triangle_phase").className = "glyphicon phase glyphicon-triangle-bottom";
         }
     });
+
+//LINE FOLD SOCKET
+script.
+    socket.on('induct_stat', function (data) {
+        if (data == 0) {
+            document.getElementById("linaok").className = "bg-success";
+            document.getElementById("fold_mod_head").className = "modal-header bg-success";
+            document.getElementById("warning_fold_mod").className = "modal-header bg-success";
+            document.getElementById("linaok").innerHTML = "LINA USTAWIONA OK";
+            document.getElementById("line_fold").disabled = false;
+            document.getElementById("fold_confirm").disabled = false;
+            document.getElementById("fold_confirm").className = "btn btn-lg btn-success";
+
+        } else{
+            document.getElementById("linaok").className = "bg-danger";
+            document.getElementById("fold_mod_head").className = "modal-header bg-danger";
+            document.getElementById("warning_fold_mod").className = "modal-header bg-danger";
+            document.getElementById("linaok").innerHTML = "LINA ZLE WYCIAGNIETA";
+            document.getElementById("line_fold").disabled = true;
+            document.getElementById("fold_confirm").disabled = true;
+            document.getElementById("fold_confirm").className = "btn btn-lg btn-danger";
+        }
+    });
+
+//Position Read
+script.
+    var phase_count = 0;
+    socket.on('position', function (data) {
+        if (data.pos >= -0.5 && data.pos <= 0.5 && data.ind==0) {
+            document.getElementById("cycle_count").innerHTML = phase_count;
+            phase_count  = phase_count + 1;
+        }
+    });
+
+//STOP AW
+script.
+    socket.on('stop_RED', function (data) {
+        if (data == 0) {
+            alert("STOP Awaryjny  - Wyłącz Stop i odświerz stronę");
+        else if (data == 0)
+    }});

@@ -18,14 +18,14 @@
                 label.control-label(for='line_length')  Długość
                 .input-group.input-group-lg
                     span.input-group-addon cm
-                    input#line_length.form-control(type='number', min='10',max='100', placeholder='10-100', required='', oninput='cal_mod_checkLI()')
+                    input#line_length.form-control(type='number', min='20',max='150', placeholder='20-150', required='', oninput='cal_mod_checkLI()')
                 span.glyphicon.form-control-feedback(aria-hidden='true')
                 span.help-block.with-errors.text-center Proszę podać długość linki w cm
             .form-group.has-feedback
                 label.control-label(for='interia_moment') Moment bezwładności
                 .input-group.input-group-lg
                     span.input-group-addon N
-                    input#interia_moment.form-control(type='number', min='100',max='2000', placeholder='100-2000', required='', oninput='cal_mod_checkLI()')
+                    input#interia_moment.form-control(type='number', min='500',max='50000', placeholder='500-50000', required='', oninput='cal_mod_checkLI()')
                 span.glyphicon.form-control-feedback(aria-hidden='true')
                 span.help-block.with-errors.text-center Proszę podać moment bezwładności w N
             .form-group.text-center
@@ -33,22 +33,20 @@
         .modal-footer
             a(href='/')
                 button.btn.btn-lg(type='button') Wróć
-                button.btn.btn-lg.btn-primary#btn_llength_next(type='submit', data-dismiss='modal', onclick='calib_mod3_next(4)', disabled='true') Dalej
+                button.btn.btn-lg.btn-primary#btn_llength_next(type='submit', data-dismiss='modal', onclick='calib_mod3_next(0)', disabled='true') Dalej
 
 #calibration_modal_3.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
-    .modal-header
-        h1.text-center Wyciąganie liny
+    #fold_mod_head.modal-header
+        h1.text-center Kalibracja liny
     .modal-body.text-center
         p Teraz aby kontunuować klaibrację urządzenia wyciągnij powoli całą długość liny.
-        p Gdy lina będzie całkowicie wyciągnieta poczujesz opór, wtedy puść linę swobodnie
-        p Gdy wykonasz powyższe czynności wciśnij przycisk poniżej "Nawiń linę"
-        p Spowoduje to wciągnięcie liny i skrócenie jej do wcześniej wybranej długości
-        p Jeśli długość liny jest nieodpowiednie ponów proces kalibracji
-        button.btn.btn-lg.btn-warning#line_fold(type='button',data-toggle='modal', href='#modal_warning') Nawiń linę
+        p Po pojawieniu się zielonego napisu "LINA OK" możesz przejść dalej
+        h1#linaok.bg-danger LINA ZLE WYCIAGNIETA
+        button.btn.btn-lg.btn-warning#line_fold(type='button',data-toggle='modal', href='#modal_warning', disabled="true") Nawiń linę
     .modal-footer
         a(href='/')
             button.btn.btn-lg(type='button') Wróć
-        button.btn.btn-lg.btn-primary#cal_mod_conf_last(type='button', data-dismiss='modal' onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
+        button.btn.btn-lg.btn-primary#cal_mod_conf_last(type='button', data-dismiss='modal', onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
 
 #modal_waiting.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
     .modal-header.bg-warning
@@ -60,11 +58,10 @@
     .modal-footer
 
 #modal_warning.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
-    .modal-header.bg-danger
+    #warning_fold_mod.modal-header.bg-danger
         h1.text-center.text-danger UWAGA !!!
     .modal-body
-        h2.text-center.text-danger Czy na pewno wyciągnąłęś linę do końca ?
-        h2.text-center.text-danger Jeśli nie zrób to teraz !!!
+        h2.text-center.text-danger Teraz nastąpi zwinięcie liny!!!
     .modal-footer
         p.text-center
-            button.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)') Potwierdzam
+            button#fold_confirm.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)', disabled="true") Ok

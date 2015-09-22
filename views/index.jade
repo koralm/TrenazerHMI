@@ -17,7 +17,7 @@ block content
                 p Proszę wipsz swoj identyfikator w pole Identyfikator poniżej i zatwierdź przyciskiem aby przejść do ekranu startowego
                 .form-group
                     label(for='in_userID') Identyfikator:
-                        input#in_userID.input-lg.form-control.text-center(type='text', placeholder="Tutaj wpisz ID", oninput="warn_brn_enable()")
+                        input#in_userID.input-lg.form-control.text-center(type='tel', placeholder="Tutaj wpisz ID", oninput="warn_brn_enable()")
             .modal-footer
                 button.btn.btn-primary#welcome_conf(type='button', data-dismiss='modal', onclick='wlecom_conf()', disabled="true") Potwierdź
 
