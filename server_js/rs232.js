@@ -4,7 +4,7 @@ var SerialPort = serialport.SerialPort;
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM7";
+var COM_port = "COM4";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -23,16 +23,22 @@ var sp_ov_USB = new SerialPort(COM_port, {
 var decoded_data = 14;
 
 //SEND over COM
-var time_interval = 1000;        //Send data interval
-var frame_header = '7E7E';      //Frame header
-var rs_status = '0';              //For calibration status 0,4,1
-var rs_line_length = '0';         //Line length
-var rs_interia = '0';             //Interia moment x*0.001 eg: 1000*0.001=1
-var calib_force = '0';            //Calibration Force
-var frame_terminator = '0303';  //Frame terminator
+var time_interval = 1000;           //Send data interval
+var frame_header = '7E7E';          //Frame header
+var rs_status = '0';                //For calibration status 0,4,1
+var rs_line_length = '0';           //Line length
+var rs_roller_dist = '30';          //Rollers distance 5mm - 40mm
+var rs_record_stat= '7';            //Recod data start-stop
+var rs_interia = '0';               //Interia moment x*0.001 eg: 1000*0.001=1
+var calib_force = '0';              //Calibration Force
+var frame_terminator = '0303';      //Frame terminator
+
+//Receive form COM
 var stop_aw = 0;
 var tryb_pracy = 0;
-var induc_sens= 1;
+var induc_sens= 0;
+var phase = 0;
+var strength_r = 0;
 
 sp_ov_USB.open(function (error) {
     if ( error ) {
@@ -50,11 +56,13 @@ sp_ov_USB.on('data', function (data) {
 
     //CONSOLE display received data
     disp_recev_data(decoded_data);
+    strength_r=decoded_data[2];
 
     //DECODE ERROR
     decode_stop(decoded_data[4]);
     decode_work(decoded_data[4]);
-    decode_induction(decoded_data[4])
+    decode_induction(decoded_data[4]);
+    decode_phase(decoded_data[4]);
 });
 
 /*
@@ -89,10 +97,10 @@ function rs_start_F(data){
 function decode_recev_data(data){
     var bufferek = new Buffer(data ,'hex');
         if (bufferek.length == 19) {
-            var sample_nr = bufferek.readUInt16LE(17);
             var position = bufferek.readDoubleLE(0);
             var strength = bufferek.readDoubleLE(8);
             var induction_sens = bufferek.readUInt8(16);
+            var sample_nr = bufferek.readUInt16LE(17);
         };
     return([data,sample_nr,strength,position,induction_sens]);
 }
@@ -102,33 +110,35 @@ function disp_recev_data(data){
     //console.log('probka: ' + data[1]);//.toString());
     //console.log('sila: ' + data[2]);//.toString());
     //console.log('polozenie: ' + data[3]);//.toString());
-    console.log('czujnik: ' + data[4]);//.toString());
+    //console.log('czujnik: ' + data[4]);//.toString());
 }
 
 function code_send_data(send_frame){
     var header = new Buffer(send_frame[0] ,'hex');
-    var send_buffer = new Buffer(6);
+    var send_buffer = new Buffer(8);
         send_buffer.writeUInt8(send_frame[1].toString(16),0,'hex');
         send_buffer.writeUInt8(send_frame[2].toString(16),1,'hex');
-        send_buffer.writeUInt16LE(send_frame[3].toString(16),2,'hex');
-        send_buffer.writeUInt16LE(send_frame[4].toString(16),4,'hex');
-    var terminator = new Buffer(send_frame[5] ,'hex');
+        send_buffer.writeUInt8(send_frame[3].toString(16),2,'hex');
+        send_buffer.writeUInt8(send_frame[4].toString(16),3,'hex');
+        send_buffer.writeUInt16LE(send_frame[5].toString(16),4,'hex');
+        send_buffer.writeUInt16LE(send_frame[6].toString(16),6,'hex');
+    var terminator = new Buffer(send_frame[7] ,'hex');
     var rs_frameout = Buffer.concat([header,send_buffer,terminator]);
     return(rs_frameout);
 }
 
 function push_rs232(){
-    var send_frame = [frame_header,rs_status,rs_line_length,rs_interia,calib_force,frame_terminator];
+    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
     console.log(code_send_data(send_frame));
 };
 
 function decode_stop(data){
     if ((data & 64) == 64) {
-        //console.log("STOP ok")
+        console.log("STOP ok")
         stop_aw=1;
     } else {
-        //console.log("STOP wcisnięty")
+        console.log("STOP wcisnięty")
         stop_aw=0;
     }
 }
@@ -140,6 +150,16 @@ function decode_work(data){
     } else {
         //console.log("Tryb kalibracji")
         tryb_pracy = 0;
+    }
+}
+
+function decode_phase(data){
+    if ((data & 2) == 2) {
+        //console.log("faza_1");
+        phase= 1;
+    } else {
+        //console.log("faza_0");
+        phase = 0;
     }
 }
 
@@ -161,6 +181,12 @@ exports.rs_statusSET = function (data) {
 
 exports.rs_line_lengthSET = function (data) {
     rs_line_length = data;
+    push_rs232();
+};
+
+exports.rs_roller_distSET = function (data) {
+    rs_roller_dist = data;
+    console.log(data);
     push_rs232();
 };
 
@@ -190,7 +216,15 @@ exports.rs_ind_sens = function () {
     return induc_sens;
 };
 
+exports.rs_phase_sens = function () {
+    return phase;
+};
+
 exports.rs_positon_READ = function (){
     return decoded_data[3];
-}
+};
+
+exports.rs_strength_READ = function (){
+    return strength_r;
+};
 

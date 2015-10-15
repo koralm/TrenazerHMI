@@ -130,6 +130,13 @@ io.on('connection', function (socket) {
 });
 
 io.on('connection', function (socket) {
+  socket.on('roller_dist', function (data) {
+    rs232.rs_roller_distSET(data);
+    //console.log(data);
+  });
+});
+
+io.on('connection', function (socket) {
   socket.on('interia', function (data) {
     rs232.rs_interiaSET(data);
     //console.log(data);
@@ -146,6 +153,12 @@ io.on('connection', function (socket) {
     setInterval( function() {
       socket.emit('stop_RED',rs232.rs_stopRED());
     }, 10 );
+});
+
+io.on('connection', function (socket) {
+  setInterval( function() {
+    socket.emit('phase_sens',rs232.rs_phase_sens());
+  }, 10 );
 });
 
 io.on('connection', function (socket) {

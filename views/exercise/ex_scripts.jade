@@ -40,7 +40,7 @@ script.
 //Line length button --> In range chagnes check in modals code
 script.
     function cal_mod_checkLI() {
-        if ((document.getElementById("line_length").value >= 20 && document.getElementById("line_length").value <= 150) && (document.getElementById("interia_moment").value >= 500 && document.getElementById("interia_moment").value <= 50000)){
+        if ((document.getElementById("line_length").value >= 20 && document.getElementById("line_length").value <= 150) && (document.getElementById("interia_moment").value >= 1000 && document.getElementById("interia_moment").value <= 100000) && (document.getElementById("roller_dist").value >= 10 && document.getElementById("roller_dist").value <= 40)){
             document.getElementById("btn_llength_conf").disabled = false;
         }
         else {
@@ -51,6 +51,7 @@ script.
 script.
     function calib_mod3_line_interia(){
         socket.emit('line_length', document.getElementById("line_length").value);
+        socket.emit('roller_dist', document.getElementById("roller_dist").value);
         socket.emit('interia', document.getElementById("interia_moment").value);
         document.getElementById("btn_llength_next").disabled = false;
     }
@@ -73,6 +74,7 @@ script.
             document.getElementById("cal_mod_conf_last").disabled = false;
             document.getElementById("cal_mod_conf_last").click();
         }, 7000);
+        phase_count = 0;
     }
 
 
@@ -125,7 +127,7 @@ script.
 
 //Phase triangle
 script.
-    socket.on('phase', function (data) {
+    socket.on('phase_sens', function (data) {
         if (data == 1) {
             document.getElementById("triangle_phase").className = "glyphicon phase glyphicon-triangle-top";
         }
@@ -160,12 +162,16 @@ script.
 //Position Read
 script.
     var phase_count = 0;
-    socket.on('position', function (data) {
-        if (data.pos >= -0.5 && data.pos <= 0.5 && data.ind==0) {
+    var phase_past = 0;
+    socket.on('phase_sens', function (data) {
+        if (data==0 && phase_past==1) {
             document.getElementById("cycle_count").innerHTML = phase_count;
             phase_count  = phase_count + 1;
         }
+        phase_past=data;
     });
+
+
 
 //STOP AW
 script.

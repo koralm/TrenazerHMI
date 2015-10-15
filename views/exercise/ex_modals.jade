@@ -21,11 +21,20 @@
                     input#line_length.form-control(type='number', min='20',max='150', placeholder='20-150', required='', oninput='cal_mod_checkLI()')
                 span.glyphicon.form-control-feedback(aria-hidden='true')
                 span.help-block.with-errors.text-center Proszę podać długość linki w cm
+
+            .form-group.has-feedback
+                label.control-label(for='roller_dist') Odległość rolek
+                .input-group.input-group-lg
+                    span.input-group-addon mm
+                    input#roller_dist.form-control(type='number', min='10',max='40', placeholder='10-40', required='', oninput='cal_mod_checkLI()')
+                span.glyphicon.form-control-feedback(aria-hidden='true')
+                span.help-block.with-errors.text-center Proszę podać odległość rolek w mm
+
             .form-group.has-feedback
                 label.control-label(for='interia_moment') Moment bezwładności
                 .input-group.input-group-lg
                     span.input-group-addon N
-                    input#interia_moment.form-control(type='number', min='500',max='50000', placeholder='500-50000', required='', oninput='cal_mod_checkLI()')
+                    input#interia_moment.form-control(type='number', min='1000',max='100000', placeholder='1000-100000', required='', oninput='cal_mod_checkLI()')
                 span.glyphicon.form-control-feedback(aria-hidden='true')
                 span.help-block.with-errors.text-center Proszę podać moment bezwładności w N
             .form-group.text-center
