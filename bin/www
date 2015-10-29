@@ -173,18 +173,37 @@ io.on('connection', function (socket) {
 
 //save to file
 var fs = require('fs');
-var wstream = fs.createWriteStream('D:/test.txt');
 var REC = 0;
+
+
+var wstream;
+
+//Create Folder
+var mkdirp = require('mkdirp');
+
 
 io.on('connection', function (socket) {
   socket.on('REC', function (data) {
-    REC = data;
+    console.log(data);    REC = data;
+    if (data==1){
+      var datax = new Date().toISOString().replace(/T.+/,'')      // replace T with a space
+      var timex = new Date()
+      mkdirp('E:/' + datax + '/', function(err) {
+        console.log("create folder good");
+      });
+      wstream = fs.createWriteStream('E:/' + datax + '/' + timex.getHours() + "_" + timex.getMinutes() + "_" + timex.getSeconds() );
+    }
   });
 });
+
+
 
 rs232.xyz.on("someEvent", function () {
   if (REC == 1){
     wstream.write(rs232.decoded_datax[1] + '  STR: ' + rs232.decoded_datax[2] + '  POS: ' + rs232.decoded_datax[3] + '\r\n');
+  }
+  else{
+    wstream.end();
   }
 });
 
