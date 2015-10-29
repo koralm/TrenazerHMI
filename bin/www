@@ -170,4 +170,23 @@ io.on('connection', function (socket) {
   }, 100 );
 });
 
-//Dorobic phase triangle
+
+//save to file
+var fs = require('fs');
+var wstream = fs.createWriteStream('D:/test.txt');
+var REC = 0;
+
+io.on('connection', function (socket) {
+  socket.on('REC', function (data) {
+    REC = data;
+  });
+});
+
+rs232.xyz.on("someEvent", function () {
+  if (REC == 1){
+    wstream.write(rs232.decoded_datax[1] + '  STR: ' + rs232.decoded_datax[2] + '  POS: ' + rs232.decoded_datax[3] + '\r\n');
+  }
+});
+
+
+

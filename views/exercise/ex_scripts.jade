@@ -121,7 +121,8 @@ script.
             }
 
         }, 1000);
-        document.getElementById("stopwatch_stop").onclick = function(){stop=1};//;socket.emit('rs232_start', "123");};
+
+        document.getElementById("stopwatch_stop").onclick = function(){stop=1;socket.emit('REC', 0);};//;socket.emit('rs232_start', "123");};
     };
 
 
@@ -180,3 +181,11 @@ script.
             alert("STOP Awaryjny  - Wyłącz Stop i odświerz stronę");
         else if (data == 0)
     }});
+
+//ADD IN SECOND STEP
+
+//RECORD DATA START
+script.
+    function REC_data_start(){
+        socket.emit('REC', 1);
+    };

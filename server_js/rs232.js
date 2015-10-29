@@ -1,10 +1,11 @@
 var serialport = require('serialport');
 var SerialPort = serialport.SerialPort;
+
 /*
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM4";
+var COM_port = "COM5";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -20,7 +21,7 @@ var sp_ov_USB = new SerialPort(COM_port, {
  * INITIALIZE VARIABLES FOR COMMUNICATION BETWEEN MODULES
  */
 //Recieved from COM
-var decoded_data = 14;
+var decoded_data = 0;
 
 //SEND over COM
 var time_interval = 1000;           //Send data interval
@@ -58,11 +59,16 @@ sp_ov_USB.on('data', function (data) {
     disp_recev_data(decoded_data);
     strength_r=decoded_data[2];
 
+
     //DECODE ERROR
     decode_stop(decoded_data[4]);
     decode_work(decoded_data[4]);
     decode_induction(decoded_data[4]);
     decode_phase(decoded_data[4]);
+
+    //SAVE TO FILE
+    exports.decoded_datax = decoded_data;
+    ee.emit("someEvent");
 });
 
 /*
@@ -135,7 +141,7 @@ function push_rs232(){
 
 function decode_stop(data){
     if ((data & 64) == 64) {
-        console.log("STOP ok")
+        //console.log("STOP ok")
         stop_aw=1;
     } else {
         console.log("STOP wcisnięty")
@@ -227,4 +233,14 @@ exports.rs_positon_READ = function (){
 exports.rs_strength_READ = function (){
     return strength_r;
 };
+
+//EVENT EMIT
+
+var EventEmitter = require("events").EventEmitter;
+var ee = new EventEmitter();
+
+exports.xyz = ee;
+
+
+
 
