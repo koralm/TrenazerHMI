@@ -122,7 +122,12 @@ script.
 
         }, 1000);
 
-        document.getElementById("stopwatch_stop").onclick = function(){stop=1;socket.emit('REC', 0);};//;socket.emit('rs232_start', "123");};
+        document.getElementById("stopwatch_stop").onclick = function(){
+            stop=1;
+            socket.emit('REC', 0);
+            document.getElementById("rec_glyph_color").style.color = "black";
+            document.getElementById("rec_text_color").style.color = "black";
+        };
     };
 
 
@@ -188,4 +193,6 @@ script.
 script.
     function REC_data_start(){
         socket.emit('REC', 1);
+        document.getElementById("rec_glyph_color").style.color = "red";
+        document.getElementById("rec_text_color").style.color = "red";
     };

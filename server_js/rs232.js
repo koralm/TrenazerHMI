@@ -1,11 +1,16 @@
 var serialport = require('serialport');
 var SerialPort = serialport.SerialPort;
 
+//EVENT EMIT
+
+var EventEmitter = require("events").EventEmitter;
+var ee = new EventEmitter();
+
 /*
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM3";
+var COM_port = "COM5";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -41,6 +46,26 @@ var induc_sens= 0;
 var phase = 0;
 var strength_r = 0;
 
+//Formats
+//Ilosciowy
+var force_sum = 0;
+var mean_force_acc = 0;
+var mean_force_brake = 0;
+var mean_force_cycle = 0;
+var time_acc_phase =0;
+var time_brake_phase =0;
+var time_cycle =0;
+var max_speed_cycle =0;
+var concetrate_pointer =0;
+
+var help_count=0;
+var phase0_count=0;
+var pos_hist = 0;
+var speed = 0;
+
+var phase_hist = 3;
+
+
 sp_ov_USB.open(function (error) {
     if ( error ) {
         console.log('failed to open COM: '+error);
@@ -66,9 +91,60 @@ sp_ov_USB.on('data', function (data) {
     decode_induction(decoded_data[4]);
     decode_phase(decoded_data[4]);
 
+    //PARAMS TO SAVE
+    force_sum = force_sum + decoded_data[3];
+    speed = (pos_hist - decoded_data[2]);
+    //console.log(speed);
+    //COUNTERS
+    phase0_count = phase0_count + 1;
+
+
+
+    //FLAG
+    if (phase != phase_hist){
+        if (help_count == 0){
+            //console.log("wciaga");
+            mean_force_brake = force_sum/phase0_count;
+            exports.mean_force_brake = force_sum/phase0_count;
+            time_acc_phase = phase0_count;
+            exports.time_acc_phase = phase0_count;
+            //console.log(mean_force_brake);
+        }
+
+        if (help_count == 1){
+            //console.log("ciagne");
+            mean_force_acc = force_sum/phase0_count;
+            exports.mean_force_acc = force_sum/phase0_count;
+            time_brake_phase =phase0_count;
+            exports.time_brake_phase = phase0_count;
+            //console.log(mean_force_acc);
+        }
+
+        phase0_count = 0;
+        force_sum = 0;
+        help_count ++;
+
+        if (help_count == 2){
+            help_count = 0;
+            //console.log("cykl");
+            exports.mean_force_cycle = (mean_force_brake + mean_force_acc)/2;
+            exports.time_cycle = time_acc_phase + time_brake_phase;
+            ee.emit("cykl");
+            //console.log(time_cycle);
+            mean_force_brake=0;
+            mean_force_acc=0;
+            time_acc_phase = 0;
+            time_brake_phase = 0;
+        }
+    }
+
+
     //SAVE TO FILE
     exports.decoded_datax = decoded_data;
+    exports.phase = phase;
     ee.emit("someEvent");
+    phase_hist = phase;
+    pos_hist = decoded_data[2];
 });
 
 /*
@@ -234,13 +310,6 @@ exports.rs_strength_READ = function (){
     return strength_r;
 };
 
-//EVENT EMIT
 
-var EventEmitter = require("events").EventEmitter;
-var ee = new EventEmitter();
 
 exports.xyz = ee;
-
-
-
-
