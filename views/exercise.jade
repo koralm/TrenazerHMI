@@ -2,6 +2,8 @@ extends layout
 
 block layouts
 
+block scripts top
+
 block content
     .container-fluid
         include exercise/ex_displays_bar
@@ -10,19 +12,8 @@ block content
         .row-bufferx2
         include exercise/ex_disp_button
 
-    //button#btn0.btn-lg.btn-primary(type="button", onclick="f0(0)") 0
-    //button#btn1.btn-lg.btn-primary(type="button", onclick="f0(1)") 1
-    //button#btn2.btn-lg.btn-primary(type="button", onclick="f0(2)") 2
-    //button#btn3.btn-lg.btn-primary(type="button", onclick="f0(3)") 3
-    //button#btn4.btn-lg.btn-primary(type="button", onclick="f0(4)") 4
-
 
     include exercise/ex_modals.jade
 
 block scripts bottom
     include exercise/ex_scripts.jade
-
-    script.
-        function f0(data){
-            socket.emit('status',data);
-        }

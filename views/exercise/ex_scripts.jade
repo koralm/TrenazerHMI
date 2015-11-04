@@ -87,7 +87,7 @@ script.
 
 //BOOTSTRAP DISPLAY
 script.
-    $('.progress .progress-bar').progressbar();
+    //$('.progress .progress-bar').progressbar();
 
 //Stopwatch buttons
 script.
@@ -209,9 +209,10 @@ script.
 script.
     //var pasek = document.getElementById("bar1");
     socket.on('procent', function (data) {
+        //document.getElementById("bar1").setAttribute("data-transitiongoal", data.data1);
         //pasek.setAttribute("aria-valuemin", 0);
         //pasek.setAttribute("aria-valuemax", 50);
         //pasek.setAttribute("data-transitiongoal", data.data1);
-        fill_precent = data.data1;
-    $('.progress .progress-bar').attr('data-transitiongoal', fill_precent).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+        $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": data.data2 ,"aria-valuemax": data.data3}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
     });
+

@@ -255,7 +255,6 @@ rs232.xyz.on("cykl", function () {
   }
   socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2));
   socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
-  console.log(disp_min, disp_max)
 });
 });
 
