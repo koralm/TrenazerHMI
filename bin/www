@@ -109,6 +109,8 @@ server.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
+io.sockets.setMaxListeners(50);
+
 //io.on('connection', function (socket) {
 //    setInterval( function() {
 //      socket.emit('message', rs232.rsout());
@@ -182,7 +184,22 @@ var wstream;
 var mkdirp = require('mkdirp');
 var disk_path = "D:/";
 var rec_flag = 0;
+var folder_name = "";
 
+//folder name
+io.on('connection', function (socket) {
+  socket.on('folder_name', function (data) {
+    folder_name=data;
+  });
+});
+
+//File name
+var file_name ="";
+io.on('connection', function (socket) {
+  socket.on('file_name', function (data) {
+    file_name=data;
+  });
+});
 
 
 io.on('connection', function (socket) {
@@ -192,20 +209,32 @@ io.on('connection', function (socket) {
     if (data==1){
       var datax = new Date().toISOString().replace(/T.+/,'');      // replace T with a space
       var timex = new Date();
-      mkdirp(disk_path + datax + '/', function(err) {
+      mkdirp(disk_path + folder_name + '/' + datax + '/', function(err) {
         console.log("create folder good");
       });
-      wstream_c = fs.createWriteStream(disk_path + datax + "/" + timex.getHours() + "_" + timex.getMinutes() + "_" + timex.getSeconds() + "_ciagly" + ".txt" );
-      wstream_il = fs.createWriteStream(disk_path + datax + "/" + timex.getHours() + "_" + timex.getMinutes() + "_" + timex.getSeconds() + "_ilosciowy" + ".txt" );
+      wstream_c = fs.createWriteStream(disk_path + folder_name + '/' + datax + "/" + file_name + "_" + timex.getHours() + "_" + timex.getMinutes() + "_" + timex.getSeconds() + "_ciagly" + ".txt" );
+      wstream_il = fs.createWriteStream(disk_path + folder_name + '/' + datax + "/" + file_name + "_" + timex.getHours() + "_" + timex.getMinutes() + "_" + timex.getSeconds() + "_ilosciowy" + ".txt" );
     }
   });
 });
 
+//DISP RANGE
+var disp_min = 0;
+var disp_max = 100;
 
+io.on('connection', function (socket) {
+  socket.on('disp_min', function (data) {
+    disp_min=data;
+  });
+  socket.on('disp_max', function (data) {
+    disp_max=data;
+  });
+
+});
 
 rs232.xyz.on("someEvent", function () {
   if (REC == 1){
-    wstream_c.write(parseFloat(rs232.decoded_datax[3]).toFixed(2) + "   " + parseFloat(rs232.decoded_datax[2]).toFixed(1) + '   ' + rs232.phase + '\r\n');
+    wstream_c.write(parseFloat(rs232.decoded_datax[3]).toFixed(2) + "    " + parseFloat(rs232.decoded_datax[2]).toFixed(1) + '    ' + rs232.phase + '\r\n');
     rec_flag = 1;
   }
   if (REC == 0 && rec_flag == 1){
@@ -214,14 +243,19 @@ rs232.xyz.on("someEvent", function () {
   }
 });
 
+io.on('connection', function (socket) {
 rs232.xyz.on("cykl", function () {
   if (REC == 1){
-    wstream_il.write(parseFloat(rs232.mean_force_acc).toFixed(2) + "   " + parseFloat(rs232.mean_force_brake).toFixed(2) + "   " + parseFloat(rs232.mean_force_cycle).toFixed(2) + "   " + rs232.time_acc_phase + "   " + rs232.time_brake_phase + "   " + rs232.time_cycle + '\r\n');
+    wstream_il.write(parseFloat(rs232.mean_force_acc).toFixed(2) + "    " + parseFloat(rs232.mean_force_brake).toFixed(2) + "    " + parseFloat(rs232.mean_force_cycle).toFixed(2) + "    " + rs232.time_acc_phase + "    " + rs232.time_brake_phase + "    " + rs232.time_cycle + '\r\n');
     rec_flag = 1;
   }
   if (REC == 0 && rec_flag == 1){
     wstream_il.end();
     rec_flag=0;
   }
+  socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2));
+  socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
+  console.log(disp_min, disp_max)
+});
 });
 

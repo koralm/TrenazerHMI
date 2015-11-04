@@ -196,3 +196,22 @@ script.
         document.getElementById("rec_glyph_color").style.color = "red";
         document.getElementById("rec_text_color").style.color = "red";
     };
+
+//DISPLAY BAR
+script.
+    socket.on('disp_bar', function (data) {
+        document.getElementById("display_1").innerHTML = data;
+    });
+
+
+
+//BAR WIDTH
+script.
+    //var pasek = document.getElementById("bar1");
+    socket.on('procent', function (data) {
+        //pasek.setAttribute("aria-valuemin", 0);
+        //pasek.setAttribute("aria-valuemax", 50);
+        //pasek.setAttribute("data-transitiongoal", data.data1);
+        fill_precent = data.data1;
+    $('.progress .progress-bar').attr('data-transitiongoal', fill_precent).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+    });

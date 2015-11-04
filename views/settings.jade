@@ -1,0 +1,42 @@
+extends layout
+
+block content
+    .container
+        //CONTENT
+        #id_content.text-center
+            .h1 Tutaj znajdują się ustawienia dotyczące ekranu ćwiczeń
+
+        #folder_path.text-left
+            h2 Nazwa Folderu:
+            p
+                .form-group
+                    label(for='folder_name')
+                        input#folder_name.input-lg.form-control.text-center(type='text', placeholder="Tutaj wpisz nazwe folderu")
+
+        #file_path.text-left
+            h2 Nazwa Pliku:
+            p
+                .form-group
+                    label(for='file_name')
+                        input#file_name.input-lg.form-control.text-center(type='text', placeholder="Tutaj wpisz nazwe pliku")
+
+        #disp_range.text-left
+            h2 Zakresy wyświetlacza:
+            p
+                .form-group
+                    label(for='disp_min') Minimalna wartosc:
+                        input#disp_min.input-lg.form-control.text-center(type='number', placeholder="Min")
+                    label(for='disp_max') Maksymalna wartosc:
+                        input#disp_max.input-lg.form-control.text-center(type='number', placeholder="Max")
+
+        button.btn.btn-lg.btn-success.btn-block#save_settings(type='button', onclick='save_settings()') Zapisz
+
+    script.
+        function save_settings(){
+            socket.emit('file_name', document.getElementById("file_name").value);
+            socket.emit('folder_name', document.getElementById("folder_name").value);
+            socket.emit('disp_min', document.getElementById("disp_min").value);
+            socket.emit('disp_max', document.getElementById("disp_max").value);
+        }
+
+

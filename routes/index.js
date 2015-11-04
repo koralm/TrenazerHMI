@@ -10,4 +10,8 @@ router.get('/exercise', function(req, res, next) {
   res.render('exercise', { title: 'Exercise' });
 });
 
+router.get('/settings', function(req, res, next) {
+  res.render('settings', { title: 'settings' });
+});
+
 module.exports = router;
