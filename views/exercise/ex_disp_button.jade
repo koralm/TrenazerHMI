@@ -3,20 +3,17 @@
       .col-md-6.bg-display
          .row
             .col-md-5.bg-display
-               .row
-                  .btn-default.bg-display(type='button', data-toggle='collapse', data-target='#cycle_count_input', aria-expanded='false', aria-controls='#cycle_count_input')
-                     h2#cycle_count.display 0
+                  //.btn-default.bg-display(type='button', data-toggle='collapse', data-target='#cycle_count_input', aria-expanded='false', aria-controls='#cycle_count_input')
+                  h2#cycle_count.display(style="color:black") 0
                      h3.display Liczba cykli
             .col-md-2.bg-display
-               .row
-                  i#triangle_phase.glyphicon.phase.glyphicon-triangle-bottom
+                  i#triangle_phase.glyphicon.phase.glyphicon-triangle-bottom(style="color:black")
                   h3.display Faza
             .col-md-5.bg-display
-               .row
-                  .btn-default.bg-display(type='button', data-toggle='collapse', data-target='#time_cycle_count_input', aria-expanded='false', aria-controls='#time_cycle_count_input')
-                     h2.display#time_count_s 00:00
-                        h3.display Czas treningu
-         #time_cycle_count_input.collapse
+                  //.btn-default.bg-display(type='button', data-toggle='collapse', data-target='#time_cycle_count_input', aria-expanded='false', aria-controls='#time_cycle_count_input')
+                  h2.display#time_count_s(style="color:black") 00:00
+                     h3.display Czas treningu
+         //#time_cycle_count_input.collapse
             .row
                .col-md-6.bg-display
                   .input-group.input-group-lg
@@ -41,7 +38,3 @@
                         button#stopwatch_stop.btn.btn-warning.btn-lg.btn-block.block-full(type='button', onclick='REC_data_stop()')
                            span.glyphicon.button.glyphicon-stop
                            h2  Stop
-
-
-
-

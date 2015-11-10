@@ -91,7 +91,7 @@ script.
 
 //Stopwatch buttons
 script.
-    function stopwatch_start(){
+    function stopwatch_start() {
         var stop = 0;
         var minutes = 0;
         var seconds = 0;
@@ -99,21 +99,26 @@ script.
         intervalID = setInterval(function () {
             seconds = seconds + 1;
 
-            if (seconds%60 == 0) {
+            if (seconds % 60 == 0) {
                 minutes = minutes + 1;
                 seconds = 0;
             }
-            if (minutes<10 && seconds<10) {
-                document.getElementById("time_count_s").innerHTML = "0" + minutes + ":0" + seconds;}
-            else if(minutes<10 && seconds>=10){
-                document.getElementById("time_count_s").innerHTML = "0" + minutes + ":" + seconds;}
-            else if(minutes>=10 && seconds<10){
-                document.getElementById("time_count_s").innerHTML = minutes + ":0" + seconds;}
-            else{
-                document.getElementById("time_count_s").innerHTML = minutes + ":" + seconds;}
+            if (minutes < 10 && seconds < 10) {
+                document.getElementById("time_count_s").innerHTML = "0" + minutes + ":0" + seconds;
+            }
+            else if (minutes < 10 && seconds >= 10) {
+                document.getElementById("time_count_s").innerHTML = "0" + minutes + ":" + seconds;
+            }
+            else if (minutes >= 10 && seconds < 10) {
+                document.getElementById("time_count_s").innerHTML = minutes + ":0" + seconds;
+            }
+            else {
+                document.getElementById("time_count_s").innerHTML = minutes + ":" + seconds;
+            }
 
-            if (document.getElementById("time_count_input_m").value == minutes && document.getElementById("time_count_input_s").value == seconds){
-                stop=1;}
+            if (document.getElementById("time_count_input_m").value == minutes && document.getElementById("time_count_input_s").value == seconds) {
+                stop = 1;
+            }
 
             if (stop == 1) {
                 clearInterval(intervalID);
@@ -122,8 +127,8 @@ script.
 
         }, 1000);
 
-        document.getElementById("stopwatch_stop").onclick = function(){
-            stop=1;
+        document.getElementById("stopwatch_stop").onclick = function () {
+            stop = 1;
             socket.emit('REC', 0);
             document.getElementById("rec_glyph_color").style.color = "black";
             document.getElementById("rec_text_color").style.color = "black";
@@ -216,3 +221,9 @@ script.
         $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": data.data2 ,"aria-valuemax": data.data3}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
     });
 
+//DISP SELECTED
+script.
+    function bar_selected(){
+        var selectedValue = $('#disp1_sel').find("option:selected").attr("id");
+        socket.emit("sel_disp_1", 12);
+    }

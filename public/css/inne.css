@@ -55,6 +55,7 @@ h3.display {
 
 .bg-display {
     background-color: #E6E6E6;
+    height: 135px;
 }
 
 .progress.progress-big {
@@ -70,6 +71,11 @@ h3.display {
 
 .progress-bar-custom {
     background: rgba(151, 159, 166, 1);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
 }
 
 .warn_window{
@@ -85,13 +91,13 @@ h3.display {
 }
 .button_window-lg{
     width: 37.5%;
-    height: 150px;
+    height: 135px;
     float: left;
 }
 
 .button_window{
     width: 25%;
-    height: 150px;
+    height: 135px;
     float: left;
 }
 
