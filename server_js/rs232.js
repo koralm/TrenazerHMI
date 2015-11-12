@@ -10,7 +10,7 @@ var ee = new EventEmitter();
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM5";
+var COM_port = "COM4";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";

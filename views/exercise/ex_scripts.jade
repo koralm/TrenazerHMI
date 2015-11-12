@@ -225,5 +225,5 @@ script.
 script.
     function bar_selected(){
         var selectedValue = $('#disp1_sel').find("option:selected").attr("id");
-        socket.emit("sel_disp_1", 12);
+        socket.emit("sel_disp_1", selectedValue);
     }

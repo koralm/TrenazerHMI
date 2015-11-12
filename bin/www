@@ -232,11 +232,11 @@ io.on('connection', function (socket) {
 });
 
 //DISP WHAT
-var disp_selection1 = "#mean_phase_acc_1"
+var disp_selection1 = "mean_phase_acc_1"
 
 io.on('connection', function (socket) {
   socket.on("sel_disp_1", function (data) {
-    disp_selection1 = data;
+    disp_selection1 = data.toString();
     console.log(data);
   });
 });
@@ -262,41 +262,42 @@ rs232.xyz.on("cykl", function () {
     wstream_il.end();
     rec_flag=0;
   }
+
   switch(disp_selection1) {
-    case "#mean_phase_acc_1":
-      socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2));
+    case "mean_phase_acc_1":
+      socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2) + " N");
       socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
       break;
-    case "#mean_phase_brake_1":
-      socket.emit('disp_bar', parseFloat(rs232.mean_force_brake).toFixed(2));
+    case "mean_phase_brake_1":
+      socket.emit('disp_bar', parseFloat(rs232.mean_force_brake).toFixed(2) + " N");
       socket.emit('procent', {data1: parseFloat(rs232.mean_force_brake).toFixed(2), data2: disp_min, data3: disp_max});
       break;
-    case "#mean_cycle_1":
-      socket.emit('disp_bar', parseFloat(rs232.mean_force_cycle).toFixed(2));
+    case "mean_cycle_1":
+      socket.emit('disp_bar', parseFloat(rs232.mean_force_cycle).toFixed(2) + " N");
       socket.emit('procent', {data1: parseFloat(rs232.mean_force_cycle).toFixed(2), data2: disp_min, data3: disp_max});
       break;
-    case "#time_acceleration_1":
-      socket.emit('disp_bar', parseFloat(rs232.time_acc_phase).toFixed(2));
+    case "time_acceleration_1":
+      socket.emit('disp_bar', parseFloat(rs232.time_acc_phase).toFixed(2) + " ms");
       socket.emit('procent', {data1: parseFloat(rs232.time_acc_phase).toFixed(2), data2: disp_min, data3: disp_max});
       break;
-    case "#time_brake_1":
-      socket.emit('disp_bar', parseFloat(rs232.time_brake_phase).toFixed(2));
+    case "time_brake_1":
+      socket.emit('disp_bar', parseFloat(rs232.time_brake_phase).toFixed(2) + " ms");
       socket.emit('procent', {data1: parseFloat(rs232.time_brake_phase).toFixed(2), data2: disp_min, data3: disp_max});
       break;
-    case "#time_cycle_1":
-      socket.emit('disp_bar', parseFloat(rs232.time_cycle).toFixed(2));
+    case "time_cycle_1":
+      socket.emit('disp_bar', parseFloat(rs232.time_cycle).toFixed(2) + " ms");
       socket.emit('procent', {data1: parseFloat(rs232.time_cycle).toFixed(2), data2: disp_min, data3: disp_max});
       break;
-    case "#max_spped_cycle_1":
-      socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2));
+    case "max_spped_cycle_1":
+      socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2) + " m/s");
       socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
       break;
-    case "#max_power_cycle_1":
-      socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2));
+    case "max_power_cycle_1":
+      socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2) + " xx");
       socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
       break;
     default:
-      socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2));
+      socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2) + "d");
       socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
   }
 });
