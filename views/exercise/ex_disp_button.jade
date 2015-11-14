@@ -31,10 +31,34 @@
                            span.glyphicon.button.glyphicon-play
                            h2 Start
                      .button_window
-                        button#stopwatch_REC.btn.btn-default.btn-lg.btn-block.block-full(type='button', onclick='REC_data_start()')
-                           span#rec_glyph_color.glyphicon.button.glyphicon-record
-                           h2#rec_text_color REC
+                           //button#stopwatch_REC.btn.btn-default.btn-lg.btn-block.block-full(type='button', onclick='REC_data_start()')
+                           button#stopwatch_REC.btn.btn-default.btn-lg.btn-block.block-full(type='button', data-toggle='modal', href='#rec_data_modal')
+                              span#rec_glyph_color.glyphicon.button.glyphicon-record
+                              h2#rec_text_color REC
                      .button_window-lg
-                        button#stopwatch_stop.btn.btn-warning.btn-lg.btn-block.block-full(type='button')
+                        button#stopwatch_stop.btn.btn-warning.btn-lg.btn-block.block-full(type='button', onclick='stopwatch_stop()')
                            span.glyphicon.button.glyphicon-stop
                            h2  Stop
+
+#rec_data_modal.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+   #rec_data_head.modal-header
+      h1.text-center Ustawienia zapisu
+   .modal-body
+      h2.text-center Podaj nazwę pliku oraz folderu
+
+      #folder_path.text-center
+         h2 Nazwa Folderu:
+         p
+            .form-group
+               label(for='folder_name_mod')
+                  input#folder_name_mod.input-lg.form-control.text-center(type='text', placeholder="Tutaj wpisz nazwe folderu")
+
+      #file_path.text-center
+         h2 Nazwa Pliku:
+         p
+            .form-group
+               label(for='file_name_mod')
+                  input#file_name_mod.input-lg.form-control.text-center(type='text', placeholder="Tutaj wpisz nazwe pliku")
+   .modal-footer
+      p.text-center
+         button#rec_confirm.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='REC_data_start()') Rejestruj
