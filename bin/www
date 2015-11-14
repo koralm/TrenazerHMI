@@ -10,6 +10,7 @@ var http = require('http');
 var d3 = require('d3');
 var rs232 = require('../server_js/rs232');
 //var writetxt = require('../server_js/str_write');
+var stoper = require('../server_js/stoper');
 
 /**
  * Get port from environment and store in Express.
@@ -301,4 +302,10 @@ rs232.xyz.on("cykl", function () {
       socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
   }
 });
+});
+
+io.on('connection', function (socket) {
+  socket.on('stopwach', function (data) {
+    stoper.stoper_stat(data);
+  });
 });
