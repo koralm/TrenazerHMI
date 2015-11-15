@@ -2,41 +2,101 @@ extends layout
 
 block content
     .container
-        //CONTENT
-        #id_content.text-center
-            .h1 Tutaj znajdują się ustawienia dotyczące ekranu ćwiczeń
+        .row
+            //CONTENT
+            #id_content.text-center
+                .h1 Tutaj znajdują się ustawienia traktowane jako domyślne podczas treningu
+        .row
+           .col-lg-10
+            #exercise_settings.text-left
+                h2 Ustawienia kalibracji:
+                    p
+                        .form-group
+                            label(for='line_length') Długość liny:
+                                .input-group.input-group-lg
+                                    input#line_length.input-lg.form-control.text-center(type='text', placeholder="0")
+                                    span.input-group-addon cm
+                            label(for='roller_dist') Rozstaw rolek:
+                                .input-group.input-group-lg
+                                    input#roller_dist.input-lg.form-control.text-center(type='text', placeholder="0")
+                                    span.input-group-addon mm
+                            label(for='interia_moment') Moment bezwładności:
+                                .input-group.input-group-lg
+                                    input#interia_moment.input-lg.form-control.text-center(type='text', placeholder="0")
+                                    span.input-group-addon N
+        .row
+            .col-lg-6
+                #path_settings.text-left
+                    h2 Ustawienia zapisu treningów:
+                    p
+                        .form-group
+                            label(for='folder_name') Nazwa folderu:
+                                input#folder_name.input-lg.form-control.text-center(type='text', placeholder="data")
+                            label(for='file_name') Nazwa pliku:
+                                input#file_name.input-lg.form-control.text-center(type='text', placeholder="godzina")
+        .row
+            .col-lg-6
+                #disp1_range.text-left
+                    h2 Zakresy wyświetlacza 1:
+                    p
+                        .form-group
+                            label(for='disp1_min') Minimalna wartosc:
+                                input#disp1_min.input-lg.form-control.text-center(type='number', placeholder="0")
+                            label(for='disp1_max') Maksymalna wartosc:
+                                input#disp1_max.input-lg.form-control.text-center(type='number', placeholder="100")
+            .col-lg-6
+                #disp2_range.text-left
+                    h2 Zakresy wyświetlacza 2:
+                    p
+                        .form-group
+                            label(for='disp2_min') Minimalna wartosc:
+                                input#disp2_min.input-lg.form-control.text-center(type='number', placeholder="0")
+                            label(for='disp2_max') Maksymalna wartosc:
+                                input#disp2_max.input-lg.form-control.text-center(type='number', placeholder="100")
+        .row
+            .col-lg-6
+                #max_time_range.text-left
+                    h2 Maksumalny czas ćwiczenia
+                    p
+                        .form-group
+                            label(for='minutes_max') Minuty:
+                                input#minutes_max.input-lg.form-control.text-center(type='number', placeholder="0")
+                            label(for='seconds_max') Sekundy
+                                input#seconds_max.input-lg.form-control.text-center(type='number', placeholder="0")
 
-        #folder_path.text-left
-            h2 Nazwa Folderu:
-            p
-                .form-group
-                    label(for='folder_name')
-                        input#folder_name.input-lg.form-control.text-center(type='text', placeholder="Tutaj wpisz nazwe folderu")
+            .col-lg-6
+                #max_cycle_range.text-left
+                    h2 Maksymalna ilość cykli
+                    p
+                        .form-group
+                            label(for='cycle_max') Ilość cykli:
+                                input#cycle_max.input-lg.form-control.text-center(type='number', placeholder="0")
 
-        #file_path.text-left
-            h2 Nazwa Pliku:
-            p
-                .form-group
-                    label(for='file_name')
-                        input#file_name.input-lg.form-control.text-center(type='text', placeholder="Tutaj wpisz nazwe pliku")
-
-        #disp_range.text-left
-            h2 Zakresy wyświetlacza:
-            p
-                .form-group
-                    label(for='disp_min') Minimalna wartosc:
-                        input#disp_min.input-lg.form-control.text-center(type='number', placeholder="Min")
-                    label(for='disp_max') Maksymalna wartosc:
-                        input#disp_max.input-lg.form-control.text-center(type='number', placeholder="Max")
-
-        button.btn.btn-lg.btn-success.btn-block#save_settings(type='button', onclick='save_settings()') Zapisz
+        .row
+            button.btn.btn-lg.btn-success.btn-block#save_settings(type='button', onclick='save_settings()') Zapisz
 
     script.
-        function save_settings(){
+        function save_settings() {
+            //do usunuecia jak bedzie dzialalo
             socket.emit('file_name', document.getElementById("file_name").value);
             socket.emit('folder_name', document.getElementById("folder_name").value);
-            socket.emit('disp_min', document.getElementById("disp_min").value);
-            socket.emit('disp_max', document.getElementById("disp_max").value);
-        }
+            socket.emit('disp1_min', document.getElementById("disp1_min").value);
+            socket.emit('disp1_max', document.getElementById("disp1_max").value);
+
+            //nowa wersja
+            socket.emit('settings', {
+                line_l: document.getElementById("line_length").value,
+                roller_d: document.getElementById("roller_dist").value,
+                interia_m: document.getElementById("interia_moment").value,
+                file_name: document.getElementById("file_name").value,
+                folder_name: document.getElementById("folder_name").value,
+                disp1_min: document.getElementById("disp1_min").value,
+                disp1_max: document.getElementById("disp1_max").value,
+                disp2_min: document.getElementById("disp2_min").value,
+                disp2_max: document.getElementById("disp2_max").value,
+                minutes_max: document.getElementById("minutes_max").value,
+                seconds_max: document.getElementById("seconds_max").value,
+                cycle_max: document.getElementById("cycle_max").value});
+            };
 
 

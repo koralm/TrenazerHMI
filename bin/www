@@ -9,8 +9,8 @@ var debug = require('debug')('TrenazerHMI:server');
 var http = require('http');
 var d3 = require('d3');
 var rs232 = require('../server_js/rs232');
-//var writetxt = require('../server_js/str_write');
 var stoper = require('../server_js/stoper');
+var settingss = require('../server_js/settings');
 
 /**
  * Get port from environment and store in Express.
@@ -99,6 +99,7 @@ function onListening() {
  */
 
 var io = require('socket.io')(server);
+
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('disconnect', function(){
@@ -192,6 +193,7 @@ var folder_name = "";
 io.on('connection', function (socket) {
   socket.on('folder_name', function (data) {
     folder_name=data;
+    console.log("data");
   });
 });
 
@@ -201,6 +203,7 @@ io.on('connection', function (socket) {
   socket.on('file_name', function (data) {
     file_name=data;
   });
+
 });
 
 
@@ -322,5 +325,12 @@ io.on('connection', function (socket) {
 io.on('connection', function (socket) {
   socket.on('stopwach', function (data) {
     stoper.stoper_stat(data);
+  });
+});
+
+//folder name
+io.on('connection', function (socket) {
+  socket.on('settings', function (data) {
+  settingss.dupa(data)
   });
 });
