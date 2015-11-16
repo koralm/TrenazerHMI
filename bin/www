@@ -11,6 +11,7 @@ var d3 = require('d3');
 var rs232 = require('../server_js/rs232');
 var stoper = require('../server_js/stoper');
 var settingss = require('../server_js/settings');
+//var play_sound = require('../server_js/play_sound');
 
 /**
  * Get port from environment and store in Express.
@@ -172,7 +173,7 @@ io.on('connection', function (socket) {
     socket.emit('position',{pos: rs232.rs_positon_READ(), ind: rs232.rs_ind_sens()});
     //console.log(rs232.rs_positon_READ());
     socket.emit('stoper_time', stoper.stoper_time());
-  }, 100 );
+  }, 10 );
 });
 
 
@@ -233,6 +234,14 @@ io.on('connection', function (socket) {
   });
 });
 
+//STOPER
+io.on('connection', function (socket) {
+  stoper.stoper_event.on("stoper_stop", function () {
+    socket.emit('stoper_stop', 1);
+    REC = 0;
+  })
+})
+
 //DISP RANGE
 var disp_min = 0;
 var disp_max = 100;
@@ -277,6 +286,7 @@ rs232.xyz.on("cykl", function () {
     wstream_il.end();
     rec_flag=0;
   }
+  stoper.stoper_cycle();
 });
 
 io.on('connection', function (socket) {

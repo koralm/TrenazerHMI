@@ -114,6 +114,14 @@ script.
         document.getElementById("stopwatch_start").disabled = false;
     }
 
+//Stopwatch end time
+script.
+    socket.on("stoper_stop", function () {
+        document.getElementById("rec_glyph_color").style.color = "black";
+        document.getElementById("rec_text_color").style.color = "black";
+        document.getElementById("stopwatch_start").disabled = false;
+    })
+
 //Stopwatch update
 script.
     socket.on('stoper_time', function (data) {
@@ -209,34 +217,37 @@ script.
     socket.on('procent', function (data) {
         //$('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": data.data2 ,"aria-valuemax": data.data3}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
 
-        var procent = (data.data1-data.data2)/(data.data3 - data.data2)*100;
+        var lower_bound = data.data2  * 0.3;
+        var uppper_bound = data.data3 * 1.3;
 
-        if (procent>=20 && procent<=80){
-            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": data.data2 ,"aria-valuemax": data.data3, "style": "background-color: green"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+
+        var procent = (data.data1-lower_bound)/(uppper_bound - lower_bound)*100;
+
+        if (procent>=30 && procent<=70){
+            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": lower_bound ,"aria-valuemax":uppper_bound, "style": "background-color: green"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
             $('#bar_warn_UPL').attr("style", "");
             $('#bar_warn_UPR').attr("style", "");
             $('#bar_ok_UP').attr("style","background-color: green");
             $('#bar_ok_DOWN').attr("style","background-color: green");
             $('#bar_warn_DOWNL').attr("style", "");
             $('#bar_warn_DOWNR').attr("style", "");}
-        if (procent<20){
-            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": data.data2 ,"aria-valuemax": data.data3, "style": "background-color: red"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+        if (procent<30){
+            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": lower_bound ,"aria-valuemax":uppper_bound, "style": "background-color: red"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
             $('#bar_warn_UPL').attr("style", "background-color: red");
             $('#bar_warn_UPR').attr("style", "");
             $('#bar_ok_UP').attr("style","");
             $('#bar_ok_DOWN').attr("style","");
             $('#bar_warn_DOWNL').attr("style","background-color: red");
             $('#bar_warn_DOWNR').attr("style","");}
-        if (procent>80){
-            $('#bar1').attr({"data-transitiongoal": data.data1, "aria-valuemin": data.data2, "aria-valuemax": data.data3, "style": "background-color: red"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
-            $('#bar_warn_UPL').attr("style","");
+        if (procent>70){
+            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": lower_bound ,"aria-valuemax":uppper_bound, "style": "background-color: red"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});            $('#bar_warn_UPL').attr("style","");
             $('#bar_warn_UPR').attr("style","background-color: red");
             $('#bar_ok_UP').attr("style","");
             $('#bar_ok_DOWN').attr("style","");
             $('#bar_warn_DOWNL').attr("style", "");
             $('#bar_warn_DOWNR').attr("style", "background-color: red");}
         else {
-            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": data.data2 ,"aria-valuemax": data.data3}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": lower_bound ,"aria-valuemax":uppper_bound}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
         }
     });
 
