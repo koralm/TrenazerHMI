@@ -91,15 +91,15 @@ script.
 script.
     function stopwatch_start() {
         document.getElementById("stopwatch_start").disabled = true;
-        socket.emit('stopwach', 0)
+        socket.emit('stopwach', {stoper_stop: 0, stoper_stop_zero: 0})
     }
 
 //RECORD DATA START
 script.
     function REC_data_start(){
+        socket.emit('REC', 1);
         socket.emit('file_name', document.getElementById("file_name_mod").value);
         socket.emit('folder_name', document.getElementById("folder_name_mod").value);
-        socket.emit('REC', 1);
         document.getElementById("rec_glyph_color").style.color = "red";
         document.getElementById("rec_text_color").style.color = "red";
     };
@@ -108,7 +108,7 @@ script.
 script.
     function stopwatch_stop() {
         socket.emit('REC', 0);
-        socket.emit('stopwach', 1)
+        socket.emit('stopwach', {stoper_stop: 1, stoper_stop_zero: 1})
         document.getElementById("rec_glyph_color").style.color = "black";
         document.getElementById("rec_text_color").style.color = "black";
         document.getElementById("stopwatch_start").disabled = false;
@@ -119,7 +119,6 @@ script.
     socket.on("stoper_stop", function () {
         document.getElementById("rec_glyph_color").style.color = "black";
         document.getElementById("rec_text_color").style.color = "black";
-        document.getElementById("stopwatch_start").disabled = false;
     })
 
 //Stopwatch update
@@ -178,18 +177,12 @@ script.
         }
     });
 
-//Position Read
+//Cycle_counter
 script.
-    var phase_count = 0;
-    var phase_past = 0;
-    socket.on('phase_sens', function (data) {
-        if (data==0 && phase_past==1) {
-            document.getElementById("cycle_count").innerHTML = phase_count;
-            phase_count  = phase_count + 1;
-        }
-        phase_past=data;
-    });
 
+    socket.on('cycle_count', function (data) {
+            document.getElementById("cycle_count").innerHTML = data;
+    });
 
 
 //STOP AW
@@ -215,40 +208,49 @@ script.
 //BAR WIDTH
 script.
     socket.on('procent', function (data) {
-        //$('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": data.data2 ,"aria-valuemax": data.data3}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
 
-        var lower_bound = data.data2  * 0.3;
-        var uppper_bound = data.data3 * 1.3;
+        var act_val = data.data1;
+        var range_min = 10;
+        var range_max = 20;
 
+        var lower_bound = parseFloat(range_min) - ((range_max-range_min)*0.3);
+        var uppper_bound = parseFloat(range_max) + ((range_max-range_min)*0.3);
 
-        var procent = (data.data1-lower_bound)/(uppper_bound - lower_bound)*100;
+        var lower_bound_scale = ((act_val-lower_bound)*(100))/(range_min-lower_bound)
 
-        if (procent>=30 && procent<=70){
-            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": lower_bound ,"aria-valuemax":uppper_bound, "style": "background-color: green"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
-            $('#bar_warn_UPL').attr("style", "");
-            $('#bar_warn_UPR').attr("style", "");
-            $('#bar_ok_UP').attr("style","background-color: green");
-            $('#bar_ok_DOWN').attr("style","background-color: green");
-            $('#bar_warn_DOWNL').attr("style", "");
-            $('#bar_warn_DOWNR').attr("style", "");}
-        if (procent<30){
-            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": lower_bound ,"aria-valuemax":uppper_bound, "style": "background-color: red"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
-            $('#bar_warn_UPL').attr("style", "background-color: red");
-            $('#bar_warn_UPR').attr("style", "");
-            $('#bar_ok_UP').attr("style","");
-            $('#bar_ok_DOWN').attr("style","");
-            $('#bar_warn_DOWNL').attr("style","background-color: red");
-            $('#bar_warn_DOWNR').attr("style","");}
-        if (procent>70){
-            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": lower_bound ,"aria-valuemax":uppper_bound, "style": "background-color: red"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});            $('#bar_warn_UPL').attr("style","");
-            $('#bar_warn_UPR').attr("style","background-color: red");
-            $('#bar_ok_UP').attr("style","");
-            $('#bar_ok_DOWN').attr("style","");
-            $('#bar_warn_DOWNL').attr("style", "");
-            $('#bar_warn_DOWNR').attr("style", "background-color: red");}
-        else {
-            $('#bar1').attr({"data-transitiongoal": data.data1,"aria-valuemin": lower_bound ,"aria-valuemax":uppper_bound}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
-        }
+        document.getElementById("text1").innerHTML = range_min;
+        document.getElementById("text2").innerHTML = range_max;
+        document.getElementById("text3").innerHTML = lower_bound_scale;
+
+            if (act_val>=range_min && act_val<=range_max && 5==6){
+                $('#bar_range_ok').attr({"data-transitiongoal": act_val,"aria-valuemin": range_min ,"aria-valuemax": range_max, "style": "background-color: green"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+                $('#bar_range_down').attr({"data-transitiongoal": range_min,"aria-valuemin": lower_bound ,"aria-valuemax": range_min, "style": "background-color: green"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+                $('#bar_warn_UPL').attr("style", "");
+                $('#bar_warn_UPR').attr("style", "");
+                $('#bar_ok_UP').attr("style","background-color: green");
+                $('#bar_ok_DOWN').attr("style","background-color: green");
+                $('#bar_warn_DOWNL').attr("style", "");
+                $('#bar_warn_DOWNR').attr("style", "");}
+
+            if (act_val<range_min){
+                $('#bar_range_down').attr({"data-transitiongoal": lower_bound_scale,"aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+                $('#bar_warn_UPL').attr("style", "background-color: red");
+                $('#bar_warn_UPR').attr("style", "");
+                $('#bar_ok_UP').attr("style","");
+                $('#bar_ok_DOWN').attr("style","");
+                $('#bar_warn_DOWNL').attr("style","background-color: red");
+                $('#bar_warn_DOWNR').attr("style","");}
+
+            if (act_val>range_max){
+                $('#bar_warn_UPL').attr("style", "");
+                $('#bar_warn_UPR').attr("style","background-color: blue");
+                $('#bar_ok_UP').attr("style","");
+                $('#bar_ok_DOWN').attr("style","");
+                $('#bar_warn_DOWNL').attr("style", "");
+                $('#bar_warn_DOWNR').attr("style", "background-color: red");}
+
+            else {
+                $('#bar_range_ok').attr({"data-transitiongoal": data.data1,"aria-valuemin": range_min ,"aria-valuemax": range_max}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0})}
     });
 
 //DISP SELECTED

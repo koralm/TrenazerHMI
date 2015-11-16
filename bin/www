@@ -160,11 +160,6 @@ io.on('connection', function (socket) {
     }, 10 );
 });
 
-io.on('connection', function (socket) {
-  setInterval( function() {
-    socket.emit('phase_sens',rs232.rs_phase_sens());
-  }, 10 );
-});
 
 io.on('connection', function (socket) {
   setInterval( function() {
@@ -173,6 +168,8 @@ io.on('connection', function (socket) {
     socket.emit('position',{pos: rs232.rs_positon_READ(), ind: rs232.rs_ind_sens()});
     //console.log(rs232.rs_positon_READ());
     socket.emit('stoper_time', stoper.stoper_time());
+    socket.emit('phase_sens',rs232.rs_phase_sens());
+    socket.emit('cycle_count',stoper.cycle_count());
   }, 10 );
 });
 
@@ -246,15 +243,6 @@ io.on('connection', function (socket) {
 var disp_min = 0;
 var disp_max = 100;
 
-io.on('connection', function (socket) {
-  socket.on('disp_min', function (data) {
-    disp_min=data;
-  });
-  socket.on('disp_max', function (data) {
-    disp_max=data;
-  });
-});
-
 //DISP WHAT
 var disp_selection1 = "mean_phase_acc_1"
 
@@ -277,6 +265,18 @@ rs232.xyz.on("someEvent", function () {
 });
 
 
+io.on('connection', function (socket) {
+  socket.on('disp1_min', function (data) {
+    disp_min=data;
+    console.log(data);
+  });
+  socket.on('disp1_max', function (data) {
+    disp_max=data;
+    console.log(data);
+  });
+});
+
+
 rs232.xyz.on("cykl", function () {
   if (REC == 1){
     wstream_il.write(parseFloat(rs232.mean_force_acc).toFixed(2) + "    " + parseFloat(rs232.mean_force_brake).toFixed(2) + "    " + parseFloat(rs232.mean_force_cycle).toFixed(2) + "    " + rs232.time_acc_phase + "    " + rs232.time_brake_phase + "    " + rs232.time_cycle + '\r\n');
@@ -295,7 +295,7 @@ io.on('connection', function (socket) {
     switch(disp_selection1) {
       case "mean_phase_acc_1":
         socket.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2) + " N");
-        socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
+        socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: parseFloat(disp_min).toFixed(2), data3: parseFloat(disp_max).toFixed(2)});
         break;
       case "mean_phase_brake_1":
         socket.emit('disp_bar', parseFloat(rs232.mean_force_brake).toFixed(2) + " N");
