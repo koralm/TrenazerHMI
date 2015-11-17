@@ -87,6 +87,119 @@ script.
         //sessionStorage.setItem('callib_modal', 'true')
     };
 
+//DISPLAY
+//DISPLAY BAR
+script.
+    socket.on('disp_bar', function (data) {
+        document.getElementById("display_1").innerHTML = data;
+    });
+
+//DISP SELECTED
+script.
+    function bar_selected() {
+        var selectedValue = $('#disp1_sel').find("option:selected").attr("id");
+        socket.emit("sel_disp_1", selectedValue);
+    }
+
+//BAR WIDTH
+script.
+    socket.on('procent', function (data) {
+
+        var act_val = data.data1;
+        var range_min = data.data2*1.0;
+        var range_max = data.data3*1.0;
+
+        var lower_bound = parseFloat(range_min) - ((range_max-range_min)*0.3);
+        var uppper_bound = parseFloat(range_max) + ((range_max-range_min)*0.3);
+
+        var lower_bound_scale = ((act_val-lower_bound)*(100))/(range_min-lower_bound);
+        var ok_bound_scale = ((act_val-range_min)*(100))/(range_max-range_min);
+        var upper_bound_scale = ((act_val-range_max)*(100))/(uppper_bound-range_max);
+
+        document.getElementById("text1").innerHTML = lower_bound_scale;
+        document.getElementById("text2").innerHTML = ok_bound_scale;
+        document.getElementById("text3").innerHTML = upper_bound_scale;
+
+        if (act_val < range_min) {
+            $('#bar_warn_UPL').attr("style", "background-color: red");
+            $('#bar_warn_UPR').attr("style", "");
+            $('#bar_ok_UP').attr("style", "");
+            $('#bar_ok_DOWN').attr("style", "");
+            $('#bar_warn_DOWNL').attr("style", "background-color: red");
+            $('#bar_warn_DOWNR').attr("style", "");
+            $('#bar_range_down').attr({
+                "data-transitiongoal": lower_bound_scale,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_ok').attr({
+                "data-transitiongoal": 0,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_up').attr({
+                "data-transitiongoal": 0,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+        }
+        else if ((act_val >= range_min) && (act_val <= range_max)) {
+            $('#bar_range_up').attr({
+                "data-transitiongoal": 0,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: green"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_ok').attr({
+                "data-transitiongoal": ok_bound_scale,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: green"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_down').attr({
+                "data-transitiongoal": 100,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: green"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_warn_UPL').attr("style", "");
+            $('#bar_warn_UPR').attr("style", "");
+            $('#bar_ok_UP').attr("style", "background-color: green");
+            $('#bar_ok_DOWN').attr("style", "background-color: green");
+            $('#bar_warn_DOWNL').attr("style", "");
+            $('#bar_warn_DOWNR').attr("style", "");
+        }
+        else if (act_val > range_max) {
+            $('#bar_warn_UPL').attr("style", "");
+            $('#bar_warn_UPR').attr("style", "background-color: red");
+            $('#bar_ok_UP').attr("style", "");
+            $('#bar_ok_DOWN').attr("style", "");
+            $('#bar_warn_DOWNL').attr("style", "");
+            $('#bar_warn_DOWNR').attr("style", "background-color: red");
+            $('#bar_range_down').attr({
+                "data-transitiongoal": 100,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_ok').attr({
+                "data-transitiongoal": 100,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_up').attr({
+                "data-transitiongoal": upper_bound_scale,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+        }
+    });
+
 //Stopwatch start button
 script.
     function stopwatch_start() {
@@ -198,68 +311,3 @@ script.
     });
 
 //ADD IN SECOND STEP
-
-//DISPLAY BAR
-script.
-    socket.on('disp_bar', function (data) {
-    document.getElementById("display_1").innerHTML = data;
-    });
-
-//BAR WIDTH
-script.
-    socket.on('procent', function (data) {
-
-        var act_val = data.data1;
-        var range_min = data.data2;
-        var range_max = data.data3;
-
-        var lower_bound = parseFloat(range_min) - ((range_max-range_min)*0.3);
-        var uppper_bound = parseFloat(range_max) + ((range_max-range_min)*0.3);
-
-        var lower_bound_scale = ((act_val-lower_bound)*(100))/(range_min-lower_bound);
-        var ok_bound_scale = ((act_val-range_min)*(100))/(range_max-range_min);
-        var upper_bound_scale = ((act_val-uppper_bound)*(100))/(range_max-uppper_bound);
-
-        document.getElementById("text1").innerHTML = range_min;
-        document.getElementById("text2").innerHTML = range_max;
-        document.getElementById("text3").innerHTML = ok_bound_scale;
-
-            if (act_val>=range_min && act_val<=range_max){
-                $('#bar_range_ok').attr({"data-transitiongoal": ok_bound_scale, "aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: green"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-                $('#bar_range_down').attr({"data-transitiongoal": 100, "aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: green"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-                $('#bar_warn_UPL').attr("style", "");
-                $('#bar_warn_UPR').attr("style", "");
-                $('#bar_ok_UP').attr("style","background-color: green");
-                $('#bar_ok_DOWN').attr("style","background-color: green");
-                $('#bar_warn_DOWNL').attr("style", "");
-                $('#bar_warn_DOWNR').attr("style", "");}
-
-            if (act_val<range_min){
-                $('#bar_range_down').attr({"data-transitiongoal": lower_bound_scale,"aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-                $('#bar_warn_UPL').attr("style", "background-color: red");
-                $('#bar_warn_UPR').attr("style", "");
-                $('#bar_ok_UP').attr("style","");
-                $('#bar_ok_DOWN').attr("style","");
-                $('#bar_warn_DOWNL').attr("style","background-color: red");
-                $('#bar_warn_DOWNR').attr("style","");}
-
-            if (act_val>range_max){
-                $('#bar_range_down').attr({"data-transitiongoal": 100, "aria-valuemin": 0, "aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-                $('#bar_range_ok').attr({"data-transitiongoal": 100, "aria-valuemin": 0, "aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-                $('#bar_range_up').attr({"data-transitiongoal": upper_bound_scale,"aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-                $('#bar_warn_UPL').attr("style", "");
-                $('#bar_warn_UPR').attr("style","background-color: red");
-                $('#bar_ok_UP').attr("style","");
-                $('#bar_ok_DOWN').attr("style","");
-                $('#bar_warn_DOWNL').attr("style", "");
-                $('#bar_warn_DOWNR').attr("style", "background-color: red");}
-            else {
-                $('#bar_range_okc').attr({"data-transitiongoal": upper_bound_scale,"aria-valuemin": 0 ,"aria-valuemax": 100}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0})}
-    });
-
-//DISP SELECTED
-script.
-    function bar_selected(){
-        var selectedValue = $('#disp1_sel').find("option:selected").attr("id");
-        socket.emit("sel_disp_1", selectedValue);
-    }

@@ -204,7 +204,6 @@ io.on('connection', function (socket) {
 
 });
 
-
 io.on('connection', function (socket) {
   socket.on('REC', function (data) {
     console.log(data);
@@ -276,7 +275,6 @@ io.on('connection', function (socket) {
   });
 });
 
-
 rs232.xyz.on("cykl", function () {
   if (REC == 1){
     wstream_il.write(parseFloat(rs232.mean_force_acc).toFixed(2) + "    " + parseFloat(rs232.mean_force_brake).toFixed(2) + "    " + parseFloat(rs232.mean_force_cycle).toFixed(2) + "    " + rs232.time_acc_phase + "    " + rs232.time_brake_phase + "    " + rs232.time_cycle + '\r\n');
@@ -330,7 +328,6 @@ io.on('connection', function (socket) {
         socket.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
     }
 });});
-
 
 io.on('connection', function (socket) {
   socket.on('stopwach', function (data) {
