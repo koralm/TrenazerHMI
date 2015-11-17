@@ -58,6 +58,7 @@ script.
                     try {
                         json_settings = JSON.parse(e.target.result);
                         load_settings(json_settings)
+                        socket.emit('settings',json_settings);
                     } catch (ex) {
                         alert('ex when trying to parse json = ' + ex);
                     }

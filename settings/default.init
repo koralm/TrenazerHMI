@@ -1,0 +1,15 @@
+{
+  "line_l": "65",
+  "roller_d": "12",
+  "interia_m": "1212",
+  "file_name": "",
+  "folder_name": "",
+  "disp1_min": "10",
+  "disp1_max": "20",
+  "disp2_min": "5",
+  "disp2_max": "55",
+  "minutes_max": "0",
+  "seconds_max": "17",
+  "cycle_max": "50",
+  "settings_name": "default"
+}

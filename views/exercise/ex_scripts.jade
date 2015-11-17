@@ -88,117 +88,233 @@ script.
     };
 
 //DISPLAY
-//DISPLAY BAR
+//DISPLAY BAR 1
 script.
-    socket.on('disp_bar', function (data) {
+    socket.on('disp_bar1', function (data) {
         document.getElementById("display_1").innerHTML = data;
     });
 
-//DISP SELECTED
+//DISPLAY BAR
 script.
-    function bar_selected() {
+    socket.on('disp_bar2', function (data) {
+        document.getElementById("display_2").innerHTML = data;
+    });
+
+//DISP SELECTED1
+script.
+    function bar_selected1() {
         var selectedValue = $('#disp1_sel').find("option:selected").attr("id");
         socket.emit("sel_disp_1", selectedValue);
     }
 
-//BAR WIDTH
+//DISP SELECTED2
 script.
-    socket.on('procent', function (data) {
+    function bar_selected2() {
+        var selectedValue = $('#disp2_sel').find("option:selected").attr("id");
+        socket.emit("sel_disp_2", selectedValue);
+    }
+
+
+//BAR WIDTH 1
+script.
+    socket.on('procent1', function (data) {
 
         act_val = data.data1;
         range_min = data.data2*1.0;
         range_max = data.data3*1.0;
 
-        var lower_bound = parseFloat(range_min) - ((range_max-range_min)*0.3);
-        var uppper_bound = parseFloat(range_max) + ((range_max-range_min)*0.3);
+        lower_bound = parseFloat(range_min) - ((range_max-range_min)*0.3);
+        uppper_bound = parseFloat(range_max) + ((range_max-range_min)*0.3);
 
-        var lower_bound_scale = ((act_val-lower_bound)*(100))/(range_min-lower_bound);
-        var ok_bound_scale = ((act_val-range_min)*(100))/(range_max-range_min);
-        var upper_bound_scale = ((act_val-range_max)*(100))/(uppper_bound-range_max);
+        lower_bound_scale = ((act_val-lower_bound)*(100))/(range_min-lower_bound);
+        ok_bound_scale = ((act_val-range_min)*(100))/(range_max-range_min);
+        upper_bound_scale = ((act_val-range_max)*(100))/(uppper_bound-range_max);
 
         document.getElementById("text1").innerHTML = lower_bound_scale;
         document.getElementById("text2").innerHTML = ok_bound_scale;
         document.getElementById("text3").innerHTML = upper_bound_scale;
 
         if (act_val < range_min) {
-            $('#bar_warn_UPL').attr("style", "background-color: red");
-            $('#bar_warn_UPR').attr("style", "");
-            $('#bar_ok_UP').attr("style", "");
-            $('#bar_ok_DOWN').attr("style", "");
-            $('#bar_warn_DOWNL').attr("style", "background-color: red");
-            $('#bar_warn_DOWNR').attr("style", "");
-            $('#bar_range_down').attr({
+            $('#bar_warn_UPL1').attr("style", "background-color: red");
+            $('#bar_warn_UPR1').attr("style", "");
+            $('#bar_ok_UP1').attr("style", "");
+            $('#bar_ok_DOWN1').attr("style", "");
+            $('#bar_warn_DOWNL1').attr("style", "background-color: red");
+            $('#bar_warn_DOWNR1').attr("style", "");
+            $('#bar_range_down1').attr({
                 "data-transitiongoal": lower_bound_scale,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            $('#bar_range_ok').attr({
+            $('#bar_range_ok1').attr({
                 "data-transitiongoal": 0,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            $('#bar_range_up').attr({
+            $('#bar_range_up1').attr({
                 "data-transitiongoal": 0,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            socket.emit('range_sound',0);
+            socket.emit('range_sound1',0);
         }
         else if ((act_val >= range_min) && (act_val <= range_max)) {
-            $('#bar_range_up').attr({
+            $('#bar_range_up1').attr({
                 "data-transitiongoal": 0,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
                 "style": "background-color: green"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            $('#bar_range_ok').attr({
+            $('#bar_range_ok1').attr({
                 "data-transitiongoal": ok_bound_scale,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
                 "style": "background-color: green"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            $('#bar_range_down').attr({
+            $('#bar_range_down1').attr({
                 "data-transitiongoal": 100,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
                 "style": "background-color: green"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            $('#bar_warn_UPL').attr("style", "");
-            $('#bar_warn_UPR').attr("style", "");
-            $('#bar_ok_UP').attr("style", "background-color: green");
-            $('#bar_ok_DOWN').attr("style", "background-color: green");
-            $('#bar_warn_DOWNL').attr("style", "");
-            $('#bar_warn_DOWNR').attr("style", "");
+            $('#bar_warn_UPL1').attr("style", "");
+            $('#bar_warn_UPR1').attr("style", "");
+            $('#bar_ok_UP1').attr("style", "background-color: green");
+            $('#bar_ok_DOWN1').attr("style", "background-color: green");
+            $('#bar_warn_DOWNL1').attr("style", "");
+            $('#bar_warn_DOWNR1').attr("style", "");
         }
         else if (act_val > range_max) {
-            $('#bar_warn_UPL').attr("style", "");
-            $('#bar_warn_UPR').attr("style", "background-color: red");
-            $('#bar_ok_UP').attr("style", "");
-            $('#bar_ok_DOWN').attr("style", "");
-            $('#bar_warn_DOWNL').attr("style", "");
-            $('#bar_warn_DOWNR').attr("style", "background-color: red");
-            $('#bar_range_down').attr({
+            $('#bar_warn_UPL1').attr("style", "");
+            $('#bar_warn_UPR1').attr("style", "background-color: red");
+            $('#bar_ok_UP1').attr("style", "");
+            $('#bar_ok_DOWN1').attr("style", "");
+            $('#bar_warn_DOWNL1').attr("style", "");
+            $('#bar_warn_DOWNR1').attr("style", "background-color: red");
+            $('#bar_range_down1').attr({
                 "data-transitiongoal": 100,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            $('#bar_range_ok').attr({
+            $('#bar_range_ok1').attr({
                 "data-transitiongoal": 100,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            $('#bar_range_up').attr({
+            $('#bar_range_up1').attr({
                 "data-transitiongoal": upper_bound_scale,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            socket.emit('range_sound', 1);
+            socket.emit('range_sound1', 1);
+        }
+    });
+
+
+//BAR WIDTH 2
+script.
+    socket.on('procent2', function (data) {
+
+        act_val = data.data1;
+        range_min = data.data2*1.0;
+        range_max = data.data3*1.0;
+
+        lower_bound = parseFloat(range_min) - ((range_max-range_min)*0.3);
+        uppper_bound = parseFloat(range_max) + ((range_max-range_min)*0.3);
+
+        lower_bound_scale = ((act_val-lower_bound)*(100))/(range_min-lower_bound);
+        ok_bound_scale = ((act_val-range_min)*(100))/(range_max-range_min);
+        upper_bound_scale = ((act_val-range_max)*(100))/(uppper_bound-range_max);
+
+        document.getElementById("text1").innerHTML = lower_bound_scale;
+        document.getElementById("text2").innerHTML = ok_bound_scale;
+        document.getElementById("text3").innerHTML = upper_bound_scale;
+
+        if (act_val < range_min) {
+            $('#bar_warn_UPL2').attr("style", "background-color: red");
+            $('#bar_warn_UPR2').attr("style", "");
+            $('#bar_ok_UP2').attr("style", "");
+            $('#bar_ok_DOWN2').attr("style", "");
+            $('#bar_warn_DOWNL2').attr("style", "background-color: red");
+            $('#bar_warn_DOWNR2').attr("style", "");
+            $('#bar_range_down2').attr({
+                "data-transitiongoal": lower_bound_scale,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_ok2').attr({
+                "data-transitiongoal": 0,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_up2').attr({
+                "data-transitiongoal": 0,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            socket.emit('range_sound2',0);
+        }
+        else if ((act_val >= range_min) && (act_val <= range_max)) {
+            $('#bar_range_up2').attr({
+                "data-transitiongoal": 0,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: green"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_ok2').attr({
+                "data-transitiongoal": ok_bound_scale,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: green"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_down2').attr({
+                "data-transitiongoal": 100,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: green"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_warn_UPL2').attr("style", "");
+            $('#bar_warn_UPR2').attr("style", "");
+            $('#bar_ok_UP2').attr("style", "background-color: green");
+            $('#bar_ok_DOWN2').attr("style", "background-color: green");
+            $('#bar_warn_DOWNL2').attr("style", "");
+            $('#bar_warn_DOWNR2').attr("style", "");
+        }
+        else if (act_val > range_max) {
+            $('#bar_warn_UPL2').attr("style", "");
+            $('#bar_warn_UPR2').attr("style", "background-color: red");
+            $('#bar_ok_UP2').attr("style", "");
+            $('#bar_ok_DOWN2').attr("style", "");
+            $('#bar_warn_DOWNL2').attr("style", "");
+            $('#bar_warn_DOWNR2').attr("style", "background-color: red");
+            $('#bar_range_down2').attr({
+                "data-transitiongoal": 100,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_ok2').attr({
+                "data-transitiongoal": 100,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            $('#bar_range_up2').attr({
+                "data-transitiongoal": upper_bound_scale,
+                "aria-valuemin": 0,
+                "aria-valuemax": 100,
+                "style": "background-color: red"
+            }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            socket.emit('range_sound2', 1);
         }
     });
 
@@ -298,18 +414,3 @@ script.
     socket.on('cycle_count', function (data) {
             document.getElementById("cycle_count").innerHTML = data;
     });
-
-
-//STOP AW
-script.
-    var stop_flag = 0;
-    socket.on('stop_RED', function (data) {
-        if (data == 0 && stop_flag == 0) {
-            alert("STOP Awaryjny  - Wyłącz Stop i odśwież stronę");
-            stop_flag = 1}
-        if (data == 1 && stop_flag == 1) {
-            stop_flag = 0
-        }
-    });
-
-//ADD IN SECOND STEP

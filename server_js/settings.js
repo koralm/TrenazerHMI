@@ -1,4 +1,10 @@
-var fs = require('fs');
+//var fs = require('fs');
+var fs = require('fs-extra')
+
+var EventEmitter = require("events").EventEmitter;
+var settings_ee = new EventEmitter();
+
+
 
 var settings_default = JSON.parse(fs.readFileSync("./settings/default.init", 'utf8'));
 var settings_loaded = ""
@@ -10,11 +16,11 @@ exports.save = function (data){
     wstream_c = fs.createWriteStream("./settings/" + data.settings_name.toString() + ".init");
     wstream_c.write(JSON.stringify(data, null, 2));
     settings_actual = settings_loaded;
+    settings_ee.emit("settigs_load");
 }
 
-exports.load_def = function (){
-    settings_default = JSON.parse(fs.readFileSync("./settings/default.init", 'utf8'));
-    return (settings_default);
+exports.load_act = function (){
+    return (settings_actual);
 }
 
-exports.settings_actual = settings_actual;
+exports.settings_ee = settings_ee;

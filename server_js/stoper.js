@@ -10,8 +10,10 @@ var seconds = 0;
 var cycles = 0;
 
 var minutes_max = 0;
-var seconds_max = 15;
-var cycles_max = 5;
+var seconds_max = 0;
+var cycles_max = 0;
+
+var intervalID = 0;
 
 exports.stoper_stat = function(data){
 
@@ -88,11 +90,12 @@ exports.stoper_stat = function(data){
                 seconds = 0;
             }
         }
-        console.log(cycles)
+        console.log(stoper_stop)
         }, 1000)}
     if (stoper_stop_zero==1){
-        if (stoper_stop==0) {
+        if (intervalID!=0) {
             clearInterval(intervalID);
+            intervalID = null;
         }
         minutes = 0;
         seconds = 0;
@@ -126,3 +129,9 @@ exports.cycle_count = function (){
 }
 
 exports.stoper_event = stoper_event;
+
+exports.stoper_max_update = function(data) {
+    minutes_max = data.minutes_max;
+    seconds_max = data.seconds_max;
+    cycles_max = data.cycle_max;
+}
