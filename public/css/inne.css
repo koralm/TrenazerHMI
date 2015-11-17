@@ -65,6 +65,8 @@ h3.display {
     height: 60px;
     margin-top: 5px;
     margin-bottom: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .progress-bar-custom {
@@ -109,4 +111,16 @@ h3.display {
 
 .row-bufferx2 {
     margin-top: 100px;
+}
+
+.container30_bar{
+    width:30%;
+    max-width:980px;
+    margin: 0px auto;
+}
+
+.container40_bar{
+    width:40%;
+    max-width:980px;
+    margin: 0px auto;
 }

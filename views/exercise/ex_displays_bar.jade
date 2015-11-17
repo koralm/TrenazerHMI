@@ -20,12 +20,13 @@
             #bar_ok_UP.tolerance_window.bg-success
             #bar_warn_UPR.warn_window.bg-danger
          .row
-            .progress.progress-big
-                  #bar_range_down.progress-bar(role='progressbar', style='width:30%')
-                  #bar_range_ok.progress-bar.progress-bar-custom(role='progressbar', style='width:40%')
-                  //#bar_range_up.progress-bar.progress-bar-warning(role='progressbar', data-transitiongoal='20', style='width:30%')
+            .warn_window.progress.progress-big
+                  #bar_range_down.progress-bar.progress-bar-custom(role='progressbar')
+            .tolerance_window.progress.progress-big
+                  #bar_range_ok.progress-bar.progress-bar-custom(role='progressbar')
+            .warn_window.progress.progress-big
+                  #bar_range_up.progress-bar.progress-bar-custom(role='progressbar')
          .row
             #bar_warn_DOWNL.warn_window.pull-left.bg-danger
             #bar_ok_DOWN.tolerance_window.bg-success
             #bar_warn_DOWNR.warn_window.bg-danger
-

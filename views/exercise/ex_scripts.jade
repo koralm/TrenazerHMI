@@ -210,21 +210,23 @@ script.
     socket.on('procent', function (data) {
 
         var act_val = data.data1;
-        var range_min = 10;
-        var range_max = 20;
+        var range_min = data.data2;
+        var range_max = data.data3;
 
         var lower_bound = parseFloat(range_min) - ((range_max-range_min)*0.3);
         var uppper_bound = parseFloat(range_max) + ((range_max-range_min)*0.3);
 
-        var lower_bound_scale = ((act_val-lower_bound)*(100))/(range_min-lower_bound)
+        var lower_bound_scale = ((act_val-lower_bound)*(100))/(range_min-lower_bound);
+        var ok_bound_scale = ((act_val-range_min)*(100))/(range_max-range_min);
+        var upper_bound_scale = ((act_val-uppper_bound)*(100))/(range_max-uppper_bound);
 
         document.getElementById("text1").innerHTML = range_min;
         document.getElementById("text2").innerHTML = range_max;
-        document.getElementById("text3").innerHTML = lower_bound_scale;
+        document.getElementById("text3").innerHTML = ok_bound_scale;
 
-            if (act_val>=range_min && act_val<=range_max && 5==6){
-                $('#bar_range_ok').attr({"data-transitiongoal": act_val,"aria-valuemin": range_min ,"aria-valuemax": range_max, "style": "background-color: green"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
-                $('#bar_range_down').attr({"data-transitiongoal": range_min,"aria-valuemin": lower_bound ,"aria-valuemax": range_min, "style": "background-color: green"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+            if (act_val>=range_min && act_val<=range_max){
+                $('#bar_range_ok').attr({"data-transitiongoal": ok_bound_scale, "aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: green"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+                $('#bar_range_down').attr({"data-transitiongoal": 100, "aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: green"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
                 $('#bar_warn_UPL').attr("style", "");
                 $('#bar_warn_UPR').attr("style", "");
                 $('#bar_ok_UP').attr("style","background-color: green");
@@ -233,7 +235,7 @@ script.
                 $('#bar_warn_DOWNR').attr("style", "");}
 
             if (act_val<range_min){
-                $('#bar_range_down').attr({"data-transitiongoal": lower_bound_scale,"aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0});
+                $('#bar_range_down').attr({"data-transitiongoal": lower_bound_scale,"aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
                 $('#bar_warn_UPL').attr("style", "background-color: red");
                 $('#bar_warn_UPR').attr("style", "");
                 $('#bar_ok_UP').attr("style","");
@@ -242,15 +244,17 @@ script.
                 $('#bar_warn_DOWNR').attr("style","");}
 
             if (act_val>range_max){
+                $('#bar_range_down').attr({"data-transitiongoal": 100, "aria-valuemin": 0, "aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+                $('#bar_range_ok').attr({"data-transitiongoal": 100, "aria-valuemin": 0, "aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+                $('#bar_range_up').attr({"data-transitiongoal": upper_bound_scale,"aria-valuemin": 0 ,"aria-valuemax": 100, "style": "background-color: red"}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
                 $('#bar_warn_UPL').attr("style", "");
-                $('#bar_warn_UPR').attr("style","background-color: blue");
+                $('#bar_warn_UPR').attr("style","background-color: red");
                 $('#bar_ok_UP').attr("style","");
                 $('#bar_ok_DOWN').attr("style","");
                 $('#bar_warn_DOWNL').attr("style", "");
                 $('#bar_warn_DOWNR').attr("style", "background-color: red");}
-
             else {
-                $('#bar_range_ok').attr({"data-transitiongoal": data.data1,"aria-valuemin": range_min ,"aria-valuemax": range_max}).progressbar({display_text: 'fill', transition_delay: 0, refresh_speed: 0})}
+                $('#bar_range_okc').attr({"data-transitiongoal": upper_bound_scale,"aria-valuemin": 0 ,"aria-valuemax": 100}).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0})}
     });
 
 //DISP SELECTED
