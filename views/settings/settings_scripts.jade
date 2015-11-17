@@ -1,0 +1,111 @@
+//ONLOAD PAGE
+
+//ON LOAD, LOAD DEFAULTS
+script.
+    socket.on('default_sett_on', function (data) {
+    wiev_settings(data);
+    })
+
+
+
+//SAVE SETTINGS BUTTON
+script.
+    function save_settings() {
+        //do usunuecia jak bedzie dzialalo
+        socket.emit('file_name', document.getElementById("file_name").value);
+        socket.emit('folder_name', document.getElementById("folder_name").value);
+
+        //nowa wersja
+        socket.emit('settings', {
+            line_l: document.getElementById("line_length").value,
+            roller_d: document.getElementById("roller_dist").value,
+            interia_m: document.getElementById("interia_moment").value,
+            file_name: document.getElementById("file_name").value,
+            folder_name: document.getElementById("folder_name").value,
+            disp1_min: document.getElementById("disp1_min").value,
+            disp1_max: document.getElementById("disp1_max").value,
+            disp2_min: document.getElementById("disp2_min").value,
+            disp2_max: document.getElementById("disp2_max").value,
+            minutes_max: document.getElementById("minutes_max").value,
+            seconds_max: document.getElementById("seconds_max").value,
+            cycle_max: document.getElementById("cycle_max").value,
+            settings_name: document.getElementById("save_set_name").value
+        });
+    };
+
+//LOAD FILES    
+script.
+    $('#load_settings').on('click', function() {
+    $('#files').trigger('click');
+    });
+
+script.
+    function handleFileSelect(evt) {
+        var files = evt.target.files; // FileList object
+
+        // files is a FileList of File objects. List some properties.
+        var output = [];
+        for (var i = 0, f; f = files[i]; i++) {
+            output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                    f.size, ' bytes, last modified: ',
+                    f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                    '</li>');
+
+            var reader = new FileReader();
+
+            //TO FILE
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    console.log('e readAsText = ', e);
+                    console.log('e readAsText target = ', e.target);
+                    try {
+                        json_settings = JSON.parse(e.target.result);
+                        load_settings(json_settings)
+                    } catch (ex) {
+                        alert('ex when trying to parse json = ' + ex);
+                    }
+                }
+            })(f);
+            reader.readAsText(f);
+
+        }
+        document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+//LOAD DEFAULT SETTINGS FUNCTION    
+script.
+    function load_settings(data){
+        json_settings = data;
+        document.getElementById("line_length").value = json_settings.line_l;
+        document.getElementById("roller_dist").value = json_settings.roller_d;
+        document.getElementById("interia_moment").value = json_settings.interia_m;
+        document.getElementById("file_name").value = json_settings.file_name;
+        document.getElementById("folder_name").value = json_settings.folder_name;
+        document.getElementById("disp1_min").value = json_settings.disp1_min;
+        document.getElementById("disp1_max").value = json_settings.disp1_max;
+        document.getElementById("disp2_min").value = json_settings.disp2_min;
+        document.getElementById("disp2_max").value = json_settings.disp2_max;
+        document.getElementById("minutes_max").value = json_settings.minutes_max;
+        document.getElementById("seconds_max").value = json_settings.seconds_max;
+        document.getElementById("cycle_max").value = json_settings.cycle_max;}
+    
+    
+//SHOW DEFAULT SETTINGSS   
+script.
+    function wiev_settings(data){
+        json_settings = data;
+        document.getElementById("line_length").placeholder = json_settings.line_l;
+        document.getElementById("roller_dist").placeholder = json_settings.roller_d;
+        document.getElementById("interia_moment").placeholder = json_settings.interia_m;
+        document.getElementById("file_name").placeholder = json_settings.file_name;
+        document.getElementById("folder_name").placeholder = json_settings.folder_name;
+        document.getElementById("disp1_min").placeholder = json_settings.disp1_min;
+        document.getElementById("disp1_max").placeholder = json_settings.disp1_max;
+        document.getElementById("disp2_min").placeholder = json_settings.disp2_min;
+        document.getElementById("disp2_max").placeholder = json_settings.disp2_max;
+        document.getElementById("minutes_max").placeholder = json_settings.minutes_max;
+        document.getElementById("seconds_max").placeholder = json_settings.seconds_max;
+        document.getElementById("cycle_max").placeholder = json_settings.cycle_max;}

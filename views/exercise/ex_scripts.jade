@@ -105,9 +105,9 @@ script.
 script.
     socket.on('procent', function (data) {
 
-        var act_val = data.data1;
-        var range_min = data.data2*1.0;
-        var range_max = data.data3*1.0;
+        act_val = data.data1;
+        range_min = data.data2*1.0;
+        range_max = data.data3*1.0;
 
         var lower_bound = parseFloat(range_min) - ((range_max-range_min)*0.3);
         var uppper_bound = parseFloat(range_max) + ((range_max-range_min)*0.3);
@@ -145,6 +145,7 @@ script.
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            socket.emit('range_sound',0);
         }
         else if ((act_val >= range_min) && (act_val <= range_max)) {
             $('#bar_range_up').attr({
@@ -197,6 +198,7 @@ script.
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
+            socket.emit('range_sound', 1);
         }
     });
 

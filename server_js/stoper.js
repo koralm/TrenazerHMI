@@ -36,7 +36,7 @@ exports.stoper_stat = function(data){
                 stoper_stop=1;
                 stoper_event.emit("stoper_stop");
                 clearInterval(intervalID);
-                sounds.play_end();
+                sounds.play_end("TaDa");
                 }
 
         }
@@ -54,7 +54,7 @@ exports.stoper_stat = function(data){
                 stoper_stop=1;
                 stoper_event.emit("stoper_stop");
                 clearInterval(intervalID);
-                sounds.play_end();
+                sounds.play_end("TaDa");
             }
 
             }
@@ -73,7 +73,7 @@ exports.stoper_stat = function(data){
                 stoper_event.emit("stoper_stop");
                 clearInterval(intervalID);
                 console.log(seconds)
-                sounds.play_end();
+                sounds.play_end("TaDa");
                 return;
             }
 

@@ -71,32 +71,32 @@ block content
                         .form-group
                             label(for='cycle_max') Ilość cykli:
                                 input#cycle_max.input-lg.form-control.text-center(type='number', placeholder="0")
-
         .row
-            button.btn.btn-lg.btn-success.btn-block#save_settings(type='button', onclick='save_settings()') Zapisz
-
-    script.
-        function save_settings() {
-            //do usunuecia jak bedzie dzialalo
-            socket.emit('file_name', document.getElementById("file_name").value);
-            socket.emit('folder_name', document.getElementById("folder_name").value);
-            socket.emit('disp1_min', document.getElementById("disp1_min").value);
-            socket.emit('disp1_max', document.getElementById("disp1_max").value);
-
-            //nowa wersja
-            socket.emit('settings', {
-                line_l: document.getElementById("line_length").value,
-                roller_d: document.getElementById("roller_dist").value,
-                interia_m: document.getElementById("interia_moment").value,
-                file_name: document.getElementById("file_name").value,
-                folder_name: document.getElementById("folder_name").value,
-                disp1_min: document.getElementById("disp1_min").value,
-                disp1_max: document.getElementById("disp1_max").value,
-                disp2_min: document.getElementById("disp2_min").value,
-                disp2_max: document.getElementById("disp2_max").value,
-                minutes_max: document.getElementById("minutes_max").value,
-                seconds_max: document.getElementById("seconds_max").value,
-                cycle_max: document.getElementById("cycle_max").value});
-            };
+            button.btn.btn-lg.btn-success.btn-block#save_settings(type='button', data-toggle='modal', data-target="#sett_save_modal") Zapisz ustawienia
+        .row
+            p
+        .row
+            button.btn.btn-lg.btn-primary.btn-block#load_settings(type='button') Wczytaj
+        .row
+            .col-lg-12.text-center
+                input#files(type='file', name='files[]', multiple='', style='opacity:0; height:0px; width:0px;')
+                output.align-center#list
 
 
+    #sett_save_modal.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+        #sett_save_head.modal-header
+            h1.text-center Zapis ustawień
+        .modal-body
+            h2.text-center Podaj nazwę zapisywanych ustawień:
+            #sett_save_name.text-center
+                p
+                    .form-group
+                        label(for='save_set_name')
+                            input#save_set_name.input-lg.form-control.text-center(type='text', placeholder="Nazwa ustawien")
+        .modal-footer
+            p.text-center
+                button#save_sett_confirm.btn.btn-lg.btn-success(type='button', data-dismiss='modal', onclick='save_settings()') Zapisz
+
+
+block scripts bottom
+    include ./settings/settings_scripts
