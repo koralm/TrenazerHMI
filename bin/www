@@ -178,36 +178,32 @@ io.on('connection', function (socket) {
   }, 10 );
 });
 
-
+//EXERCISE SETTINGSS---------------------------------------
 //save to file
 var fs = require('fs');
 var REC = 0;
-
-
-var wstream;
 
 //Create Folder
 var mkdirp = require('mkdirp');
 var disk_path = "D:/";
 var rec_flag = 0;
-var folder_name = "";
 
-//folder name
-io.on('connection', function (socket) {
-  socket.on('folder_name', function (data) {
-    folder_name=data;
-    console.log("data");
-  });
-});
 
-//File name
-var file_name ="";
-io.on('connection', function (socket) {
-  socket.on('file_name', function (data) {
-    file_name=data;
-  });
+//Exercise parameters
+var line_l = parseInt(settingss.settings_actual.line_l);
+var roller_d = parseInt(settingss.settings_actual.roller_d);
+var interia_m = parseInt(settingss.settings_actual.interia_m);
+var file_name = settingss.settings_actual.file_name.toString();
+var folder_name = settingss.settings_actual.folder_name.toString();
+var disp1_min = parseFloat(settingss.settings_actual.disp1_min);
+var disp1_max = parseFloat(settingss.settings_actual.disp1_max);
+var disp2_min = parseFloat(settingss.settings_actual.disp2_min);
+var disp2_max = parseFloat(settingss.settings_actual.disp2_max);
+var minutes_max = parseInt(settingss.settings_actual.minutes_max);
+var seconds_max = parseInt(settingss.settings_actual.seconds_max);
+var cycle_max = parseInt(settingss.settings_actual.cycle_max);
 
-});
+
 
 io.on('connection', function (socket) {
   socket.on('REC', function (data) {
@@ -248,10 +244,6 @@ stoper.stoper_event.on("stoper_stop", function () {
   REC = 0;
 });
 
-//DISP RANGE
-var disp_min = 0;
-var disp_max = 100;
-
 //DISP WHAT
 var disp_selection1 = "mean_phase_acc_1"
 
@@ -290,42 +282,43 @@ rs232.xyz.on("cykl", function () {
   switch(disp_selection1) {
     case "mean_phase_acc_1":
       socket_ev.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2) + " N");
-      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
+      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp1_min, data3: disp1_max});
       break;
     case "mean_phase_brake_1":
       socket_ev.emit('disp_bar', parseFloat(rs232.mean_force_brake).toFixed(2) + " N");
-      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_brake).toFixed(2), data2: disp_min, data3: disp_max});
+      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_brake).toFixed(2), data2: disp1_min, data3: disp1_max});
       break;
     case "mean_cycle_1":
       socket_ev.emit('disp_bar', parseFloat(rs232.mean_force_cycle).toFixed(2) + " N");
-      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_cycle).toFixed(2), data2: disp_min, data3: disp_max});
+      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_cycle).toFixed(2), data2: disp1_min, data3: disp1_max});
       break;
     case "time_acceleration_1":
       socket_ev.emit('disp_bar', parseFloat(rs232.time_acc_phase).toFixed(2) + " ms");
-      socket_ev.emit('procent', {data1: parseFloat(rs232.time_acc_phase).toFixed(2), data2: disp_min, data3: disp_max});
+      socket_ev.emit('procent', {data1: parseFloat(rs232.time_acc_phase).toFixed(2), data2: disp1_min, data3: disp1_max});
       break;
     case "time_brake_1":
       socket_ev.emit('disp_bar', parseFloat(rs232.time_brake_phase).toFixed(2) + " ms");
-      socket_ev.emit('procent', {data1: parseFloat(rs232.time_brake_phase).toFixed(2), data2: disp_min, data3: disp_max});
+      socket_ev.emit('procent', {data1: parseFloat(rs232.time_brake_phase).toFixed(2), data2: disp1_min, data3: disp1_max});
       break;
     case "time_cycle_1":
       socket_ev.emit('disp_bar', parseFloat(rs232.time_cycle).toFixed(2) + " ms");
-      socket_ev.emit('procent', {data1: parseFloat(rs232.time_cycle).toFixed(2), data2: disp_min, data3: disp_max});
+      socket_ev.emit('procent', {data1: parseFloat(rs232.time_cycle).toFixed(2), data2: disp1_min, data3: disp1_max});
       break;
     case "max_spped_cycle_1":
       socket_ev.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2) + " m/s");
-      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
+      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp1_min, data3: disp1_max});
       break;
     case "max_power_cycle_1":
       socket_ev.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2) + " xx");
-      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
+      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp1_min, data3: disp1_max});
       break;
     default:
       socket_ev.emit('disp_bar', parseFloat(rs232.mean_force_acc).toFixed(2) + "d");
-      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp_min, data3: disp_max});
+      socket_ev.emit('procent', {data1: parseFloat(rs232.mean_force_acc).toFixed(2), data2: disp1_min, data3: disp1_max});
   }
 });  
 
+//RANGE BELLS
 io.on('connection', function (socket) {
   socket.on('range_sound', function (data) {
     if (data==0){
@@ -336,18 +329,17 @@ io.on('connection', function (socket) {
   });
 });
 
-//folder name
+//SAVE_SETTINGS
 io.on('connection', function (socket) {
   socket.on('settings', function (data) {
   settingss.save(data)
   });
 });
 
-//LOAD DEFAULTS
+//SEND LOADED DEFAULTS
 io.on('connection', function (socket) {
   intervalIDx = setInterval(function () {
     socket.emit('default_sett_on',settingss.load_def())
     console.log(settingss.load_def())
     clearInterval(intervalIDx);
-} ,100)});
-
+} ,10)});

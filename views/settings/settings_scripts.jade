@@ -11,10 +11,6 @@ script.
 //SAVE SETTINGS BUTTON
 script.
     function save_settings() {
-        //do usunuecia jak bedzie dzialalo
-        socket.emit('file_name', document.getElementById("file_name").value);
-        socket.emit('folder_name', document.getElementById("folder_name").value);
-
         //nowa wersja
         socket.emit('settings', {
             line_l: document.getElementById("line_length").value,
