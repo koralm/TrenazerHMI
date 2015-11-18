@@ -40,7 +40,7 @@ script.
     };
 
 //Mod invite calib auto
-//script.
+script.
     function calib_mod2_auto(data) {
         socket.emit('calib_req', 0);
         socket.emit('status', data);
@@ -51,7 +51,7 @@ script.
     };
 
 //Update line values
-//script.
+script.
     socket.on('line_values', function (data) {
         document.getElementById("sett_line_length_auto").innerHTML = "Długość liny: " + data.line_l;
         document.getElementById("sett_roller_dist_auto").innerHTML = "Rozstaw rolek: " + data.roller_d;
@@ -100,6 +100,8 @@ script.
             document.getElementById("line_fold").disabled = true;
             document.getElementById("cal_mod_conf_last").disabled = false;
             document.getElementById("cal_mod_conf_last").click();
+            document.getElementById("cal_mod_conf_last_auto").disabled = false;
+            document.getElementById("cal_mod_conf_last_auto").click();
         }, 7000);
         phase_count = 0;
     }
@@ -410,11 +412,10 @@ script.
             document.getElementById("line_fold").disabled = false;
             document.getElementById("fold_confirm").disabled = false;
             document.getElementById("fold_confirm").className = "btn btn-lg btn-success";
-            //document.getElementById("linaok_auto").className = "bg-success";
-            //document.getElementById("fold_mod_head_auto").className = "modal-header bg-success";
-            //document.getElementById("warning_fold_mod_auto").className = "modal-header bg-success";
-            //document.getElementById("linaok_auto").innerHTML = "LINA USTAWIONA OK";
-            //document.getElementById("line_fold_auto").disabled = false;
+            document.getElementById("linaok_auto").className = "bg-success";
+            document.getElementById("fold_mod_head_auto").className = "modal-header bg-success";
+            document.getElementById("linaok_auto").innerHTML = "LINA USTAWIONA OK";
+            document.getElementById("line_fold_auto").disabled = false;
             //document.getElementById("fold_confirm_auto").disabled = false;
             //document.getElementById("fold_confirm_auto").className = "btn btn-lg btn-success";
         } else{
@@ -425,11 +426,10 @@ script.
             document.getElementById("line_fold").disabled = true;
             document.getElementById("fold_confirm").disabled = true;
             document.getElementById("fold_confirm").className = "btn btn-lg btn-danger";
-            //document.getElementById("linaok_auto").className = "bg-danger";
-            //document.getElementById("fold_mod_head_auto").className = "modal-header bg-danger";
-            //document.getElementById("warning_fold_mod_auto").className = "modal-header bg-danger";
-            //document.getElementById("linaok_auto").innerHTML = "LINA ZLE WYCIAGNIETA";
-            //document.getElementById("line_fold_auto").disabled = true;
+            document.getElementById("linaok_auto").className = "bg-danger";
+            document.getElementById("fold_mod_head_auto").className = "modal-header bg-danger";
+            document.getElementById("linaok_auto").innerHTML = "LINA ZLE WYCIAGNIETA";
+            document.getElementById("line_fold_auto").disabled = true;
             //document.getElementById("fold_confirm_auto").disabled = true;
             //document.getElementById("fold_confirm_auto").className = "btn btn-lg btn-danger";
         }
