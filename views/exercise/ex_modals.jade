@@ -3,13 +3,29 @@
         h1.text-center Proces kalibracji
     .modal-body.text-center
         p Witamy w procesie kalibracji.
-        p Jeśli chcesz przejść do klabiracji urządzenia wciśnij przycisk Dalej.
+        .row
+            .col-lg-12
+                button.btn.btn-lg.btn-success.btn-block#load_locally(type='button', data-dismiss='modal', onclick='calib_mod2_auto(0)') Wczytaj z pliku
+        .row
+            p
+        .row
+            .col-lg-12
+                button.btn.btn-lg.btn-primary.btn-block#load_form_server(type='button', disabled='true') Przez internet
+        .row
+            p
+        .row
+            .col-lg-12
+                button.btn.btn-lg.btn-warning.btn-block#load_manual(type='button' , data-dismiss='modal', onclick='calib_mod2_line(0)') Wprowadź ręcznie
     .modal-footer
       a(href='/')
-         button.btn.btn-lg(type='button') Wróć
-      button.btn.btn-lg.btn-primary#cal_mod_conf_1(type='button', data-dismiss='modal', onclick='calib_mod2_line(0)') Dalej
+        .row
+            .col-lg-12
+                button.btn.btn-lg.btn-block(type='button') Wróć
+
+
+//Modal Manual
 #calibration_modal_2.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
-    form(data-toggle='validator', role='form')
+    form#form_line(data-toggle='validator', role='form')
         .modal-header
             h1.text-center Długość liny i moment bezwładności
         .modal-body
@@ -44,6 +60,8 @@
                 button.btn.btn-lg(type='button') Wróć
                 button.btn.btn-lg.btn-primary#btn_llength_next(type='submit', data-dismiss='modal', onclick='calib_mod3_next(0)', disabled='true') Dalej
 
+
+
 #calibration_modal_3.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
     #fold_mod_head.modal-header
         h1.text-center Kalibracja liny
@@ -56,6 +74,25 @@
         a(href='/')
             button.btn.btn-lg(type='button') Wróć
         button.btn.btn-lg.btn-primary#cal_mod_conf_last(type='button', data-dismiss='modal', onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
+
+//Moadl auto
+#calibration_modal_3_auto.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    #fold_mod_head_auto.modal-header
+        h1.text-center Kalibracja liny
+    .modal-body.text-center
+        p Toje wartości ustawień:
+        h2#sett_line_length_auto L: xx
+        h2#sett_roller_dist_auto RF: xx
+        h2#sett_interiam_auto IM: xx
+        p Teraz aby kontunuować klaibrację urządzenia wyciągnij powoli całą długość liny.
+        p Po pojawieniu się zielonego napisu "LINA OK" możesz przejść dalej
+        h1#linaok_auto.bg-danger LINA ZLE WYCIAGNIETA
+        button.btn.btn-lg.btn-warning#line_fold_auto(type='button',data-toggle='modal', href='#modal_warning', disabled="true") Nawiń linę
+    .modal-footer
+        a(href='/')
+            button.btn.btn-lg(type='button') Wróć
+        button.btn.btn-lg.btn-primary#cal_mod_conf_last_auto(type='button', data-dismiss='modal', onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
+
 
 #modal_waiting.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
     .modal-header.bg-warning

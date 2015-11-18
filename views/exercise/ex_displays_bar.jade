@@ -37,14 +37,14 @@
       .col-md-6.bg-display
          .row
             select.selectpicker.show-tick#disp2_sel(data-width='100%', data-live-search="true", onchange="bar_selected2()")
-               option#mean_phase_acc_2 Średnia wartość siły w fazie rozpędzania [N]
-               option#mean_phase_brake_2 Średnia wartość siły w fazie hamowania [N]
-               option#mean_cycle_2 Średnia wartość siły w całym cyklu [N]
-               option#time_acceleration_2 Czas fazy rozpędzania [ms]
-               option#time_brake_2 Czas fazy hamowania [ms]
-               option#time_cycle_2 Czas cyklu [ms]
-               option#max_spped_cycle_2 Wartość maksymalna prędkości w cyklu [m/s]
-               option#max_power_cycle_2 Wartość funkcji koncentracji siły w cyklu [N]
+               option(value='1')#mean_phase_acc_2 Średnia wartość siły w fazie rozpędzania [N]
+               option(value='2')#mean_phase_brake_2 Średnia wartość siły w fazie hamowania [N]
+               option(value='3')#mean_cycle_2 Średnia wartość siły w całym cyklu [N]
+               option(value='4')#time_acceleration_2 Czas fazy rozpędzania [ms]
+               option(value='5')#time_brake_2 Czas fazy hamowania [ms]
+               option(value='6')#time_cycle_2 Czas cyklu [ms]
+               option(value='7')#max_spped_cycle_2 Wartość maksymalna prędkości w cyklu [m/s]
+               option(value='8')#max_power_cycle_2 Wartość funkcji koncentracji siły w cyklu [N]
          .row
             h1.display#display_2(style="color:black") 888.888
       .col-md-6

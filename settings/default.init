@@ -6,10 +6,10 @@
   "folder_name": "",
   "disp1_min": "10",
   "disp1_max": "20",
-  "disp2_min": "5",
-  "disp2_max": "55",
+  "disp2_min": "100",
+  "disp2_max": "600",
   "minutes_max": "0",
-  "seconds_max": "17",
+  "seconds_max": "19",
   "cycle_max": "50",
   "settings_name": "default"
 }

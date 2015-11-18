@@ -30,4 +30,9 @@ exports.load_act = function (){
     return (settings_actual);
 }
 
+exports.load_init = function (){
+    settings_ee.emit("settigs_load");
+    return (settings_actual);
+}
+
 exports.settings_ee = settings_ee;

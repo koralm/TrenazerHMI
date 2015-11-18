@@ -12,6 +12,9 @@ script(type='text/javascript').
             socket.emit('status', 3);
             socket.emit('status', 0);
             $('#calibration_modal_1').modal('show');
+            $('.selectpicker').selectpicker();
+            $('#disp2_sel').selectpicker('val', "4");
+            $('.selectpicker').selectpicker('refresh');
         });
     }
 
@@ -27,7 +30,7 @@ script.
       return 'Czy na pewno chcesz opuścic tryb treningu ?';
    };
 
-//Mod invite calib
+//Mod invite calib manual
 script.
     function calib_mod2_line(data) {
         $('#calibration_modal_2').modal('show')
@@ -36,6 +39,28 @@ script.
         socket.emit('interia', 0);
     };
 
+//Mod invite calib auto
+//script.
+    function calib_mod2_auto(data) {
+        socket.emit('calib_req', 0);
+        socket.emit('status', data);
+        socket.emit('line_length',0);
+        socket.emit('interia', 0);
+        $('#calibration_modal_3_auto').modal('show')
+
+    };
+
+//Update line values
+//script.
+    socket.on('line_values', function (data) {
+        document.getElementById("sett_line_length_auto").innerHTML = "Długość liny: " + data.line_l;
+        document.getElementById("sett_roller_dist_auto").innerHTML = "Rozstaw rolek: " + data.roller_d;
+        document.getElementById("sett_interiam_auto").innerHTML = "Moment bezwladnosci: " + data.interia_m;
+        socket.emit('line_length', data.line_l);
+        socket.emit('roller_dist', data.roller_d);
+        socket.emit('interia', data.interia_m);
+        socket.emit('status', 0);
+    });
 
 
 //LINE LENGTH
@@ -113,7 +138,6 @@ script.
         var selectedValue = $('#disp2_sel').find("option:selected").attr("id");
         socket.emit("sel_disp_2", selectedValue);
     }
-
 
 //BAR WIDTH 1
 script.
@@ -386,7 +410,13 @@ script.
             document.getElementById("line_fold").disabled = false;
             document.getElementById("fold_confirm").disabled = false;
             document.getElementById("fold_confirm").className = "btn btn-lg btn-success";
-
+            //document.getElementById("linaok_auto").className = "bg-success";
+            //document.getElementById("fold_mod_head_auto").className = "modal-header bg-success";
+            //document.getElementById("warning_fold_mod_auto").className = "modal-header bg-success";
+            //document.getElementById("linaok_auto").innerHTML = "LINA USTAWIONA OK";
+            //document.getElementById("line_fold_auto").disabled = false;
+            //document.getElementById("fold_confirm_auto").disabled = false;
+            //document.getElementById("fold_confirm_auto").className = "btn btn-lg btn-success";
         } else{
             document.getElementById("linaok").className = "bg-danger";
             document.getElementById("fold_mod_head").className = "modal-header bg-danger";
@@ -395,6 +425,13 @@ script.
             document.getElementById("line_fold").disabled = true;
             document.getElementById("fold_confirm").disabled = true;
             document.getElementById("fold_confirm").className = "btn btn-lg btn-danger";
+            //document.getElementById("linaok_auto").className = "bg-danger";
+            //document.getElementById("fold_mod_head_auto").className = "modal-header bg-danger";
+            //document.getElementById("warning_fold_mod_auto").className = "modal-header bg-danger";
+            //document.getElementById("linaok_auto").innerHTML = "LINA ZLE WYCIAGNIETA";
+            //document.getElementById("line_fold_auto").disabled = true;
+            //document.getElementById("fold_confirm_auto").disabled = true;
+            //document.getElementById("fold_confirm_auto").className = "btn btn-lg btn-danger";
         }
     });
 
