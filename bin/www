@@ -218,8 +218,6 @@ settingss.settings_ee.on("settigs_load", function () {
     seconds_max = parseInt(settings.seconds_max);
     cycle_max = parseInt(settings.cycle_max);
     stoper.stoper_max_update(settings);
-  console.log(settingss.settings_actual);
-  console.log("event");
 });
 
 
@@ -402,16 +400,27 @@ io.on('connection', function (socket) {
 io.on('connection', function (socket) {
   intervalIDx = setInterval(function () {
     socket.emit('default_sett_on',settingss.load_act())
-    console.log(settingss.load_act())
     clearInterval(intervalIDx);
   } ,10)});
 
 //SAVE_SETTINGS
 io.on('connection', function (socket) {
   socket.on('settings', function (data) {
-  console.log(data)
-  console.log('ss')
   settingss.save(data)
+  socket.emit('settings_ex',data)
   });
 });
+
+//SETTINGS_UPDATE_REQ
+io.on('connection', function (socket) {
+  socket.on("sett_upd_req", function (data) {
+    socket.emit('settings_ex',settingss.load_act());
+  })
+});
+
+//Settings updated return
+io.on('connection', function (socket) {
+  socket.on("sett_upd_ex_val", function (data) {
+    settingss.update(data)
+  })});
 

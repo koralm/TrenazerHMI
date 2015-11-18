@@ -19,6 +19,13 @@ exports.save = function (data){
     settings_ee.emit("settigs_load");
 }
 
+exports.update = function (data){
+    settings_loaded = data;
+    settings_actual = settings_loaded;
+    console.log(settings_actual);
+    settings_ee.emit("settigs_load");
+}
+
 exports.load_act = function (){
     return (settings_actual);
 }

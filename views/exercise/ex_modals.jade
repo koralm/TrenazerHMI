@@ -74,3 +74,58 @@
     .modal-footer
         p.text-center
             button#fold_confirm.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)', disabled="true") Ok
+
+#sett_exercise_modal.modal.container.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    #sett_exercise_head.modal-header
+        h1.text-center Ustawienia ograniczen treningu
+    .modal-body
+        .row
+            .col-lg-6
+                #path_settings_ex.text-left
+                    h2 Ustawienia zapisu treningów:
+                    p
+                        .form-group
+                            label(for='folder_name_ex') Nazwa folderu:
+                                input#folder_name_ex.input-lg.form-control.text-center(type='text', placeholder="data")
+                            label(for='file_name_ex') Nazwa pliku:
+                                input#file_name_ex.input-lg.form-control.text-center(type='text', placeholder="godzina")
+        .row
+            .col-lg-6
+                #disp1_range_ex.text-left
+                    h2 Zakresy wyświetlacza 1:
+                    p
+                        .form-group
+                            label(for='disp1_min_ex') Minimalna wartosc:
+                                input#disp1_min_ex.input-lg.form-control.text-center(type='number', placeholder="0")
+                            label(for='disp1_max_ex') Maksymalna wartosc:
+                                input#disp1_max_ex.input-lg.form-control.text-center(type='number', placeholder="100")
+            .col-lg-6
+                #disp2_range_ex.text-left
+                    h2 Zakresy wyświetlacza 2:
+                    p
+                        .form-group
+                            label(for='disp2_min_ex') Minimalna wartosc:
+                                input#disp2_min_ex.input-lg.form-control.text-center(type='number', placeholder="0")
+                            label(for='disp2_max_ex') Maksymalna wartosc:
+                                input#disp2_max_ex.input-lg.form-control.text-center(type='number', placeholder="100")
+        .row
+            .col-lg-6
+                #max_time_range_ex.text-left
+                    h2 Maksumalny czas ćwiczenia
+                    p
+                        .form-group
+                            label(for='minutes_max_ex') Minuty:
+                                input#minutes_max_ex.input-lg.form-control.text-center(type='number', placeholder="0")
+                            label(for='seconds_max_ex') Sekundy
+                                input#seconds_max_ex.input-lg.form-control.text-center(type='number', placeholder="0")
+            .col-lg-6
+                #max_cycle_range_ex.text-left
+                    h2 Maksymalna ilość cykli
+                    p
+                        .form-group
+                            label(for='cycle_max_ex') Ilość cykli:
+                                input#cycle_max_ex.input-lg.form-control.text-center(type='number', placeholder="0")
+
+    .modal-footer
+        p.text-center
+            button#save_sett_exercise_confirm.btn.btn-lg.btn-success(type='button', data-dismiss='modal', onclick="save_ex_updated_sett()") Zapisz

@@ -130,10 +130,6 @@ script.
         ok_bound_scale = ((act_val-range_min)*(100))/(range_max-range_min);
         upper_bound_scale = ((act_val-range_max)*(100))/(uppper_bound-range_max);
 
-        document.getElementById("text1").innerHTML = lower_bound_scale;
-        document.getElementById("text2").innerHTML = ok_bound_scale;
-        document.getElementById("text3").innerHTML = upper_bound_scale;
-
         if (act_val < range_min) {
             $('#bar_warn_UPL1').attr("style", "background-color: red");
             $('#bar_warn_UPR1').attr("style", "");
@@ -232,10 +228,6 @@ script.
         ok_bound_scale = ((act_val-range_min)*(100))/(range_max-range_min);
         upper_bound_scale = ((act_val-range_max)*(100))/(uppper_bound-range_max);
 
-        document.getElementById("text1").innerHTML = lower_bound_scale;
-        document.getElementById("text2").innerHTML = ok_bound_scale;
-        document.getElementById("text3").innerHTML = upper_bound_scale;
-
         if (act_val < range_min) {
             $('#bar_warn_UPL2').attr("style", "background-color: red");
             $('#bar_warn_UPR2').attr("style", "");
@@ -329,8 +321,6 @@ script.
 script.
     function REC_data_start(){
         socket.emit('REC', 1);
-        socket.emit('file_name', document.getElementById("file_name_mod").value);
-        socket.emit('folder_name', document.getElementById("folder_name_mod").value);
         document.getElementById("rec_glyph_color").style.color = "red";
         document.getElementById("rec_text_color").style.color = "red";
     };
@@ -414,3 +404,38 @@ script.
     socket.on('cycle_count', function (data) {
             document.getElementById("cycle_count").innerHTML = data;
     });
+
+//Modal_settings_ex
+script.
+    function settings_upd_req(){
+        socket.emit("sett_upd_req",1)
+        $("#sett_exercise_modal").modal("show");
+    }
+
+script.
+    socket.on('settings_ex', function (data) {
+        json_settings = data;
+        document.getElementById("file_name_ex").value = json_settings.file_name;
+        document.getElementById("folder_name_ex").value = json_settings.folder_name;
+        document.getElementById("disp1_min_ex").value = json_settings.disp1_min;
+        document.getElementById("disp1_max_ex").value = json_settings.disp1_max;
+        document.getElementById("disp2_min_ex").value = json_settings.disp2_min;
+        document.getElementById("disp2_max_ex").value = json_settings.disp2_max;
+        document.getElementById("minutes_max_ex").value = json_settings.minutes_max;
+        document.getElementById("seconds_max_ex").value = json_settings.seconds_max;
+        document.getElementById("cycle_max_ex").value = json_settings.cycle_max;});
+
+script.
+    function save_ex_updated_sett(){
+        socket.emit("sett_upd_ex_val",{
+            file_name: document.getElementById("file_name_ex").value,
+            folder_name: document.getElementById("folder_name_ex").value,
+            disp1_min: document.getElementById("disp1_min_ex").value,
+            disp1_max: document.getElementById("disp1_max_ex").value,
+            disp2_min: document.getElementById("disp2_min_ex").value,
+            disp2_max: document.getElementById("disp2_max_ex").value,
+            minutes_max: document.getElementById("minutes_max_ex").value,
+            seconds_max: document.getElementById("seconds_max_ex").value,
+            cycle_max: document.getElementById("cycle_max_ex").value,
+        })
+    }
