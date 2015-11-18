@@ -143,6 +143,8 @@ script.
 
 //BAR WIDTH 1
 script.
+    var ping_flag1=0;
+
     socket.on('procent1', function (data) {
 
         act_val = data.data1;
@@ -181,7 +183,10 @@ script.
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            socket.emit('range_sound1',0);
+            if (ping_flag1 == 0) {
+                socket.emit('range_sound1', 0);
+                ping_flag1 = 1
+            }
         }
         else if ((act_val >= range_min) && (act_val <= range_max)) {
             $('#bar_range_up1').attr({
@@ -208,6 +213,7 @@ script.
             $('#bar_ok_DOWN1').attr("style", "background-color: green");
             $('#bar_warn_DOWNL1').attr("style", "");
             $('#bar_warn_DOWNR1').attr("style", "");
+            ping_flag1 = 0;
         }
         else if (act_val > range_max) {
             $('#bar_warn_UPL1').attr("style", "");
@@ -234,13 +240,18 @@ script.
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            socket.emit('range_sound1', 1);
+            if (ping_flag1 == 0) {
+                socket.emit('range_sound1', 0);
+                ping_flag1 = 1
+            }
         }
     });
 
 
 //BAR WIDTH 2
 script.
+    var ping_flag2 = 0;
+
     socket.on('procent2', function (data) {
 
         act_val = data.data1;
@@ -279,7 +290,10 @@ script.
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            socket.emit('range_sound2',0);
+            if (ping_flag2==0){
+                socket.emit('range_sound2',0);
+                ping_flag2=1
+            }
         }
         else if ((act_val >= range_min) && (act_val <= range_max)) {
             $('#bar_range_up2').attr({
@@ -306,6 +320,7 @@ script.
             $('#bar_ok_DOWN2').attr("style", "background-color: green");
             $('#bar_warn_DOWNL2').attr("style", "");
             $('#bar_warn_DOWNR2').attr("style", "");
+            ping_flag2 = 0;
         }
         else if (act_val > range_max) {
             $('#bar_warn_UPL2').attr("style", "");
@@ -332,7 +347,10 @@ script.
                 "aria-valuemax": 100,
                 "style": "background-color: red"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
-            socket.emit('range_sound2', 1);
+            if (ping_flag2 == 0){
+                socket.emit('range_sound2',0);
+                ping_flag2= 1
+            }
         }
     });
 

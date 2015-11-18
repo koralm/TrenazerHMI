@@ -95,8 +95,8 @@ block content
                             input#save_set_name.input-lg.form-control.text-center(type='text', placeholder="Nazwa ustawien")
         .modal-footer
             p.text-center
+                button#save_sett_cancel.btn.btn-lg.btn-default(type='button', data-dismiss='modal') Anuluj
                 button#save_sett_confirm.btn.btn-lg.btn-success(type='button', data-dismiss='modal', onclick='save_settings()') Zapisz
-
 
 block scripts bottom
     include ./settings/settings_scripts
