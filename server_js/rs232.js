@@ -65,6 +65,7 @@ var speed = 0;
 
 var phase_hist = 3;
 var max_pos_cyc = 0;
+val_strength_table = new Array(1200),
 
 
 sp_ov_USB.open(function (error) {
@@ -94,7 +95,7 @@ sp_ov_USB.on('data', function (data) {
 
     //PARAMS TO SAVE
     force_sum = force_sum + decoded_data[3];
-    speed = (pos_hist - decoded_data[2]);
+    //speed = (pos_hist - decoded_data[2]);
     //console.log(speed);
     //COUNTERS
     phase0_count = phase0_count + 1;
@@ -125,9 +126,12 @@ sp_ov_USB.on('data', function (data) {
         force_sum = 0;
         help_count ++;
 
-        if (max_pos_cyc<decoded_data[3]){
-            max_pos_cyc = decoded_data[3]
+        //max position in cycle
+        if (max_pos_cyc<decoded_data[4]){
+            max_pos_cyc = decoded_data[4]
         }
+
+        val_strength_table[decoded_data[2]] = decoded_data[3];
 
         if (help_count == 2){
             help_count = 0;
@@ -135,13 +139,29 @@ sp_ov_USB.on('data', function (data) {
             exports.mean_force_cycle = (mean_force_brake + mean_force_acc)/2;
             exports.time_cycle = time_acc_phase + time_brake_phase;
             exports.max_pos_cyc = max_pos_cyc;
+
+           //concentrate function
+            force_mean = math.mean(val_strength_table);
+            force_mean_count = 0;
+
+            for (i=0; i < val_strength_table.length; i++){
+                if (val_strength_table[i] < force_mean){
+                    force_mean_count++;
+                }
+            }
+
+            exports.concetrate_pointer = (1.0-(val_strength_table.length/force_mean_count));
+
             ee.emit("cykl");
+
             //console.log(time_cycle);
             mean_force_brake=0;
             mean_force_acc=0;
             time_acc_phase = 0;
             time_brake_phase = 0;
             max_pos_cyc = 0;
+            force_mean_count=0;
+            force_mean = 0;
         }
     }
 
