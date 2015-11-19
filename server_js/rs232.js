@@ -64,6 +64,7 @@ var pos_hist = 0;
 var speed = 0;
 
 var phase_hist = 3;
+var max_pos_cyc = 0;
 
 
 sp_ov_USB.open(function (error) {
@@ -124,17 +125,23 @@ sp_ov_USB.on('data', function (data) {
         force_sum = 0;
         help_count ++;
 
+        if (max_pos_cyc<decoded_data[3]){
+            max_pos_cyc = decoded_data[3]
+        }
+
         if (help_count == 2){
             help_count = 0;
             //console.log("cykl");
             exports.mean_force_cycle = (mean_force_brake + mean_force_acc)/2;
             exports.time_cycle = time_acc_phase + time_brake_phase;
+            exports.max_pos_cyc = max_pos_cyc;
             ee.emit("cykl");
             //console.log(time_cycle);
             mean_force_brake=0;
             mean_force_acc=0;
             time_acc_phase = 0;
             time_brake_phase = 0;
+            max_pos_cyc = 0;
         }
     }
 
