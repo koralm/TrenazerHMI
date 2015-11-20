@@ -37,6 +37,8 @@ var rs_roller_dist = '30';          //Rollers distance 5mm - 40mm
 var rs_record_stat= '7';            //Recod data start-stop
 var rs_interia = '0';               //Interia moment x*0.001 eg: 1000*0.001=1
 var calib_force = '0';              //Calibration Force
+var damping_speed = "0";            //tłumienei od prędkości
+var damping_static = "0"            //tłumienie statyczne
 var frame_terminator = '0303';      //Frame terminator
 
 //Receive form COM
@@ -60,12 +62,13 @@ var concetrate_pointer =0;
 
 var help_count=0;
 var phase0_count=0;
-var pos_hist = 0;
 var speed = 0;
 
 var phase_hist = 3;
 var max_pos_cyc = 0;
-val_strength_table = new Array(1200),
+var max_speed_cycle = 0;
+
+val_strength_table = new Array(1100),
 
 
 sp_ov_USB.open(function (error) {
@@ -94,13 +97,11 @@ sp_ov_USB.on('data', function (data) {
     decode_phase(decoded_data[4]);
 
     //PARAMS TO SAVE
-    force_sum = force_sum + decoded_data[3];
-    //speed = (pos_hist - decoded_data[2]);
-    //console.log(speed);
+    force_sum = force_sum + decoded_data[2];
+
+
     //COUNTERS
     phase0_count = phase0_count + 1;
-
-
 
     //FLAG
     if (phase != phase_hist){
@@ -131,7 +132,12 @@ sp_ov_USB.on('data', function (data) {
             max_pos_cyc = decoded_data[4]
         }
 
-        val_strength_table[decoded_data[2]] = decoded_data[3];
+        //max speed in cycle
+        if (max_speed_cycle<decoded_data[6]){
+            max_speed_cycle= decoded_data[6]
+        }
+
+        val_strength_table[decoded_data[1]] = decoded_data[2];
 
         if (help_count == 2){
             help_count = 0;
@@ -139,6 +145,7 @@ sp_ov_USB.on('data', function (data) {
             exports.mean_force_cycle = (mean_force_brake + mean_force_acc)/2;
             exports.time_cycle = time_acc_phase + time_brake_phase;
             exports.max_pos_cyc = max_pos_cyc;
+            exports.max_speed_cycle = max_speed_cycle;
 
            //concentrate function
             force_mean = math.mean(val_strength_table);
@@ -171,7 +178,7 @@ sp_ov_USB.on('data', function (data) {
     exports.phase = phase;
     ee.emit("someEvent");
     phase_hist = phase;
-    pos_hist = decoded_data[2];
+
 });
 
 /*
@@ -205,13 +212,14 @@ function rs_start_F(data){
 */
 function decode_recev_data(data){
     var bufferek = new Buffer(data ,'hex');
-        if (bufferek.length == 19) {
+        if (bufferek.length == 27) {
             var position = bufferek.readDoubleLE(0);
             var strength = bufferek.readDoubleLE(8);
-            var induction_sens = bufferek.readUInt8(16);
-            var sample_nr = bufferek.readUInt16LE(17);
+            var speed = bufferek.readDoubleLE(16);
+            var induction_sens = bufferek.readUInt8(24);
+            var sample_nr = bufferek.readUInt16LE(25);
         };
-    return([data,sample_nr,strength,position,induction_sens]);
+    return([data,sample_nr,strength,position,induction_sens,speed]);
 }
 
 function disp_recev_data(data){
@@ -237,7 +245,7 @@ function code_send_data(send_frame){
 }
 
 function push_rs232(){
-    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,frame_terminator];
+    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed, damping_static, frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
     console.log(code_send_data(send_frame));
 };
@@ -304,6 +312,16 @@ exports.rs_interiaSET = function (data) {
     push_rs232();
 };
 
+exports.rs_damp_speedSET= function (data) {
+    damping_speed = data;
+    push_rs232();
+};
+
+exports.rs_damp_static= function (data) {
+    damping_static = data;
+    push_rs232();
+};
+
 //exports.rs_startSET = function (data) {
 //    rs_start_F(data);
 //    console.log(data);
@@ -335,6 +353,10 @@ exports.rs_positon_READ = function (){
 
 exports.rs_strength_READ = function (){
     return strength_r;
+};
+
+exports.rs_speedREAD = function (){
+    return speed;
 };
 
 

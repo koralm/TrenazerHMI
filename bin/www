@@ -425,7 +425,7 @@ io.on('connection', function (socketev) {
         socketev.emit('procent1', {data1: parseFloat(rs232.time_cycle).toFixed(2), data2: disp1_min, data3: disp1_max});
         break;
       case "max_spped_cycle_1":
-        socketev.emit('disp_bar1', parseFloat(rs232.mean_force_acc).toFixed(2) + " m/s");
+        socketev.emit('disp_bar1', parseFloat(rs232.max_speed_cycle).toFixed(2) + " m/s");
         socketev.emit('procent1', {
           data1: parseFloat(rs232.mean_force_acc).toFixed(2),
           data2: disp1_min,
@@ -503,7 +503,7 @@ io.on('connection', function (socketev) {
         socketev.emit('procent2', {data1: parseFloat(rs232.time_cycle).toFixed(2), data2: disp2_min, data3: disp2_max});
         break;
       case "max_spped_cycle_2":
-        socketev.emit('disp_bar2', parseFloat(rs232.mean_force_acc).toFixed(2) + " m/s");
+        socketev.emit('disp_bar2', parseFloat(rs232.max_speed_cycle).toFixed(2) + " m/s");
         socketev.emit('procent2', {
           data1: parseFloat(rs232.mean_force_acc).toFixed(2),
           data2: disp2_min,
