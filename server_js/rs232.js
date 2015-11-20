@@ -33,12 +33,12 @@ var time_interval = 1000;           //Send data interval
 var frame_header = '7E7E';          //Frame header
 var rs_status = '0';                //For calibration status 0,4,1
 var rs_line_length = '0';           //Line length
-var rs_roller_dist = '30';          //Rollers distance 5mm - 40mm
+var rs_roller_dist = '0';          //Rollers distance 5mm - 40mm
 var rs_record_stat= '7';            //Recod data start-stop
 var rs_interia = '0';               //Interia moment x*0.001 eg: 1000*0.001=1
 var calib_force = '0';              //Calibration Force
-var damping_speed = "0";            //tłumienei od prędkości
-var damping_static = "0"            //tłumienie statyczne
+var damping_speed = '0';            //tłumienei od prędkości
+var damping_static = '0';           //tłumienie statyczne
 var frame_terminator = '0303';      //Frame terminator
 
 //Receive form COM
@@ -57,7 +57,6 @@ var mean_force_cycle = 0;
 var time_acc_phase =0;
 var time_brake_phase =0;
 var time_cycle =0;
-var max_speed_cycle =0;
 var concetrate_pointer =0;
 
 var help_count=0;
@@ -68,7 +67,10 @@ var phase_hist = 3;
 var max_pos_cyc = 0;
 var max_speed_cycle = 0;
 
-val_strength_table = new Array(1100),
+var val_strength_table_sum = 0;
+var force_mean_count = 0;
+var force_sum_count = 0;
+val_strength_table = new Array(3000);
 
 
 sp_ov_USB.open(function (error) {
@@ -76,6 +78,8 @@ sp_ov_USB.open(function (error) {
         console.log('failed to open COM: '+error);
     } else {
         console.log('COM open');
+        sp_ov_USB.write(code_send_data([frame_header,'0',rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed,damping_static,frame_terminator]));
+        console.log([frame_header,'0',rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed,damping_static,frame_terminator]);
     }
 });
 
@@ -103,6 +107,20 @@ sp_ov_USB.on('data', function (data) {
     //COUNTERS
     phase0_count = phase0_count + 1;
 
+    //max position in cycle
+    if (max_pos_cyc<decoded_data[3]){
+        max_pos_cyc = decoded_data[3]
+    }
+
+    //max speed in cycle
+    if (max_speed_cycle<decoded_data[5]){
+        max_speed_cycle= decoded_data[5]
+    }
+
+    //values to mean
+    val_strength_table.shift();
+    val_strength_table.push(decoded_data[2]);
+
     //FLAG
     if (phase != phase_hist){
         if (help_count == 0){
@@ -115,51 +133,54 @@ sp_ov_USB.on('data', function (data) {
         }
 
         if (help_count == 1){
-            //console.log("ciagne");
             mean_force_acc = force_sum/phase0_count;
             exports.mean_force_acc = force_sum/phase0_count;
             time_brake_phase =phase0_count;
             exports.time_brake_phase = phase0_count;
-            //console.log(mean_force_acc);
         }
 
         phase0_count = 0;
         force_sum = 0;
         help_count ++;
 
-        //max position in cycle
-        if (max_pos_cyc<decoded_data[4]){
-            max_pos_cyc = decoded_data[4]
-        }
-
-        //max speed in cycle
-        if (max_speed_cycle<decoded_data[6]){
-            max_speed_cycle= decoded_data[6]
-        }
-
-        val_strength_table[decoded_data[1]] = decoded_data[2];
-
         if (help_count == 2){
             help_count = 0;
-            //console.log("cykl");
+            console.log("cykl");
             exports.mean_force_cycle = (mean_force_brake + mean_force_acc)/2;
             exports.time_cycle = time_acc_phase + time_brake_phase;
-            exports.max_pos_cyc = max_pos_cyc;
+            exports.max_pos_cyc = rs_line_length - max_pos_cyc;
             exports.max_speed_cycle = max_speed_cycle;
 
-           //concentrate function
-            force_mean = math.mean(val_strength_table);
-            force_mean_count = 0;
 
-            for (i=0; i < val_strength_table.length; i++){
-                if (val_strength_table[i] < force_mean){
+            //concentrate function
+            //CALC Mean
+
+            for (ix=0; ix < val_strength_table.length-1; ix++){
+                if (val_strength_table[ix]!=0){
+                    force_sum_count++;
+                    val_strength_table_sum += val_strength_table[ix] ;
+                }
+            }
+
+            force_mean = val_strength_table_sum/force_sum_count;
+
+
+            //CALC AVV mean
+            for (i=0; i < val_strength_table.length-1; i++){
+                if ((parseFloat(val_strength_table[i]).toFixed(2) > parseFloat(force_mean).toFixed(2)) && (val_strength_table[i]!=0) ){
                     force_mean_count++;
                 }
             }
 
-            exports.concetrate_pointer = (1.0-(val_strength_table.length/force_mean_count));
+            exports.concetrate_pointer = (1.0-(force_mean_count/force_sum_count));
 
             ee.emit("cykl");
+            console.log((1.0-(force_mean_count/force_sum_count))*100);
+            console.log(force_sum_count);
+            console.log(force_mean_count);
+
+            //CONSOLE LOG DATA
+            //console.log((1.0-(val_strength_table.length/force_mean_count)))
 
             //console.log(time_cycle);
             mean_force_brake=0;
@@ -167,8 +188,12 @@ sp_ov_USB.on('data', function (data) {
             time_acc_phase = 0;
             time_brake_phase = 0;
             max_pos_cyc = 0;
-            force_mean_count=0;
             force_mean = 0;
+            max_speed_cycle =0;
+            val_strength_table_sum = 0;
+            force_mean_count = 0;
+            force_sum_count = 0;
+            val_strength_table.fill(0);
         }
     }
 
@@ -181,35 +206,7 @@ sp_ov_USB.on('data', function (data) {
 
 });
 
-/*
-function rs_start_F(data){
-    if (data == 65) {
-        //RECEIVE DATA
-        sp_ov_USB.on('data', function (data) {
-            sp_ov_USB.flush();
-            //decode data
-            decoded_data = decode_recev_data(data);
 
-            //CONSOLE display received data
-            disp_recev_data(decoded_data);
-
-            //DECODE ERROR
-            //decode_stop(decoded_data[4]);
-            //decode_work(decoded_data[4]);
-            //decode_induction(decoded_data[4])
-        });
-    }
-    else if (data == 123){
-        sp_ov_USB.close(function (error) {
-            if ( error ) {
-                console.log('failed to close COM: '+error);
-            } else {
-                console.log('COM closed');
-            }
-        });
-    }
-};
-*/
 function decode_recev_data(data){
     var bufferek = new Buffer(data ,'hex');
         if (bufferek.length == 27) {
@@ -228,27 +225,33 @@ function disp_recev_data(data){
     //console.log('sila: ' + data[2]);//.toString());
     //console.log('polozenie: ' + data[3]);//.toString());
     //console.log('czujnik: ' + data[4]);//.toString());
+    //console.log('predkosc: ' + data[5]);//.toString());
 }
 
 function code_send_data(send_frame){
     var header = new Buffer(send_frame[0] ,'hex');
-    var send_buffer = new Buffer(8);
+    var send_buffer = new Buffer(12);
         send_buffer.writeUInt8(send_frame[1].toString(16),0,'hex');
         send_buffer.writeUInt8(send_frame[2].toString(16),1,'hex');
         send_buffer.writeUInt8(send_frame[3].toString(16),2,'hex');
         send_buffer.writeUInt8(send_frame[4].toString(16),3,'hex');
         send_buffer.writeUInt16LE(send_frame[5].toString(16),4,'hex');
         send_buffer.writeUInt16LE(send_frame[6].toString(16),6,'hex');
-    var terminator = new Buffer(send_frame[7] ,'hex');
+        send_buffer.writeUInt16LE(send_frame[7].toString(16),8,'hex');
+        send_buffer.writeUInt16LE(send_frame[8].toString(16),10,'hex');
+    var terminator = new Buffer(send_frame[9] ,'hex');
     var rs_frameout = Buffer.concat([header,send_buffer,terminator]);
     return(rs_frameout);
 }
 
 function push_rs232(){
-    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed, damping_static, frame_terminator];
+    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed,damping_static,frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
-    console.log(code_send_data(send_frame));
+    //console.log(code_send_data(send_frame));
+    console.log([frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed,damping_static,frame_terminator]);
 };
+
+
 
 function decode_stop(data){
     if ((data & 64) == 64) {

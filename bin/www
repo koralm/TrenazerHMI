@@ -373,7 +373,6 @@ io.on('connection', function (socket) {
 io.on('connection', function (socket) {
   socket.on('calib_req', function (data) {
     socket.emit('line_values',settingss.load_act());
-    console.log("boczniaki")
   })
 });
 
