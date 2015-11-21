@@ -15,6 +15,14 @@ var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
 
+serialport.list(function (err, ports) {
+    ports.forEach(function(port) {
+        console.log("A" + port.comName);
+        console.log("B" + port.pnpId);
+        console.log("C" + port.manufacturer);
+    });
+});
+
 //Open Serial port
 var sp_ov_USB = new SerialPort(COM_port, {
     baudrate: COM_baudrate,
@@ -145,7 +153,7 @@ sp_ov_USB.on('data', function (data) {
 
         if (help_count == 2){
             help_count = 0;
-            console.log("cykl");
+            //console.log("cykl");
             exports.mean_force_cycle = (mean_force_brake + mean_force_acc)/2;
             exports.time_cycle = time_acc_phase + time_brake_phase;
             exports.max_pos_cyc = rs_line_length - max_pos_cyc;
@@ -178,7 +186,6 @@ sp_ov_USB.on('data', function (data) {
 
 
             //CONSOLE LOG DATA
-            //console.log((1.0-(val_strength_table.length/force_mean_count)))
 
             //console.log(time_cycle);
             mean_force_brake=0;
