@@ -37,7 +37,7 @@ var rs_roller_dist = '0';          //Rollers distance 5mm - 40mm
 var rs_record_stat= '7';            //Recod data start-stop
 var rs_interia = '0';               //Interia moment x*0.001 eg: 1000*0.001=1
 var calib_force = '0';              //Calibration Force
-var damping_speed = '0';            //tłumienei od prędkości
+var damping_dynamic = '0';            //tłumienei od prędkości
 var damping_static = '0';           //tłumienie statyczne
 var frame_terminator = '0303';      //Frame terminator
 
@@ -78,8 +78,8 @@ sp_ov_USB.open(function (error) {
         console.log('failed to open COM: '+error);
     } else {
         console.log('COM open');
-        sp_ov_USB.write(code_send_data([frame_header,'0',rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed,damping_static,frame_terminator]));
-        console.log([frame_header,'0',rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed,damping_static,frame_terminator]);
+        sp_ov_USB.write(code_send_data([frame_header,'0',rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator]));
+        //console.log([frame_header,'0',rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator]);
     }
 });
 
@@ -175,9 +175,7 @@ sp_ov_USB.on('data', function (data) {
             exports.concetrate_pointer = (1.0-(force_mean_count/force_sum_count));
 
             ee.emit("cykl");
-            console.log((1.0-(force_mean_count/force_sum_count))*100);
-            console.log(force_sum_count);
-            console.log(force_mean_count);
+
 
             //CONSOLE LOG DATA
             //console.log((1.0-(val_strength_table.length/force_mean_count)))
@@ -245,10 +243,9 @@ function code_send_data(send_frame){
 }
 
 function push_rs232(){
-    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed,damping_static,frame_terminator];
+    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
-    //console.log(code_send_data(send_frame));
-    console.log([frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_speed,damping_static,frame_terminator]);
+    console.log([frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator]);
 };
 
 
@@ -294,6 +291,17 @@ function decode_induction(data){
 }
 
 //EXPORTS
+
+exports.rs_damp_dynamicSET = function (data) {
+    damping_dynamic = data;
+    push_rs232();
+};
+
+exports.rs_damp_staticSET= function (data) {
+    damping_static = data;
+    push_rs232();
+};
+
 exports.rs_statusSET = function (data) {
     rs_status = data;
     push_rs232();
@@ -306,7 +314,6 @@ exports.rs_line_lengthSET = function (data) {
 
 exports.rs_roller_distSET = function (data) {
     rs_roller_dist = data;
-    console.log(data);
     push_rs232();
 };
 
@@ -315,15 +322,12 @@ exports.rs_interiaSET = function (data) {
     push_rs232();
 };
 
-exports.rs_damp_speedSET= function (data) {
-    damping_speed = data;
+exports.rs_calib_forceSET = function (data) {
+    calib_force = data;
     push_rs232();
 };
 
-exports.rs_damp_static= function (data) {
-    damping_static = data;
-    push_rs232();
-};
+
 
 //exports.rs_startSET = function (data) {
 //    rs_start_F(data);

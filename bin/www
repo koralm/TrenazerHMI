@@ -124,34 +124,50 @@ io.sockets.setMaxListeners(50);
 io.on('connection', function (socket) {
   socket.on('status', function (data) {
     rs232.rs_statusSET(data);
-    //console.log(data);
   });
 });
+
 
 io.on('connection', function (socket) {
   socket.on('line_length', function (data) {
     rs232.rs_line_lengthSET(data);
-    //console.log(data);
   });
 });
 
 io.on('connection', function (socket) {
   socket.on('roller_dist', function (data) {
     rs232.rs_roller_distSET(data);
-    //console.log(data);
   });
 });
 
 io.on('connection', function (socket) {
   socket.on('interia', function (data) {
     rs232.rs_interiaSET(data);
-    //console.log(data);
   });
 });
 
 io.on('connection', function (socket) {
   socket.on('rs232_start', function (data) {
     rs232.rs_startSET(data)
+  });
+});
+
+io.on('connection', function (socket) {
+  socket.on('calib_force', function (data) {
+    rs232.rs_calib_forceSET(data)
+  });
+});
+
+
+io.on('connection', function (socket) {
+  socket.on('damping_dynamic', function (data) {
+    rs232.rs_damp_dynamicSET(data);
+  });
+});
+
+io.on('connection', function (socket) {
+  socket.on('damping_static', function (data) {
+    rs232.rs_damp_staticSET(data);
   });
 });
 
@@ -165,9 +181,7 @@ io.on('connection', function (socket) {
 io.on('connection', function (socket) {
   setInterval( function() {
     socket.emit('induct_stat',rs232.rs_ind_sens());
-    //console.log(rs232.rs_ind_sens());
     socket.emit('position',{pos: rs232.rs_positon_READ(), ind: rs232.rs_ind_sens()});
-    //console.log(rs232.rs_positon_READ());
     socket.emit('stoper_time', stoper.stoper_time());
     socket.emit('phase_sens',rs232.rs_phase_sens());
     socket.emit('cycle_count',stoper.cycle_count());
@@ -186,6 +200,8 @@ var rec_flag = 0;
 
 
 //Exercise parameters
+var damping_dynamic = 0;
+var damping_static = 0;
 var line_l = 0;
 var roller_d = 0;
 var interia_m = 0;
@@ -200,6 +216,8 @@ var seconds_max = 0;
 var cycle_max = 0;
 
 settings = settingss.load_init();
+damping_dynamic = parseInt(settings.damping_dynamic);
+damping_static = parseInt(settings.damping_static);
 line_l = parseInt(settings.line_l);
 roller_d = parseInt(settings.roller_d);
 interia_m = parseInt(settings.interia_m);
@@ -215,6 +233,8 @@ cycle_max = parseInt(settings.cycle_max);
 
 settingss.settings_ee.on("settigs_load", function () {
     settings = settingss.load_act();
+    damping_dynamic = parseInt(settings.damping_dynamic);
+    damping_static = parseInt(settings.damping_static);
     line_l = parseInt(settings.line_l);
     roller_d = parseInt(settings.roller_d);
     interia_m = parseInt(settings.interia_m);
@@ -276,14 +296,12 @@ var disp_selection2 = "time_acceleration_2"
 io.on('connection', function (socket) {
   socket.on("sel_disp_1", function (data) {
     disp_selection1 = data.toString();
-    console.log(data);
   });
 });
 
 io.on('connection', function (socket) {
   socket.on("sel_disp_2", function (data) {
     disp_selection2 = data.toString();
-    console.log(data);
   });
 });
 
@@ -431,7 +449,7 @@ io.on('connection', function (socketev) {
           data3: disp1_max
         });
         break;
-      case "#max_length_cycle_1":
+      case "max_length_cycle_1":
         socketev.emit('disp_bar1', parseFloat(rs232.max_pos_cyc).toFixed(1) + " cm");
         socketev.emit('procent1', {
           data1: parseFloat(rs232.max_pos_cyc).toFixed(2),
@@ -440,7 +458,7 @@ io.on('connection', function (socketev) {
         });
         break;
       case "max_power_cycle_1":
-        socketev.emit('disp_bar1', parseFloat(rs232.concetrate_pointer).toFixed(2) + " xx");
+        socketev.emit('disp_bar1', parseFloat(rs232.concetrate_pointer).toFixed(2) + "");
         socketev.emit('procent1', {
           data1: parseFloat(rs232.concetrate_pointer).toFixed(2),
           data2: disp1_min,
@@ -509,7 +527,7 @@ io.on('connection', function (socketev) {
           data3: disp2_max
         });
         break;
-      case "#max_length_cycle_2":
+      case "max_length_cycle_2":
         socketev.emit('disp_bar2', parseFloat(rs232.max_pos_cyc).toFixed(1) + " cm");
         socketev.emit('procent2', {
           data1: parseFloat(rs232.max_pos_cyc).toFixed(2),
@@ -518,7 +536,7 @@ io.on('connection', function (socketev) {
         });
         break;
       case "max_power_cycle_2":
-        socketev.emit('disp_bar2', parseFloat(rs232.concetrate_pointer).toFixed(2) + " xx");
+        socketev.emit('disp_bar2', parseFloat(rs232.concetrate_pointer).toFixed(2) + "");
         socketev.emit('procent2', {
           data1: parseFloat(rs232.concetrate_pointer).toFixed(2),
           data2: disp2_min,

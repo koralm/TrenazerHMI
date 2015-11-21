@@ -21,7 +21,15 @@ block content
             .modal-footer
                 button.btn.btn-primary#welcome_conf(type='button', data-dismiss='modal', onclick='wlecom_conf()', disabled="true") Potwierdź
 
-
+    #welcome_warning.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+        .modal-header.bg-danger
+            h1.text-center.text-danger UWAGA!!!
+        .modal-body
+            h2#warn_modal.text-center.text-danger !!
+            h3.text-center.text-danger  Pamiętaj, że jest to rozwoja wersja użądzenia i należy używać jej tylko pod nazdorem przeszkolonego instrukotra!!
+        .modal-footer
+            p.text-center
+                button.btn.btn-danger(type='button', data-dismiss='modal', onclick='welc_conf_session()') Zgadzam się
 
     block scripts bottom
 
@@ -44,7 +52,7 @@ block content
         //CONDITIONS
         script.
             function warn_brn_enable() {
-                //document.getElementById("welcome_conf").disabled = false;
+                document.getElementById("welcome_conf").disabled = false;
                 if (document.getElementById("in_userID").value.length > 0){
                     document.getElementById("welcome_conf").disabled = false;
                     }
@@ -61,7 +69,6 @@ block content
         script.
             function wlecom_conf(){
                 document.getElementById("warn_modal").innerHTML = document.getElementById("in_userID").value;
-                //document.getElementById("ex4").placeholder = "C:/Trenazer/" + document.getElementById("in_userID").value;
                 $('#welcome_warning').modal('show');}
 
         script.

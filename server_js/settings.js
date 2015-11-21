@@ -33,6 +33,7 @@ exports.load_act = function (){
 
 exports.load_init = function (){
     settings_ee.emit("settigs_load");
+    console.log(settings_actual);
     return (settings_actual);
 }
 

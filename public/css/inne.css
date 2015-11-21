@@ -124,3 +124,11 @@ h3.display {
     max-width:980px;
     margin: 0px auto;
 }
+
+hr.new {
+    border: none;
+    height: 1px;
+    /* Set the hr color */
+    color: #333; /* old IE */
+    background-color: #333; /* Modern Browsers */
+}

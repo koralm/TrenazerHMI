@@ -1,0 +1,49 @@
+#sett_save_modal.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    #sett_save_head.modal-header
+        h1.text-center Zapis ustawień
+    .modal-body
+        h2.text-center Podaj nazwę zapisywanych ustawień:
+        #sett_save_name.text-center
+            p
+                .form-group
+                    label(for='save_set_name')
+                        input#save_set_name.input-lg.form-control.text-center(type='text', placeholder="Nazwa ustawien")
+    .modal-footer
+        p.text-center
+            button#save_sett_cancel.btn.btn-lg.btn-default(type='button', data-dismiss='modal') Anuluj
+            button#save_sett_confirm.btn.btn-lg.btn-success(type='button', data-dismiss='modal', onclick='save_settings()') Zapisz
+
+#adv_calib_mod1.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    #adv_calib_head1.modal-header.bg-danger
+        h1.text-center(style="color:red") Kalibracja czujnika siły
+    .modal-body
+        h2.text-center Aby rozpocząć kalibrację linka musi być całkowicie wyciągnięta oraz luźna !!!
+        #adv_calib_name1.text-center
+    .modal-footer
+        p.text-center
+            button#adv_calib_back1.btn.btn-lg.btn-default(type='button', data-dismiss='modal') Wróć
+            button#adv_calib_next1.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='adv_calib_modf2()') Potwierdzam
+
+#adv_calib_mod2.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    #adv_calib_head2.modal-header.bg-danger
+        h1.text-center(style="color:red") Kalibracja czujnika siły
+    .modal-body
+        h2.text-center W celu wykonania kalibracji zawieś na linie odważnik o znanym ciężarze.
+        h2.text-center A następnie podaj ciężar w polu poniżej.
+        br
+        .input-group.input-group-lg
+            input#adv_calib_weight2.form-control.text-center(type='text', placeholder="Ciężar", aria-describedby='basic-addon2')
+            span.input-group-addon N
+    .modal-footer
+        p.text-center
+            button#adv_calib_back2.btn.btn-lg.btn-default(type='button', data-dismiss='modal') Wróć
+            button#adv_calib_next2.btn.btn-lg.btn-success(type='button', data-dismiss='modal', onclick='adv_calib_modf3()') Dalej
+
+#adv_calib_mod3_wait.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    .modal-header.bg-warning
+        h1 Kalibracja...
+    .modal-body.text-center
+        .progress
+            #line_bar.progress-bar.progress-bar-warning.progress-bar-striped.active(role='progressbar', style='width:100%')
+                | Kalibracja
+    .modal-footer

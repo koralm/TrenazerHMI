@@ -6,7 +6,10 @@ script(type='text/javascript').
     if (sessionStorage.getItem('callib_modal') !== 'true') {
         $(window).load(function () {
             socket.emit('status', 0);
+            socket.emit('damping_dynamic', 0);
+            socket.emit('damping_static', 0);
             socket.emit('line_length', 0);
+            socket.emit('roller_dist', 0);
             socket.emit('interia', 0);
             socket.emit('status', 0);
             socket.emit('status', 3);
@@ -44,6 +47,8 @@ script.
     function calib_mod2_auto(data) {
         socket.emit('calib_req', 0);
         socket.emit('status', data);
+        socket.emit('damping_dynamic', 0);
+        socket.emit('damping_static', 0);
         socket.emit('line_length',0);
         socket.emit('interia', 0);
         $('#calibration_modal_3_auto').modal('show')
@@ -56,9 +61,13 @@ script.
         document.getElementById("sett_line_length_auto").innerHTML = "Długość liny: " + data.line_l;
         document.getElementById("sett_roller_dist_auto").innerHTML = "Rozstaw rolek: " + data.roller_d;
         document.getElementById("sett_interiam_auto").innerHTML = "Moment bezwladnosci: " + data.interia_m;
+        document.getElementById("sdynamic_damping").innerHTML = "Tarcie od prędkosci: " + data.damping_static;
+        document.getElementById("sstatic_damping").innerHTML = "Tracie stałe: " + data.damping_dynamic;
         socket.emit('line_length', data.line_l);
         socket.emit('roller_dist', data.roller_d);
         socket.emit('interia', data.interia_m);
+        socket.emit('damping_dynamic', data.damping_static);
+        socket.emit('damping_static', data.damping_dynamic);
         socket.emit('status', 0);
     });
 

@@ -7,23 +7,41 @@ block content
             #id_content.text-center
                 .h1 Tutaj znajdują się ustawienia traktowane jako domyślne podczas treningu
         .row
+            .col-lg-4
+                #adv_calib_settings.text-left
+                    h2 Kalibracja czujnika siły:
+                        p
+                        button.btn.btn-lg.btn-primary.btn-block#adv_calib(type='button', data-toggle='modal', data-target="#adv_calib_mod1") Kalibruj
+        .row
+            .col-lg-6
+                #adv_calib_params.text-left
+                    h2 Parametry dodatkowe:
+                    p
+                    .form-group
+                        label(for='ddamping_dynamic') Tłumienie od prędkości:
+                            input#ddamping_dynamic.input-lg.form-control.text-center(type='number', placeholder="0")
+                        label(for='ddamping_static') Tłumienie stałe:
+                            input#ddamping_static.input-lg.form-control.text-center(type='number', placeholder="0")
+        hr.new
+        .row
            .col-lg-10
             #exercise_settings.text-left
-                h2 Ustawienia kalibracji:
-                    p
-                        .form-group
-                            label(for='line_length') Długość liny:
-                                .input-group.input-group-lg
-                                    input#line_length.input-lg.form-control.text-center(type='text', placeholder="0")
-                                    span.input-group-addon cm
-                            label(for='roller_dist') Rozstaw rolek:
-                                .input-group.input-group-lg
-                                    input#roller_dist.input-lg.form-control.text-center(type='text', placeholder="0")
-                                    span.input-group-addon mm
-                            label(for='interia_moment') Moment bezwładności:
-                                .input-group.input-group-lg
-                                    input#interia_moment.input-lg.form-control.text-center(type='text', placeholder="0")
-                                    span.input-group-addon N
+                h2 Parametry treningu:
+                p
+                    .form-group
+                        label(for='line_length') Długość liny:
+                            .input-group.input-group-lg
+                                input#line_length.input-lg.form-control.text-center(type='text', placeholder="0")
+                                span.input-group-addon cm
+                        label(for='roller_dist') Rozstaw rolek:
+                            .input-group.input-group-lg
+                                input#roller_dist.input-lg.form-control.text-center(type='text', placeholder="0")
+                                span.input-group-addon mm
+                        label(for='interia_moment') Moment bezwładności:
+                            .input-group.input-group-lg
+                                input#interia_moment.input-lg.form-control.text-center(type='text', placeholder="0")
+                                span.input-group-addon N
+        hr.new
         .row
             .col-lg-6
                 #path_settings.text-left
@@ -34,6 +52,7 @@ block content
                                 input#folder_name.input-lg.form-control.text-center(type='text', placeholder="data")
                             label(for='file_name') Nazwa pliku:
                                 input#file_name.input-lg.form-control.text-center(type='text', placeholder="godzina")
+        hr.new
         .row
             .col-lg-6
                 #disp1_range.text-left
@@ -56,7 +75,7 @@ block content
         .row
             .col-lg-6
                 #max_time_range.text-left
-                    h2 Maksumalny czas ćwiczenia
+                    h2 Maksymalny czas ćwiczenia:
                     p
                         .form-group
                             label(for='minutes_max') Minuty:
@@ -66,7 +85,7 @@ block content
 
             .col-lg-6
                 #max_cycle_range.text-left
-                    h2 Maksymalna ilość cykli
+                    h2 Maksymalna ilość cykli:
                     p
                         .form-group
                             label(for='cycle_max') Ilość cykli:
@@ -82,21 +101,7 @@ block content
                 input#files(type='file', name='files[]', multiple='', style='opacity:0; height:0px; width:0px;')
                 output.align-center#list
 
-
-    #sett_save_modal.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
-        #sett_save_head.modal-header
-            h1.text-center Zapis ustawień
-        .modal-body
-            h2.text-center Podaj nazwę zapisywanych ustawień:
-            #sett_save_name.text-center
-                p
-                    .form-group
-                        label(for='save_set_name')
-                            input#save_set_name.input-lg.form-control.text-center(type='text', placeholder="Nazwa ustawien")
-        .modal-footer
-            p.text-center
-                button#save_sett_cancel.btn.btn-lg.btn-default(type='button', data-dismiss='modal') Anuluj
-                button#save_sett_confirm.btn.btn-lg.btn-success(type='button', data-dismiss='modal', onclick='save_settings()') Zapisz
+    include settings/settings_modals.jade
 
 block scripts bottom
     include ./settings/settings_scripts

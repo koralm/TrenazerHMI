@@ -13,6 +13,8 @@ script.
     function save_settings() {
         //nowa wersja
         socket.emit('settings', {
+            damping_dynamic: document.getElementById("ddamping_dynamic").value,
+            damping_static: document.getElementById("ddamping_dynamic").value,
             line_l: document.getElementById("line_length").value,
             roller_d: document.getElementById("roller_dist").value,
             interia_m: document.getElementById("interia_moment").value,
@@ -76,6 +78,8 @@ script.
 script.
     function load_settings(data){
         json_settings = data;
+        document.getElementById("ddamping_dynamic").value = json_settings.damping_dynamic;
+        document.getElementById("ddamping_static").value = json_settings.damping_static;
         document.getElementById("line_length").value = json_settings.line_l;
         document.getElementById("roller_dist").value = json_settings.roller_d;
         document.getElementById("interia_moment").value = json_settings.interia_m;
@@ -94,6 +98,8 @@ script.
 script.
     function wiev_settings(data){
         json_settings = data;
+        document.getElementById("ddamping_dynamic").placeholder = json_settings.damping_dynamic;
+        document.getElementById("ddamping_static").placeholder = json_settings.damping_static;
         document.getElementById("line_length").placeholder = json_settings.line_l;
         document.getElementById("roller_dist").placeholder = json_settings.roller_d;
         document.getElementById("interia_moment").placeholder = json_settings.interia_m;
@@ -106,3 +112,31 @@ script.
         document.getElementById("minutes_max").placeholder = json_settings.minutes_max;
         document.getElementById("seconds_max").placeholder = json_settings.seconds_max;
         document.getElementById("cycle_max").placeholder = json_settings.cycle_max;}
+
+//START ADV CALIB MODAL
+script.
+    function adv_calib_modf2(){
+        socket.emit('status', 0);
+        socket.emit('status', 0);
+        $('#adv_calib_mod2').modal('show')
+        socket.emit('status', 4);
+        socket.emit('status', 4);
+    }
+
+script.
+    function adv_calib_modf3(){
+        socket.emit('calib_force', document.getElementById("adv_calib_weight2").value);
+        $('#adv_calib_mod3_wait').modal('show')
+
+        setTimeout(function () {
+
+        socket.emit('status', 5);
+
+        setTimeout(function () {
+            $('#adv_calib_mod3_wait').modal('hide');
+        }, 3000);
+            socket.emit('calib_force', 0);
+        socket.emit('status', 0);
+
+        }, 10000);
+    }
