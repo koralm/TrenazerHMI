@@ -61,8 +61,8 @@ script.
         document.getElementById("sett_line_length_auto").innerHTML = "Długość liny: " + data.line_l;
         document.getElementById("sett_roller_dist_auto").innerHTML = "Rozstaw rolek: " + data.roller_d;
         document.getElementById("sett_interiam_auto").innerHTML = "Moment bezwladnosci: " + data.interia_m;
-        document.getElementById("sdynamic_damping").innerHTML = "Tarcie od prędkosci: " + data.damping_static;
-        document.getElementById("sstatic_damping").innerHTML = "Tracie stałe: " + data.damping_dynamic;
+        document.getElementById("sdynamic_damping").innerHTML = "Tarcie od prędkosci: " + data.damping_dynamic;
+        document.getElementById("sstatic_damping").innerHTML = "Tracie stałe: " + data.damping_static;
         socket.emit('line_length', data.line_l);
         socket.emit('roller_dist', data.roller_d);
         socket.emit('interia', data.interia_m);

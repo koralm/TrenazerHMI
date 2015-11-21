@@ -172,7 +172,7 @@ sp_ov_USB.on('data', function (data) {
                 }
             }
 
-            exports.concetrate_pointer = (1.0-(force_mean_count/force_sum_count));
+            exports.concetrate_pointer = ((1.0-(force_mean_count/force_sum_count))*100);
 
             ee.emit("cykl");
 

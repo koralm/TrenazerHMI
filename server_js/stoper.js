@@ -109,7 +109,7 @@ exports.stoper_cycle = function(){
         if (cycles < cycles_max && cycles_max != 0) {
             cycles = cycles + 1;
         }
-        if (cycles == 0) {
+        if (cycles_max == 0) {
             cycles = cycles + 1
         }
         if (cycles == cycles_max && cycles_max != 0) {

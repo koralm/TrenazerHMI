@@ -320,7 +320,8 @@ rs232.xyz.on("cykl", function () {
   if (REC == 1){
     wstream_il.write(parseFloat(rs232.mean_force_acc).toFixed(2) + '\t' + parseFloat(rs232.mean_force_brake).toFixed(2)
         + '\t' + parseFloat(rs232.mean_force_cycle).toFixed(2) + '\t' + rs232.time_acc_phase + '\t' + rs232.time_brake_phase
-        + '\t' + rs232.time_cycle + '\t' + rs232.max_pos_cyc + '\r\n');
+        + '\t' + rs232.time_cycle + '\t' + parseFloat(rs232.max_speed_cycle).toFixed(2) + parseFloat(rs232.max_pos_cyc).toFixed(2)
+        + parseFloat(rs232.concetrate_pointer).toFixed(1) + '\r\n');
     rec_flag = 1;
   }
   if (REC == 0 && rec_flag == 1){
