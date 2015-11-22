@@ -86,7 +86,6 @@ sp_ov_USB.open(function (error) {
         console.log('failed to open COM: '+error);
     } else {
         console.log('COM open');
-        sp_ov_USB.write(code_send_data([frame_header,'0',rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator]));
         //console.log([frame_header,'0',rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator]);
     }
 });
@@ -131,6 +130,7 @@ sp_ov_USB.on('data', function (data) {
 
     //FLAG
     if (phase != phase_hist){
+
         if (help_count == 0){
             //console.log("wciaga");
             mean_force_brake = force_sum/phase0_count;
@@ -147,9 +147,6 @@ sp_ov_USB.on('data', function (data) {
             exports.time_brake_phase = phase0_count;
         }
 
-        phase0_count = 0;
-        force_sum = 0;
-        help_count ++;
 
         if (help_count == 2){
             help_count = 0;
@@ -186,6 +183,9 @@ sp_ov_USB.on('data', function (data) {
 
 
             //CONSOLE LOG DATA
+            phase0_count = 0;
+            force_sum = 0;
+            help_count ++;
 
             //console.log(time_cycle);
             mean_force_brake=0;
@@ -215,8 +215,8 @@ sp_ov_USB.on('data', function (data) {
 function decode_recev_data(data){
     var bufferek = new Buffer(data ,'hex');
         if (bufferek.length == 27) {
-            var position = bufferek.readDoubleLE(0);
-            var strength = bufferek.readDoubleLE(8);
+            var position = bufferek.readDoubleLE(8);
+            var strength = bufferek.readDoubleLE(0);
             var speed = bufferek.readDoubleLE(16);
             var induction_sens = bufferek.readUInt8(24);
             var sample_nr = bufferek.readUInt16LE(25);

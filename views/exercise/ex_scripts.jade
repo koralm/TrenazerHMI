@@ -153,7 +153,6 @@ script.
 //BAR WIDTH 1
 script.
     var ping_flag1=0;
-    var ping_flag1=0;
 
     socket.on('procent1', function (data) {
 
@@ -179,19 +178,19 @@ script.
                 "data-transitiongoal": lower_bound_scale,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color: red"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_ok1').attr({
                 "data-transitiongoal": 0,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color: red"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_up1').attr({
                 "data-transitiongoal": 0,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color: red"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             if (ping_flag1 == 0) {
                 socket.emit('range_sound1', 0);
@@ -203,19 +202,19 @@ script.
                 "data-transitiongoal": 0,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color: green"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_ok1').attr({
                 "data-transitiongoal": ok_bound_scale,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color: green"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_down1').attr({
                 "data-transitiongoal": 100,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color: green"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_warn_UPL1').attr("style", "");
             $('#bar_warn_UPR1').attr("style", "");
@@ -236,19 +235,19 @@ script.
                 "data-transitiongoal": 100,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color: red"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_ok1').attr({
                 "data-transitiongoal": 100,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color: red"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_up1').attr({
                 "data-transitiongoal": upper_bound_scale,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color: red"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             if (ping_flag1 == 0) {
                 socket.emit('range_sound1', 1);
@@ -286,19 +285,19 @@ script.
                 "data-transitiongoal": lower_bound_scale,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color:#909090"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_ok2').attr({
                 "data-transitiongoal": 0,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color:#909090"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_up2').attr({
                 "data-transitiongoal": 0,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color:#909090"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             if (ping_flag2==0){
                 socket.emit('range_sound2',0);
@@ -310,19 +309,19 @@ script.
                 "data-transitiongoal": 0,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color:#909090"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_ok2').attr({
                 "data-transitiongoal": ok_bound_scale,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color:#909090"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_down2').attr({
                 "data-transitiongoal": 100,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color:#909090"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_warn_UPL2').attr("style", "");
             $('#bar_warn_UPR2').attr("style", "");
@@ -343,19 +342,19 @@ script.
                 "data-transitiongoal": 100,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color:#909090"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_ok2').attr({
                 "data-transitiongoal": 100,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color:#909090"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             $('#bar_range_up2').attr({
                 "data-transitiongoal": upper_bound_scale,
                 "aria-valuemin": 0,
                 "aria-valuemax": 100,
-                "style": "background-color:#909090"
+                "style": "background-color:#404040"
             }).progressbar({display_text: '', transition_delay: 0, refresh_speed: 0});
             if (ping_flag2 == 0){
                 socket.emit('range_sound2',1);

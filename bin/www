@@ -370,6 +370,7 @@ io.on('connection', function (socket) {
 //SAVE_SETTINGS
 io.on('connection', function (socket) {
   socket.on('settings', function (data) {
+  console.log(data)
   settingss.save(data)
   socket.emit('settings_ex',data)
   });
