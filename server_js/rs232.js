@@ -147,6 +147,11 @@ sp_ov_USB.on('data', function (data) {
             exports.time_brake_phase = phase0_count;
         }
 
+        //CONSOLE LOG DATA
+        phase0_count = 0;
+        force_sum = 0;
+        help_count ++;
+
 
         if (help_count == 2){
             help_count = 0;
@@ -182,10 +187,6 @@ sp_ov_USB.on('data', function (data) {
             ee.emit("cykl");
 
 
-            //CONSOLE LOG DATA
-            phase0_count = 0;
-            force_sum = 0;
-            help_count ++;
 
             //console.log(time_cycle);
             mean_force_brake=0;
