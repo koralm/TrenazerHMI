@@ -51,6 +51,7 @@ var frame_terminator = '0303';      //Frame terminator
 
 //Receive form COM
 var stop_aw = 0;
+var speed_controler_off = 0;
 var tryb_pracy = 0;
 var induc_sens= 0;
 var phase = 0;
@@ -102,6 +103,7 @@ sp_ov_USB.on('data', function (data) {
 
 
     //DECODE ERROR
+    decode_speed_status(decoded_data[4]);
     decode_stop(decoded_data[4]);
     decode_work(decoded_data[4]);
     decode_induction(decoded_data[4]);
@@ -256,7 +258,15 @@ function push_rs232(){
     console.log([frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator]);
 };
 
-
+function decode_speed_status(data) {
+    if ((data & 32) == 32) {
+        //console.log("STOP ok")
+        speed_controler_off = 1;
+    } else {
+        //console.log("STOP wcisnięty")
+        speed_controler_off = 0;
+    }
+}
 
 function decode_stop(data){
     if ((data & 64) == 64) {
@@ -350,8 +360,21 @@ exports.rs_inductionREAD = function () {
     return decoded_data[4];
 };
 
+exports.rs_speedSTAT = function () {
+    return speed_controler_off;
+};
+
+//Edycja stop awaryjny lub speed contorler
+
+var stat_stop = 0;
 exports.rs_stopRED = function () {
-    return stop_aw;
+    if (stop_aw || speed_controler_off){
+        stat_stop = 1;
+    }else{
+        stat_stop = 0;
+    }
+    return stat_stop;
+    //return stop_aw;
 };
 
 exports.rs_ind_sens = function () {
@@ -376,4 +399,4 @@ exports.rs_speedREAD = function (){
 
 
 
-exports.xyz = ee;
+exports.xyz = ee
