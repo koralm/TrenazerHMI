@@ -76,6 +76,7 @@ html(lang='pl')
             .modal-footer
                 p.text-center
                     button.btn.btn-danger#aw_conf(type='button', data-dismiss='modal', disabled="true") Rozumiem
+                    button.btn.btn-danger#aw_conf_ref(type='button', data-dismiss='modal', onclick='ref_red()') Odśwież
 
 
         // Scripts
@@ -109,3 +110,20 @@ html(lang='pl')
                     document.getElementById("aw_conf").disabled = false;
                 }
             });
+
+        script.
+            function ref_red(){
+                socket.emit('status', 0);
+                socket.emit('damping_dynamic', 0);
+                socket.emit('damping_static', 0);
+                socket.emit('line_length', 0);
+                socket.emit('roller_dist', 0);
+                socket.emit('interia', 0);
+                socket.emit('status', 0);
+                socket.emit('status', 7);
+                socket.emit('status', 3);
+                socket.emit('status', 0);
+                window.location.replace("./");
+
+                //"location.href = './';"
+            }

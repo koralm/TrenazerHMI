@@ -10,7 +10,7 @@ var ee = new EventEmitter();
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM3";
+var COM_port = "COM8";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -368,11 +368,13 @@ exports.rs_speedSTAT = function () {
 
 var stat_stop = 0;
 exports.rs_stopRED = function () {
-    if (stop_aw || speed_controler_off){
+    if (stop_aw && speed_controler_off){
         stat_stop = 1;
     }else{
         stat_stop = 0;
     }
+
+    //console.log(stat_stop)
     return stat_stop;
     //return stop_aw;
 };

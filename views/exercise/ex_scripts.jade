@@ -12,6 +12,7 @@ script(type='text/javascript').
             socket.emit('roller_dist', 0);
             socket.emit('interia', 0);
             socket.emit('status', 0);
+            socket.emit('status', 7);
             socket.emit('status', 3);
             socket.emit('status', 0);
             $('#calibration_modal_1').modal('show');
@@ -76,7 +77,7 @@ script.
 //Line length button --> In range chagnes check in modals code
 script.
     function cal_mod_checkLI() {
-        if ((document.getElementById("line_length").value >= 20 && document.getElementById("line_length").value <= 150) && (document.getElementById("interia_moment").value >= 200 && document.getElementById("interia_moment").value <= 100000) && (document.getElementById("roller_dist").value >= 10 && document.getElementById("roller_dist").value <= 40)){
+        if ((document.getElementById("line_length").value >= 20 && document.getElementById("line_length").value <= 150) && (document.getElementById("interia_moment").value >= 1000 && document.getElementById("interia_moment").value <= 100000) && (document.getElementById("roller_dist").value >= 10 && document.getElementById("roller_dist").value <= 150)){
             document.getElementById("btn_llength_conf").disabled = false;
         }
         else {
