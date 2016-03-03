@@ -34,25 +34,25 @@
                 label.control-label(for='line_length')  Długość
                 .input-group.input-group-lg
                     span.input-group-addon cm
-                    input#line_length.form-control(type='number', min='20',max='150', placeholder='20-50 cm', required='', oninput='cal_mod_checkLI()')
+                    input#line_length.form-control(type='number', min='5',max='150', placeholder='5-150 cm', required='', oninput='cal_mod_checkLI()')
                 span.glyphicon.form-control-feedback(aria-hidden='true')
                 span.help-block.with-errors.text-center Proszę podać długość linki w cm
 
             .form-group.has-feedback
                 label.control-label(for='roller_dist') Odległość rolek
                 .input-group.input-group-lg
-                    span.input-group-addon mm
-                    input#roller_dist.form-control(type='number', min='10',max='150', placeholder='10-150 mm', required='', oninput='cal_mod_checkLI()')
+                    span.input-group-addon cm
+                    input#roller_dist.form-control(type='number', min='0',max='150', placeholder='0-50 cm', required='', oninput='cal_mod_checkLI()')
                 span.glyphicon.form-control-feedback(aria-hidden='true')
-                span.help-block.with-errors.text-center Proszę podać odległość rolek w mm
+                span.help-block.with-errors.text-center Proszę podać odległość rolek w cm
 
             .form-group.has-feedback
-                label.control-label(for='interia_moment') Moment bezwładności
+                label.control-label(for='interia_moment') Masa
                 .input-group.input-group-lg
-                    span.input-group-addon g
-                    input#interia_moment.form-control(type='number', min='1000',max='10000', placeholder='1000-10000 g', required='', oninput='cal_mod_checkLI()')
+                    span.input-group-addon kg
+                    input#interia_moment.form-control(type='number', step="any" , min='0.1',max='200', placeholder='0-200 kg', required='', oninput='cal_mod_checkLI()')
                 span.glyphicon.form-control-feedback(aria-hidden='true')
-                span.help-block.with-errors.text-center Proszę podać ciężar g
+                span.help-block.with-errors.text-center Proszę podać masę w kg
             .form-group.text-center
                 button.btn.btn-lg.btn-success#btn_llength_conf(type='button', onclick='calib_mod3_line_interia()', disabled='true') Potwierdzam
         .modal-footer
