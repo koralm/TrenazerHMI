@@ -68,7 +68,7 @@
     .modal-body.text-center
         p Teraz aby kontunuować klaibrację urządzenia wyciągnij powoli całą długość liny.
         p Po pojawieniu się zielonego napisu "LINA OK" możesz przejść dalej
-        h1#linaok.bg-danger LINA ZLE WYCIAGNIETA
+        h1#linaok.bg-danger Proszę wyciągnąć linę
         button.btn.btn-lg.btn-warning#line_fold(type='button',data-toggle='modal', href='#modal_warning', disabled="true") Nawiń linę
     .modal-footer
         a(href='/')
@@ -88,7 +88,7 @@
         h2#sett_interiam_auto IM: xx
         p Teraz aby kontunuować klaibrację urządzenia wyciągnij powoli całą długość liny.
         p Po pojawieniu się zielonego napisu "LINA OK" możesz przejść dalej
-        h1#linaok_auto.bg-danger LINA ZLE WYCIAGNIETA
+        h1#linaok_auto.bg-danger Proszę wyciągnąć linę
         button.btn.btn-lg.btn-warning#line_fold_auto(type='button',data-toggle='modal', href='#modal_warning', disabled="true") Nawiń linę
     .modal-footer
         a(href='/')
@@ -114,10 +114,10 @@
         p.text-center
             button#fold_confirm.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)', disabled="true") Ok
 
-#sett_exercise_modal.modal.container.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+#sett_exercise_modal.modal.container.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none', data-color="green")
     #sett_exercise_head.modal-header
-        h1.text-center Ustawienia ograniczen treningu
-    .modal-body
+        h1.text-center Konfiguracja Treningu
+    .modal-body(style="background-color:#DCDCDC")
         .row
             .col-lg-6
                 #path_settings_ex.text-left

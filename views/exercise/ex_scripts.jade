@@ -112,7 +112,7 @@ script.
             document.getElementById("cal_mod_conf_last").click();
             document.getElementById("cal_mod_conf_last_auto").disabled = false;
             document.getElementById("cal_mod_conf_last_auto").click();
-        }, 7000);
+        }, 5000);
         phase_count = 0;
     }
 
@@ -374,9 +374,21 @@ script.
 //RECORD DATA START
 script.
     function REC_data_start(){
-        socket.emit('REC', 1);
-        document.getElementById("rec_glyph_color").style.color = "red";
-        document.getElementById("rec_text_color").style.color = "red";
+        if(document.getElementById("stopwatch_start").disabled==true) {
+            socket.emit('REC', 1);
+            document.getElementById("rec_glyph_color").style.color = "red";
+            document.getElementById("rec_text_color").style.color = "red";
+            document.getElementById("stopwatch_start").disabled = true;
+            document.getElementById("stopwatch_REC").disabled = true;
+        }
+        if(document.getElementById("stopwatch_start").disabled==false) {
+            socket.emit('REC', 1);
+            document.getElementById("rec_glyph_color").style.color = "red";
+            document.getElementById("rec_text_color").style.color = "red";
+            document.getElementById("stopwatch_start").disabled = true;
+            document.getElementById("stopwatch_REC").disabled = true;
+            socket.emit('stopwach', {stoper_stop: 0, stoper_stop_zero: 0})
+        }
     };
 
 //Stopwatch stop button
@@ -387,6 +399,7 @@ script.
         document.getElementById("rec_glyph_color").style.color = "black";
         document.getElementById("rec_text_color").style.color = "black";
         document.getElementById("stopwatch_start").disabled = false;
+        document.getElementById("stopwatch_REC").disabled = false;
     }
 
 //Stopwatch end time
