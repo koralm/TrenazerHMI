@@ -14,4 +14,8 @@ router.get('/settings', function(req, res, next) {
   res.render('settings', { title: 'settings' });
 });
 
+router.get('/calibration', function(req, res, next) {
+  res.render('calibration', { title: 'calibration' });
+});
+
 module.exports = router;

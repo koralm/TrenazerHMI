@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    .container
+        .row
+            //CONTENT
+            #id_content.text-center
+                .h1(style='font-size: 50px') Menu kalibracji
+
+        .row
+            .col-lg-4
+                #adv_calib_settings.text-left
+                    h1 Kalibracja czujnika siły:
+                        p
+                        button.btn.btn-lg.btn-primary.btn-block#adv_calib(type='button', data-toggle='modal', data-target="#adv_calib_mod1") Kalibruj
