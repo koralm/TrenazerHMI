@@ -5,11 +5,16 @@ block content
         .row
             //CONTENT
             #id_content.text-center
-                .h1(style='font-size: 50px') Menu kalibracji
+                .p(style='font-size: 50px') Menu kalibracji
 
         .row
-            .col-lg-4
+            .col-lg-6
                 #adv_calib_settings.text-left
-                    h1 Kalibracja czujnika siły:
+                    h1.h1marg(style='font-size: 40px') Kalibracja czujnika siły:
                         p
                         button.btn.btn-lg.btn-primary.btn-block#adv_calib(type='button', data-toggle='modal', data-target="#adv_calib_mod1") Kalibruj
+
+    include settings/settings_modals.jade
+
+block scripts bottom
+    include ./settings/settings_scripts

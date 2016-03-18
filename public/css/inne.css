@@ -132,3 +132,15 @@ hr.new {
     color: #333; /* old IE */
     background-color: #333; /* Modern Browsers */
 }
+
+h1.h1marg {
+    padding: 30px;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 2em;
+}
