@@ -7,7 +7,7 @@ block content
             #id_content.text-center
                 .h1 Tutaj znajdują się ustawienia traktowane jako domyślne podczas treningu
         .row
-            .col-lg-6
+            .col-lg-8
                 #adv_calib_params.text-left
                     h2 Parametry dodatkowe:
                     p
@@ -18,7 +18,7 @@ block content
                             input#ddamping_static.input-lg.form-control.text-center(type='number', placeholder="0")
         hr.new
         .row
-           .col-lg-10
+           .col-lg-12
             #exercise_settings.text-left
                 h2 Parametry treningu:
                 p
@@ -31,13 +31,13 @@ block content
                             .input-group.input-group-lg
                                 input#roller_dist.input-lg.form-control.text-center(type='text', placeholder="0")
                                 span.input-group-addon mm
-                        label(for='interia_moment') Moment bezwładności:
+                        label(for='interia_moment') Masa:
                             .input-group.input-group-lg
                                 input#interia_moment.input-lg.form-control.text-center(type='text', placeholder="0")
-                                span.input-group-addon N
+                                span.input-group-addon kg
         hr.new
         .row
-            .col-lg-6
+            .col-lg-8
                 #path_settings.text-left
                     h2 Ustawienia zapisu treningów:
                     p
