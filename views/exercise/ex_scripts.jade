@@ -70,6 +70,8 @@ script.
         socket.emit('damping_dynamic', data.damping_static);
         socket.emit('damping_static', data.damping_dynamic);
         socket.emit('status', 0);
+        socket.emit('status', 4);
+        socket.emit('status', 8);
     });
 
 
@@ -97,6 +99,8 @@ script.
 script.
     function calib_mod3_next(data) {
         socket.emit('status', data);
+        socket.emit('status', 4);
+        socket.emit('status', 8);
         $('#calibration_modal_3').modal('show');
     }
 //Line fold
@@ -108,12 +112,12 @@ script.
         $('#modal_waiting').modal('show');
         setTimeout(function () {
             $('#modal_waiting').modal('hide');
-            document.getElementById("line_fold").disabled = true;
+            //document.getElementById("line_fold").disabled = true;
             document.getElementById("cal_mod_conf_last").disabled = false;
             document.getElementById("cal_mod_conf_last").click();
             document.getElementById("cal_mod_conf_last_auto").disabled = false;
             document.getElementById("cal_mod_conf_last_auto").click();
-        }, 5000);
+        }, 1000);
         phase_count = 0;
     }
 
@@ -465,13 +469,13 @@ script.
             document.getElementById("fold_mod_head").className = "modal-header bg-danger";
             document.getElementById("warning_fold_mod").className = "modal-header bg-danger";
             document.getElementById("linaok").innerHTML = "LINA ZLE WYCIAGNIETA";
-            document.getElementById("line_fold").disabled = true;
+            //document.getElementById("line_fold").disabled = true;
             document.getElementById("fold_confirm").disabled = true;
             document.getElementById("fold_confirm").className = "btn btn-lg btn-danger";
             document.getElementById("linaok_auto").className = "bg-danger";
             document.getElementById("fold_mod_head_auto").className = "modal-header bg-danger";
             document.getElementById("linaok_auto").innerHTML = "LINA ZLE WYCIAGNIETA";
-            document.getElementById("line_fold_auto").disabled = true;
+            //document.getElementById("line_fold_auto").disabled = true;
             //document.getElementById("fold_confirm_auto").disabled = true;
             //document.getElementById("fold_confirm_auto").className = "btn btn-lg btn-danger";
         }
@@ -524,4 +528,14 @@ script.
         socket.emit('status', 0);
         socket.emit('status', 4);
         socket.emit('status', 8);
+    }
+
+script.
+    function pull_request(){
+        $('#modal_pull_req').modal('show');
+    }
+
+script.
+    function pull_request_man(){
+        $('#modal_pull_req_man').modal('show');
     }
