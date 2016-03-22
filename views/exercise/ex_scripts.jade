@@ -102,6 +102,7 @@ script.
 //Line fold
 script.
     function line_fold(data){
+        socket.emit('status', 0);
         socket.emit('status', 4);
         socket.emit('status', data);
         $('#modal_waiting').modal('show');
@@ -516,4 +517,11 @@ script.
             seconds_max: document.getElementById("seconds_max_ex").value,
             cycle_max: document.getElementById("cycle_max_ex").value,
         })
+    }
+
+script.
+    function line_zero_auto(){
+        socket.emit('status', 0);
+        socket.emit('status', 4);
+        socket.emit('status', 8);
     }

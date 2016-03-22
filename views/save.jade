@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    .container
+        hr.new
+        .row
+            .col-lg-8
+                #path_settings.text-left
+                    h2 Ustawienia zapisu treningów:
+                    p
+                        .form-group
+                            label(for='folder_name') Nazwa folderu:
+                                input#folder_name.input-lg.form-control.text-center(type='text', placeholder="data")
+                            label(for='file_name') Nazwa pliku:
+                                input#file_name.input-lg.form-control.text-center(type='text', placeholder="godzina")
+        .row
+            button.btn.btn-lg.btn-success.btn-block#save_settings(type='button', data-toggle='modal', data-target="#sett_save_modal") Zapisz ustawienia
+
+
+
+
+
+
+    include settings/settings_modals.jade
+
+block scripts bottom
+    include ./settings/settings_scripts

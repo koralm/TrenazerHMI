@@ -19,7 +19,7 @@ block content
                     label(for='in_userID') Identyfikator:
                         input#in_userID.input-lg.form-control.text-center(type='tel', placeholder="Tutaj wpisz ID", oninput="warn_brn_enable()")
             .modal-footer
-                button.btn.btn-primary#welcome_conf(type='button', data-dismiss='modal', onclick='wlecom_conf()', disabled="true") Potwierdź
+                button.btn.btn-lg.btn-primary#welcome_conf(type='button', data-dismiss='modal', onclick='wlecom_conf()', disabled="true") Potwierdź
 
     #welcome_warning.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
         .modal-header.bg-danger
@@ -29,7 +29,7 @@ block content
             h3.text-center.text-danger  Pamiętaj, że jest to rozwoja wersja użądzenia i należy używać jej tylko pod nazdorem przeszkolonego instrukotra!!
         .modal-footer
             p.text-center
-                button.btn.btn-danger(type='button', data-dismiss='modal', onclick='welc_conf_session()') Zgadzam się
+                button.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='welc_conf_session()') Zgadzam się
 
     block scripts bottom
 

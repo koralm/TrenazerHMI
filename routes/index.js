@@ -18,4 +18,8 @@ router.get('/calibration', function(req, res, next) {
   res.render('calibration', { title: 'calibration' });
 });
 
+router.get('/save', function(req, res, next) {
+  res.render('save', { title: 'save' });
+});
+
 module.exports = router;
