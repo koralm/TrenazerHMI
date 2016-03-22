@@ -68,7 +68,7 @@
     .modal-body.text-center
         h3 Wyciągnij linę na maskymalną długość
         h1#linaok.bg-danger Proszę wyciągnąć linę
-        button.btn.btn-lg.btn-warning#line_fold(type='button',data-toggle='modal', href='#modal_warning', disabled="true", onclick='line_zero_auto()') Nawiń linę
+        button.btn.btn-lg.btn-warning#line_fold(type='button',data-toggle='modal', href='#modal_warning') Nawiń linę
     .modal-footer
         a(href='/')
             button.btn.btn-lg(type='button') Wróć
@@ -86,7 +86,7 @@
         h2#sett_interiam_auto IM: xx
         h1#linaok_auto.bg-danger Proszę wyciągnąć linę
         h3 Wyciągnij linę na maksymalną długość !!
-        button.btn.btn-lg.btn-warning#line_fold_auto(type='button',data-toggle='modal', href='#modal_warning', disabled="true", onclick='line_zero_auto()') Nawiń linę
+        button.btn.btn-lg.btn-warning#line_fold_auto(type='button',data-toggle='modal', href='#modal_warning' onclick="line_zero_auto()") Nawiń linę
     .modal-footer
         a(href='/')
             button.btn.btn-lg(type='button') Wróć
@@ -109,7 +109,7 @@
         h2.text-center.text-danger Upewnij się, że lina nie jest naprężona !
         h2.text-center.text-danger Teraz nastąpi nawinięcie liny !
         p.text-center
-            button#fold_confirm.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)', disabled="true") Rozumiem
+            button#fold_confirm.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)', disabled="true") Rozumiem 
 
 #sett_exercise_modal.modal.container.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none', data-color="green")
     #sett_exercise_head.modal-header
