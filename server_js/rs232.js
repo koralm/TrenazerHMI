@@ -10,7 +10,7 @@ var ee = new EventEmitter();
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM3";
+var COM_port = "COM5";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -253,9 +253,9 @@ function code_send_data(send_frame){
     return(rs_frameout);
 }
 
-//*1000 from g to kg 0.3 = 300 ???
+//*1000 from g to kg 0.3 = 300 (to string)
 function push_rs232(){
-    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator];
+    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,(rs_interia*1000).toString(),calib_force,damping_dynamic,damping_static,frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
     console.log(send_frame);
     console.log(code_send_data(send_frame))
