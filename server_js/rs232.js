@@ -336,12 +336,13 @@ exports.rs_roller_distSET = function (data) {
 };
 
 exports.rs_interiaSET = function (data) {
-    rs_interia = data;
+    rs_interia = data*10;
     push_rs232();
 };
 
 exports.rs_calib_forceSET = function (data) {
     calib_force = data;
+    console.log(data);
     push_rs232();
 };
 

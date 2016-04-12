@@ -14,7 +14,30 @@ block content
                         p
                         button.btn.btn-lg.btn-primary.btn-block#adv_calib(type='button', data-toggle='modal', data-target="#adv_calib_mod1") Kalibruj
 
-    include settings/settings_modals.jade
+    include settings/settings_modals
 
-block scripts bottom
-    include ./settings/settings_scripts
+    //START ADV CALIB MODAL
+    script.
+        function adv_calib_modf2(){
+            socket.emit('status', 0);
+            $('#adv_calib_mod2').modal('show')
+            socket.emit('status', 4);
+        }
+
+    script.
+        function adv_calib_modf3(){
+            socket.emit('calib_force', (document.getElementById("adv_calib_weight2").value)/100);
+            $('#adv_calib_mod3_wait').modal('show')
+
+            setTimeout(function () {
+
+                socket.emit('status', 5);
+
+                setTimeout(function () {
+                    $('#adv_calib_mod3_wait').modal('hide');
+                }, 3000);
+                socket.emit('calib_force', 0);
+                socket.emit('status', 0);
+
+            }, 10000);
+        }
