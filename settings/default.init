@@ -3,7 +3,7 @@
   "damping_static": "0",
   "line_l": "65",
   "roller_d": "100",
-  "interia_m": "1000",
+  "interia_m": "100",
   "file_name": "",
   "folder_name": "",
   "disp1_min": "5",

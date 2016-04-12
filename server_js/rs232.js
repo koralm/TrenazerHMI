@@ -252,10 +252,12 @@ function code_send_data(send_frame){
     return(rs_frameout);
 }
 
+//*1000 from g to kg 0.3 = 300
 function push_rs232(){
-    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator];
+    var send_frame = [frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia*1000,calib_force,damping_dynamic,damping_static,frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
-    console.log([frame_header,rs_status,rs_line_length,rs_roller_dist,rs_record_stat,rs_interia,calib_force,damping_dynamic,damping_static,frame_terminator]);
+    console.log(send_frame);
+    console.log(code_send_data(send_frame))
 };
 
 function decode_speed_status(data) {
@@ -336,13 +338,12 @@ exports.rs_roller_distSET = function (data) {
 };
 
 exports.rs_interiaSET = function (data) {
-    rs_interia = data*10;
+    rs_interia = data;
     push_rs232();
 };
 
 exports.rs_calib_forceSET = function (data) {
     calib_force = data;
-    console.log(data);
     push_rs232();
 };
 
