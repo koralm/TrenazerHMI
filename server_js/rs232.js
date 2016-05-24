@@ -10,7 +10,7 @@ var ee = new EventEmitter();
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM5";
+var COM_port = "COM3";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -131,7 +131,7 @@ sp_ov_USB.on('data', function (data) {
     val_strength_table.push(decoded_data[2]);
 
     //FLAG
-    if (phase != phase_hist){
+    if (phase != phase_hist && phase0_count!=0){
 
         if (help_count == 0){
             //console.log("wciaga");

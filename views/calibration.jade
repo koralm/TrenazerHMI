@@ -35,9 +35,9 @@ block content
 
                 setTimeout(function () {
                     $('#adv_calib_mod3_wait').modal('hide');
-                }, 3000);
+                }, 500);
                 socket.emit('calib_force', 0);
                 socket.emit('status', 0);
 
-            }, 10000);
+            }, 1000);
         }

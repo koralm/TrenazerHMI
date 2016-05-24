@@ -2,20 +2,20 @@
     .modal-header
         h1.text-center Proces kalibracji
     .modal-body.text-center
-        p Witamy w procesie kalibracji.
         .row
-            .col-lg-12
-                button.btn.btn-lg.btn-success.btn-block#load_locally(type='button', data-dismiss='modal', onclick='pull_request()') Wczytaj z pliku
-        .row
-            p
-        .row
-            .col-lg-12
-                button.btn.btn-lg.btn-primary.btn-block#load_form_server(type='button', disabled='true') Przez internet
-        .row
-            p
-        .row
-            .col-lg-12
-                button.btn.btn-lg.btn-warning.btn-block#load_manual(type='button' , data-dismiss='modal', onclick='pull_request_man()') Wprowadź ręcznie
+            .btn-group
+                button.btn.btn-lg.btn-warning#load_manual(type='button' , data-dismiss='modal', onclick='pull_request_man()')
+                    .top-buffer
+                    p Wpisz ręcznie
+                    .top-buffer
+                button.btn.btn-lg.btn-success#load_locally(type='button', data-dismiss='modal', onclick='pull_request()')
+                    .top-buffer
+                    p Wczytaj z pliku
+                    .top-buffer
+                button.btn.btn-lg.btn-primary#load_form_server(type='button', disabled='true')
+                    .top-buffer
+                    p Przez internet
+                    .top-buffer
     .modal-footer
       a(href='/')
         .row
@@ -41,10 +41,10 @@
             .form-group.has-feedback
                 label.control-label(for='roller_dist') Odległość rolek
                 .input-group.input-group-lg
-                    span.input-group-addon cm
-                    input#roller_dist.form-control(type='number', min='0',max='50', placeholder='0-50 cm', required='', oninput='cal_mod_checkLI()')
+                    span.input-group-addon mm
+                    input#roller_dist.form-control(type='number', min='0',max='50', placeholder='0-50 mm', required='', oninput='cal_mod_checkLI()')
                 span.glyphicon.form-control-feedback(aria-hidden='true')
-                span.help-block.with-errors.text-center Proszę podać odległość rolek w cm
+                span.help-block.with-errors.text-center Proszę podać odległość rolek w mm
 
             .form-group.has-feedback
                 label.control-label(for='interia_moment') Masa
