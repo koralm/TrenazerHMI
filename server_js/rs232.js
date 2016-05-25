@@ -249,7 +249,7 @@ function code_send_data(send_frame){
         send_buffer.writeUInt16LE(send_frame[8].toString(16),10,'hex');
     var terminator = new Buffer(send_frame[9] ,'hex');
     var rs_frameout = Buffer.concat([header,send_buffer,terminator]);
-    console.log(rs_frameout)
+    //console.log(rs_frameout)
     return(rs_frameout);
 }
 
@@ -257,8 +257,8 @@ function code_send_data(send_frame){
 function push_rs232(){
     var send_frame = [frame_header,rs_status,rs_line_length,(rs_roller_dist*10).toString(),rs_record_stat,(rs_interia*1000).toString(),calib_force.toString(),damping_dynamic,damping_static,frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
-    console.log(send_frame);
-    console.log(code_send_data(send_frame))
+    //console.log(send_frame);
+    //console.log(code_send_data(send_frame))
 };
 
 function decode_speed_status(data) {
@@ -293,10 +293,10 @@ function decode_work(data){
 
 function decode_phase(data){
     if ((data & 2) == 2) {
-        //console.log("faza_1");
+        console.log("faza_1");
         phase= 1;
     } else {
-        //console.log("faza_0");
+        console.log("faza_0");
         phase = 0;
     }
 }
