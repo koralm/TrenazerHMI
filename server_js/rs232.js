@@ -131,7 +131,7 @@ sp_ov_USB.on('data', function (data) {
     val_strength_table.push(decoded_data[2]);
 
     //FLAG
-    if (phase != phase_hist && phase0_count!=0){
+    if (phase != phase_hist){
 
         if (help_count == 0){
             //console.log("wciaga");
@@ -223,10 +223,12 @@ function decode_recev_data(data){
             var speed = bufferek.readDoubleLE(16);
             var induction_sens = bufferek.readUInt8(24);
             var sample_nr = bufferek.readUInt16LE(25);
+
+            return([data,sample_nr,strength,position,induction_sens,speed]);
         }else {
             console.log("Bad_frame_decode")
+            return(decoded_data)
         };
-    return([data,sample_nr,strength,position,induction_sens,speed]);
 }
 
 function disp_recev_data(data){
