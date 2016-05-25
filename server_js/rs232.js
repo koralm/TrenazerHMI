@@ -93,7 +93,7 @@ sp_ov_USB.open(function (error) {
 
 //RECEIVE DATA
 sp_ov_USB.on('data', function (data) {
-    sp_ov_USB.flush();
+    //sp_ov_USB.flush();
     //decode data
     decoded_data = decode_recev_data(data);
 
@@ -136,15 +136,15 @@ sp_ov_USB.on('data', function (data) {
         if (help_count == 0){
             //console.log("wciaga");
             mean_force_brake = force_sum/phase0_count;
-            exports.mean_force_brake = force_sum/phase0_count;
+            exports.mean_force_brake = mean_force_brake;
             time_acc_phase = phase0_count;
-            exports.time_acc_phase = phase0_count;
+            exports.time_acc_phase = time_acc_phase;
             //console.log(mean_force_brake);
         }
 
         if (help_count == 1){
             mean_force_acc = force_sum/phase0_count;
-            exports.mean_force_acc = force_sum/phase0_count;
+            exports.mean_force_acc = mean_force_acc;
             time_brake_phase =phase0_count;
             exports.time_brake_phase = phase0_count;
         }
@@ -223,6 +223,8 @@ function decode_recev_data(data){
             var speed = bufferek.readDoubleLE(16);
             var induction_sens = bufferek.readUInt8(24);
             var sample_nr = bufferek.readUInt16LE(25);
+        }else {
+            console.log("Bad_frame_decode")
         };
     return([data,sample_nr,strength,position,induction_sens,speed]);
 }
@@ -293,10 +295,10 @@ function decode_work(data){
 
 function decode_phase(data){
     if ((data & 2) == 2) {
-        console.log("faza_1");
+        //console.log("faza_1");
         phase= 1;
     } else {
-        console.log("faza_0");
+        //console.log("faza_0");
         phase = 0;
     }
 }
