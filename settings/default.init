@@ -2,7 +2,7 @@
   "damping_dynamic": "0",
   "damping_static": "0",
   "line_l": "65",
-  "roller_d": "100",
+  "roller_d": "10",
   "interia_m": "100",
   "file_name": "",
   "folder_name": "",
