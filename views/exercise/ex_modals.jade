@@ -42,7 +42,7 @@
                 label.control-label(for='roller_dist') Odległość rolek
                 .input-group.input-group-lg
                     span.input-group-addon cm
-                    input#roller_dist.form-control(type='number', min='0',max='50', placeholder='0-50 cm', required='', oninput='cal_mod_checkLI()')
+                    input#roller_dist.form-control(type='number',step="any", min='0',max='50', placeholder='0-50 cm', required='', oninput='cal_mod_checkLI()')
                 span.glyphicon.form-control-feedback(aria-hidden='true')
                 span.help-block.with-errors.text-center Proszę podać odległość rolek w cm
 
