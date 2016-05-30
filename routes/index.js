@@ -22,9 +22,23 @@ router.get('/save', function(req, res, next) {
   res.render('save', { title: 'save' });
 });
 
-router.get('/dupa', function(req, res){//get,put,post,delete
+router.get('/range_up1_get', function(req, res){//get,put,post,delete
   console.log(__dirname)
-  res.sendFile(__dirname + '/range_up1.mp3');
+  res.sendFile(__dirname + '/sounds/range_up1.mp3');
 });
 
+router.get('/range_down1_get', function(req, res){//get,put,post,delete
+  console.log(__dirname)
+  res.sendFile(__dirname + '/sounds/range_down1.mp3');
+});
+
+router.get('/range_up2_get', function(req, res){//get,put,post,delete
+  console.log(__dirname)
+  res.sendFile(__dirname + '/sounds/range_up2.mp3');
+});
+
+router.get('/range_down2_get', function(req, res){//get,put,post,delete
+  console.log(__dirname)
+  res.sendFile(__dirname + '/sounds/range_up2.mp3');
+});
 module.exports = router;

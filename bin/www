@@ -343,20 +343,20 @@ io.on('connection', function (socket) {
 io.on('connection', function (socket) {
   socket.on('range_sound1', function (data) {
     if (data==1){
-      socket.emit('range_upx',data)
-      play_sound.play_end("range_up1")
+      socket.emit('range_up1_se',data)
     } else if (data==0){
-      play_sound.play_end("range_down1")
+      socket.emit('range_down1_se',data)
     }
   });
 });
 
+
 io.on('connection', function (socket) {
   socket.on('range_sound2', function (data) {
     if (data==1){
-      play_sound.play_end("range_up2")
+      socket.emit('range_up2_se',data)
     } else if (data==0){
-      play_sound.play_end("range_down2")
+      socket.emit('range_down2_se',data)
     }
   });
 });

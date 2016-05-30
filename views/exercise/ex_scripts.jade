@@ -541,6 +541,21 @@ script.
     }
 
 script.
-    socket.on('range_upx', function (data) {
-        var audio = new Audio('dupa');
+    socket.on('range_up1_se', function (data) {
+        var audio = new Audio('range_up1_get');
+        audio.play();})
+
+script.
+    socket.on('range_down1_se', function (data) {
+        var audio = new Audio('range_down1_get');
+        audio.play();})
+
+script.
+    socket.on('range_up2_se', function (data) {
+        var audio = new Audio('range_up2_get');
+        audio.play();})
+
+script.
+    socket.on('range_down2_se', function (data) {
+        var audio = new Audio('range_down2_get');
         audio.play();})
