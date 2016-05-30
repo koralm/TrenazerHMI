@@ -22,4 +22,9 @@ router.get('/save', function(req, res, next) {
   res.render('save', { title: 'save' });
 });
 
+router.get('/dupa', function(req, res){//get,put,post,delete
+  console.log(__dirname)
+  res.sendFile(__dirname + '/range_up1.mp3');
+});
+
 module.exports = router;

@@ -305,7 +305,7 @@ io.on('connection', function (socket) {
 
 rs232.xyz.on("someEvent", function () {
   if (REC == 1){
-    wstream_c.write(parseFloat(parseFloat(rs232.decoded_datax[2]).toFixed(2) + '\t' + rs232.decoded_datax[3]).toFixed(1) + '\t' + rs232.phase + '\r\n');
+    wstream_c.write(parseFloat(rs232.decoded_datax[2]).toFixed(2) + '\t' + parseFloat(rs232.decoded_datax[3]).toFixed(1) + '\t' + rs232.phase + '\r\n');
     rec_flag = 1;
   }
   if (REC == 0 && rec_flag == 1){
@@ -343,6 +343,7 @@ io.on('connection', function (socket) {
 io.on('connection', function (socket) {
   socket.on('range_sound1', function (data) {
     if (data==1){
+      socket.emit('range_upx',data)
       play_sound.play_end("range_up1")
     } else if (data==0){
       play_sound.play_end("range_down1")
