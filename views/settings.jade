@@ -5,8 +5,7 @@ block content
         .row
             //CONTENT
             #id_content.text-center
-                .h1 Tutaj znajdują się ustawienia traktowane jako domyślne podczas treningu
-        .row
+        //.row
             .col-lg-8
                 #adv_calib_params.text-left
                     h2 Parametry dodatkowe:
@@ -16,6 +15,138 @@ block content
                             input#ddamping_dynamic.input-lg.form-control.text-center(type='number', placeholder="0")
                         label(for='ddamping_static') Tłumienie stałe:
                             input#ddamping_static.input-lg.form-control.text-center(type='number', placeholder="0")
+
+        .row
+            #disp1_range
+                .col-lg-4
+                    h2.sett_label Wyświetlacz 1:
+                .col-lg-1
+                    .form-group
+                        label(for='disp1_stat').hfield Status
+                            input#disp1_stat(data-toggle='toggle', data-height='60', type='checkbox')
+                .col-lg-2
+                    .form-group
+                        label(for='disp1_min').hfield Min.
+                            input#disp1_min.input-lg.form-control.text-center(type='number', placeholder="0")
+                .col-lg-2
+                    .form-group
+                        label(for='disp1_max').hfield Max.
+                            input#disp1_max.input-lg.form-control.text-center(type='number', placeholder="100")
+                .col-lg-3
+                    .form-group
+                        label(for='sel1').hfield Wartość wskazywana:
+                        select#sel1.input-lg.form-control.text-center
+                            option 1
+                            option 2
+                            option 3
+                            option 4
+        .row
+            #disp2_range
+                .col-lg-4
+                    h2.sett_label Wyświetlacz 2:
+                .col-lg-1
+                    .form-group
+                        label(for='disp2_stat').hfield Status
+                            input#disp2_stat(data-toggle='toggle', data-height='60', type='checkbox')
+                .col-lg-2
+                    .form-group
+                        label(for='disp2_min') Minimalna wartosc:
+                            input#disp2_min.input-lg.form-control.text-center(type='number', placeholder="0")
+                .col-lg-2
+                    .form-group
+                        label(for='disp2_max') Maksymalna wartosc:
+                            input#disp2_max.input-lg.form-control.text-center(type='number', placeholder="100")
+                .col-lg-3
+                    .form-group
+                        label(for='sel1') Select list:
+                        select#sel1.input-lg.form-control.text-center
+                            option 1
+                            option 2
+                            option 3
+                            option 4
+        hr.new
+        .row
+            #exercise_settings
+                .col-lg-4
+                    h2.sett_label Oddziaływanie:
+                .col-lg-2.col-lg-offset-1
+                    .form-group
+                        label(for='line_length').hfield Długość liny
+                            .input-group.input-group-lg
+                                input#line_length.input-lg.form-control.text-center(type='number', placeholder="0")
+                                span.input-group-addon
+                                    .unit cm
+                .col-lg-2
+                    .form-group
+                        label(for='roller_dist').hfield Odległość rolek
+                            .input-group.input-group-lg
+                                input#roller_dist.input-lg.form-control.text-center(type='number', placeholder="0")
+                                span.input-group-addon
+                                    .unit cm
+                .col-lg-3
+                    .form-group
+                        label(for='interia_moment').hfield Masa
+                            .input-group.input-group-lg
+                                input#interia_moment.input-lg.form-control.text-center(type='number', placeholder="0")
+                                span.input-group-addon
+                                    .unit kg
+        //hr.new
+        .row
+            #max_time_range
+                .col-lg-4
+                    h2.sett_label Czas trwania:
+                .col-lg-2.col-lg-offset-1
+                    .form-group
+                        label(for='minutes_max')
+                            .input-group.input-group-lg
+                                input#minutes_max.input-lg.form-control.text-center(type='number', placeholder="0")
+                                span.input-group-addon
+                                    .unit min
+                .col-lg-2
+                    .form-group
+                        label(for='seconds_max')
+                            .input-group.input-group-lg
+                                input#seconds_max.input-lg.form-control.text-center(type='number', placeholder="0")
+                                span.input-group-addon
+                                    .unit s
+            #max_cycle_range.text-left
+                .col-lg-3
+                    .form-group
+                        label(for='cycle_max')
+                            .input-group.input-group-lg
+                                input#cycle_max.input-lg.form-control.text-center(type='number', placeholder="0")
+                                span.input-group-addon
+                                    .unit powtórzeń
+        .row
+            #path_settings
+                .col-lg-4
+                    h2.sett_label Plik wynikowy:
+                .col-lg-3.col-lg-offset-1
+                    .form-group
+                        label(for='folder_name').hfield Nazwa katalogu
+                            input#folder_name.input-lg.form-control.text-center(type='text', placeholder="data")
+                .col-lg-3
+                    .form-group
+                        label(for='file_name').hfield Nazwa pliku
+                            input#file_name.input-lg.form-control.text-center(type='text', placeholder="godzina")
+        .row
+            .col-lg-4
+                button.btn.btn-lg.btn-primary.btn-block#load_settings(type='button') Wczytaj ustawienia
+            .col-lg-4
+                button.btn.btn-lg.btn-warning.btn-block#save_settings(type='button', data-toggle='modal', data-target="#sett_save_modal") Zapisz ustawienia
+            .col-lg-4
+                button.btn.btn-lg.btn-success.btn-block#save_settings(type='button', data-toggle='modal', data-target="#sett_save_modal") Rozpocznij ćwiczenie
+        .row
+            .col-lg-12.text-center
+                input#files(type='file', name='files[]', multiple='', style='opacity:0; height:0px; width:0px;')
+                output.align-center#list
+
+
+
+
+
+
+    //
         hr.new
         .row
            .col-lg-12
