@@ -23,7 +23,7 @@ block content
                 .col-lg-1
                     .form-group
                         label(for='disp1_stat').hfield Status
-                            input#disp1_stat(data-toggle='toggle', data-height='60', type='checkbox', checked="checked")
+                            input#disp1_stat(data-toggle='toggle', data-height='60', type='checkbox', checked="checked", disabled="true")
                 .col-lg-2
                     .form-group
                         label(for='disp1_min').hfield Min.
@@ -35,11 +35,16 @@ block content
                 .col-lg-3
                     .form-group
                         label(for='sel1').hfield Wartość wskazywana:
-                        select#sel1.input-lg.form-control.text-center
-                            option 1
-                            option 2
-                            option 3
-                            option 4
+                        select#sel1.form-control
+                            option Średnia wartość siły w fazie rozpędzania
+                            option Średnia wartość siły w fazie hamowania
+                            option Średnia wartość siły w całym cyklu
+                            option Czas fazy rozpędzania
+                            option Czas fazy hamowania
+                            option Czas cyklu
+                            option Wartość maksymalna prędkości w cyklu
+                            option Wartość maksymalna pozycji w cyklu
+                            option Wartość funkcji koncentracji siły w cyklu
         .row
             #disp2_range
                 .col-lg-4
@@ -47,7 +52,7 @@ block content
                 .col-lg-1
                     .form-group
                         label(for='disp2_stat').hfield Status
-                            input#disp2_stat(data-toggle='toggle', data-height='60', type='checkbox', checked="checked")
+                            input#disp2_stat(data-toggle='toggle', data-height='60', type='checkbox', checked="checked", disabled="true")
                 .col-lg-2
                     .form-group
                         label(for='disp2_min').hfield Min.
@@ -59,11 +64,16 @@ block content
                 .col-lg-3
                     .form-group
                         label(for='sel1').hfield Wartość wskazywana:
-                        select#sel1.input-lg.form-control.text-center
-                            option 1
-                            option 2
-                            option 3
-                            option 4
+                        select#sel2.form-control
+                            option Średnia wartość siły w fazie rozpędzania
+                            option Średnia wartość siły w fazie hamowania
+                            option Średnia wartość siły w całym cyklu
+                            option Czas fazy rozpędzania
+                            option Czas fazy hamowania
+                            option Czas cyklu
+                            option Wartość maksymalna prędkości w cyklu
+                            option Wartość maksymalna pozycji w cyklu
+                            option Wartość funkcji koncentracji siły w cyklu
         hr.new
         .row
             #exercise_settings
