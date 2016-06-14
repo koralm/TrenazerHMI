@@ -1,6 +1,6 @@
 #calibration_modal_1.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
     .modal-header
-        h1.text-center Proces kalibracji
+        h1.text-center Ustawienia
     .modal-body.text-center
         .row
             .btn-group
@@ -10,7 +10,7 @@
                     .top-buffer
                 button.btn.btn-lg.btn-success#load_locally(type='button', data-dismiss='modal', onclick='pull_request()')
                     .top-buffer
-                    p Wczytaj z pliku
+                    p Wczytaj ostatnie
                     .top-buffer
                 button.btn.btn-lg.btn-primary#load_form_server(type='button', disabled="true")
                     .top-buffer
@@ -19,7 +19,7 @@
     .modal-footer
       a(href='/')
         .row
-            .col-lg-12
+            .col-lg-10.col-lg-offset-1
                 button.btn.btn-lg.btn-block(type='button') Wróć
 
 

@@ -34,7 +34,7 @@ exports.play_end = function(data) {
         //range_down2.pipe(new Speaker);
     }
     if (data=="TaDa") {
-        TaDa = fs.createReadStream('./sounds/' + 'TaDa' + '.mp3').pipe(new lame.Decoder);
-        TaDa.pipe(new Speaker);
+        //TaDa = fs.createReadStream('./sounds/' + 'TaDa' + '.mp3').pipe(new lame.Decoder);
+        //TaDa.pipe(new Speaker);
         }
 }

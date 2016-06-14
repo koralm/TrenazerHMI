@@ -11,10 +11,9 @@ script.
 //SAVE SETTINGS BUTTON
 script.
     function save_settings() {
-        //nowa wersja
         socket.emit('settings', {
-            damping_dynamic: document.getElementById("ddamping_dynamic").value,
-            damping_static: document.getElementById("ddamping_dynamic").value,
+            //damping_dynamic: document.getElementById("ddamping_dynamic").value,
+            //damping_static: document.getElementById("ddamping_dynamic").value,
             line_l: document.getElementById("line_length").value,
             roller_d: document.getElementById("roller_dist").value,
             interia_m: document.getElementById("interia_moment").value,
@@ -78,8 +77,8 @@ script.
 script.
     function load_settings(data){
         json_settings = data;
-        document.getElementById("ddamping_dynamic").value = json_settings.damping_dynamic;
-        document.getElementById("ddamping_static").value = json_settings.damping_static;
+        //document.getElementById("ddamping_dynamic").value = json_settings.damping_dynamic;
+        //document.getElementById("ddamping_static").value = json_settings.damping_static;
         document.getElementById("line_length").value = json_settings.line_l;
         document.getElementById("roller_dist").value = json_settings.roller_d;
         document.getElementById("interia_moment").value = json_settings.interia_m;
@@ -98,8 +97,8 @@ script.
 script.
     function wiev_settings(data){
         json_settings = data;
-        document.getElementById("ddamping_dynamic").value = json_settings.damping_dynamic;
-        document.getElementById("ddamping_static").value = json_settings.damping_static;
+        //document.getElementById("ddamping_dynamic").value = json_settings.damping_dynamic;
+        //document.getElementById("ddamping_static").value = json_settings.damping_static;
         document.getElementById("line_length").value = json_settings.line_l;
         document.getElementById("roller_dist").value = json_settings.roller_d;
         document.getElementById("interia_moment").value = json_settings.interia_m;
