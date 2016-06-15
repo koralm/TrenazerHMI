@@ -115,7 +115,10 @@
         h2.text-center.text-danger Upewnij się, że lina nie jest naprężona !
         h2.text-center.text-danger Teraz nastąpi nawinięcie liny !
         p.text-center
-            button#fold_confirm.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)', disabled="true") Rozumiem 
+            button#fold_confirm.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)', disabled="true")
+                .top-buffer
+                p Rozumiem
+                .top-buffer
 
 #sett_exercise_modal.modal.container.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none', data-color="green")
     #sett_exercise_head.modal-header
