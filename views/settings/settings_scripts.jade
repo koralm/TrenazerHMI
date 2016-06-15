@@ -30,6 +30,30 @@ script.
         });
     };
 
+//SAVE SETTINGS Default BUTTON
+script.
+    function save_sett_default() {
+        socket.emit('settings_def', {
+            //damping_dynamic: document.getElementById("ddamping_dynamic").value,
+            //damping_static: document.getElementById("ddamping_dynamic").value,
+            line_l: document.getElementById("line_length").value,
+            roller_d: document.getElementById("roller_dist").value,
+            interia_m: document.getElementById("interia_moment").value,
+            file_name: document.getElementById("file_name").value,
+            folder_name: document.getElementById("folder_name").value,
+            disp1_min: document.getElementById("disp1_min").value,
+            disp1_max: document.getElementById("disp1_max").value,
+            disp2_min: document.getElementById("disp2_min").value,
+            disp2_max: document.getElementById("disp2_max").value,
+            minutes_max: document.getElementById("minutes_max").value,
+            seconds_max: document.getElementById("seconds_max").value,
+            cycle_max: document.getElementById("cycle_max").value,
+            settings_name: document.getElementById("save_set_name").value
+        });
+        window.location.href = "/exercise"
+    };
+
+
 //LOAD FILES    
 script.
     $('#load_settings').on('click', function() {

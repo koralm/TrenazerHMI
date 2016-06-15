@@ -79,11 +79,17 @@
     #fold_mod_head_auto.modal-header
         h1.text-center Kalibracja liny
     .modal-body.text-center
-        h2#sdynamic_damping TP: xx
-        h2#sstatic_damping TS: xx
-        h2#sett_line_length_auto L: xx
-        h2#sett_roller_dist_auto RF: xx
-        h2#sett_interiam_auto IM: xx
+        //h2#sdynamic_damping TP: xx
+        //h2#sstatic_damping TS: xx
+        hr
+        .row
+            .col-lg-4
+                h2#sett_line_length_auto Brak połączenia
+            .col-lg-4
+                h2#sett_roller_dist_auto Brak połączenia
+            .col-lg-4
+                h2#sett_interiam_auto Brak połączenia
+        hr
         h1#linaok_auto.bg-danger Proszę wyciągnąć linę
         h2 Jeśli wciąż znajduje się w złej pozycji szarpnij !!
         button.btn.btn-lg.btn-warning#line_fold_auto(type='button',data-toggle='modal', href='#modal_warning') Nawiń linę

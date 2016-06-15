@@ -1,9 +1,7 @@
 {
-  "damping_dynamic": "0",
-  "damping_static": "0",
-  "line_l": "65",
+  "line_l": "66",
   "roller_d": "1",
-  "interia_m": "1",
+  "interia_m": "11",
   "file_name": "",
   "folder_name": "",
   "disp1_min": "5",
@@ -13,5 +11,5 @@
   "minutes_max": "",
   "seconds_max": "",
   "cycle_max": "",
-  "settings_name": "default"
+  "settings_name": ""
 }

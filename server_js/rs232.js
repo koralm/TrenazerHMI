@@ -261,7 +261,7 @@ function code_send_data(send_frame){
 function push_rs232(){
     var send_frame = [frame_header,rs_status,rs_line_length,(rs_roller_dist*10).toString(),rs_record_stat,(rs_interia*1000).toString(),calib_force.toString(),damping_dynamic,damping_static,frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
-    //console.log(send_frame);
+    console.log(send_frame);
     //console.log(code_send_data(send_frame))
 };
 

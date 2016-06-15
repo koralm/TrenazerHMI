@@ -20,14 +20,24 @@ exports.save = function (data){
     settings_ee.emit("settigs_load");
 }
 
+exports.save_default = function (data){
+    settings_loaded = data;
+    wstream_c = fs.createWriteStream("./settings/default.init");
+    wstream_c.write(JSON.stringify(data, null, 2));
+    settings_actual = settings_loaded;
+    settings_ee.emit("settigs_load");
+}
+
+
+
 exports.update = function (data){
     settings_loaded = data;
-    if (typeof(settings_loaded.damping_dynamic) != "undefined"){
+    //if (typeof(settings_loaded.damping_dynamic) != "undefined"){
         settings_actual.damping_dynamic = data.damping_dynamic
-    }
-    if (typeof(settings_loaded.damping_static) != "undefined"){
+     //}
+    //if (typeof(settings_loaded.damping_static) != "undefined"){
         settings_actual.damping_static = data.damping_static
-    }
+     //}
     if (typeof(settings_loaded.line_l) != "undefined"){
         settings_actual.line_l = data.line_l
     }
@@ -78,7 +88,8 @@ exports.load_act = function (){
 
 exports.load_init = function (){
     settings_ee.emit("settigs_load");
-    //console.log(settings_actual);
+    settings_actual = JSON.parse(fs.readFileSync("./settings/default.init", 'utf8'));
+    console.log(settings_actual);
     return (settings_actual);
 }
 

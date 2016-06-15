@@ -366,7 +366,7 @@ io.on('connection', function (socket) {
   intervalIDx = setInterval(function () {
     socket.emit('default_sett_on',settingss.load_act())
     clearInterval(intervalIDx);
-  } ,10)});
+  } ,100)});
 
 //SAVE_SETTINGS
 io.on('connection', function (socket) {
@@ -374,6 +374,15 @@ io.on('connection', function (socket) {
   console.log(data)
   settingss.save(data)
   socket.emit('settings_ex',data)
+  });
+});
+
+//SAVE_SETTINGS_default
+io.on('connection', function (socket) {
+  socket.on('settings_def', function (data) {
+    console.log(data)
+    settingss.save_default(data)
+    socket.emit('settings_ex',data)
   });
 });
 

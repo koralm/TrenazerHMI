@@ -145,7 +145,7 @@ block content
             .col-lg-4
                 button.btn.btn-lg.btn-warning.btn-block#save_settings(type='button', data-toggle='modal', data-target="#sett_save_modal") Zapisz ustawienia
             .col-lg-4
-                button.btn.btn-lg.btn-success.btn-block#save_settings(type='button', data-toggle='modal', disabled="true") Rozpocznij ćwiczenie
+                button.btn.btn-lg.btn-success.btn-block#save_settings_def(type='button', data-toggle='modal', onclick="save_sett_default()") Rozpocznij ćwiczenie
         .row
             .col-lg-12.text-center
                 input#files(type='file', name='files[]', multiple='', style='opacity:0; height:0px; width:0px;')
