@@ -10,7 +10,7 @@ var ee = new EventEmitter();
 * INITIALIZE VARIABLES AND COM
  */
 //Port settings
-var COM_port = "COM3";
+var COM_port = "COM4";
 var COM_baudrate = 1000000;
 var COM_buffer_size = 4096;
 var COM_parse_strig = "03037e7e";
@@ -56,6 +56,7 @@ var tryb_pracy = 0;
 var induc_sens= 0;
 var phase = 0;
 var strength_r = 0;
+var line_ok = 0;
 
 //Formats
 //Ilosciowy
@@ -108,6 +109,7 @@ sp_ov_USB.on('data', function (data) {
     decode_work(decoded_data[4]);
     decode_induction(decoded_data[4]);
     decode_phase(decoded_data[4]);
+    decode_line_ok(decoded_data[4]);
 
     //PARAMS TO SAVE
     force_sum = force_sum + decoded_data[2];
@@ -261,7 +263,7 @@ function code_send_data(send_frame){
 function push_rs232(){
     var send_frame = [frame_header,rs_status,rs_line_length,(rs_roller_dist*10).toString(),rs_record_stat,(rs_interia*1000).toString(),calib_force.toString(),damping_dynamic,damping_static,frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
-    console.log(send_frame);
+    //console.log(send_frame);
     //console.log(code_send_data(send_frame))
 };
 
@@ -295,6 +297,17 @@ function decode_work(data){
     }
 }
 
+function decode_line_ok(data){
+    if ((data & 8) == 8) {
+        //console.log("lina_ok");
+        line_ok = 1;
+    } else {
+        //console.log("lina_fail");
+        //console.log(parseInt(data, 10).toString(2))
+        line_ok = 0;
+    }
+}
+
 function decode_phase(data){
     if ((data & 2) == 2) {
         //console.log("faza_1");
@@ -314,6 +327,8 @@ function decode_induction(data){
         induc_sens = 0;
     }
 }
+
+//tryb||stopAW||UDP||XX||lina_ok||XX||faza||czujnik
 
 //EXPORTS
 
