@@ -228,7 +228,7 @@ function decode_recev_data(data){
 
             return([data,sample_nr,strength,position,induction_sens,speed]);
         }else {
-            console.log("Bad_frame_decode")
+            //console.log("Bad_frame_decode")
             return(decoded_data)
         };
 }
@@ -261,9 +261,9 @@ function code_send_data(send_frame){
 
 //*1000 from g to kg 0.3 = 300 (to string)
 function push_rs232(){
-    var send_frame = [frame_header,rs_status,rs_line_length,(rs_roller_dist*10).toString(),rs_record_stat,(rs_interia*1000).toString(),calib_force.toString(),damping_dynamic,damping_static,frame_terminator];
+    var send_frame = [frame_header,rs_status,rs_line_length,(rs_roller_dist*10).toString(),rs_record_stat,(rs_interia*100).toString(),calib_force.toString(),damping_dynamic,damping_static,frame_terminator];
     sp_ov_USB.write(code_send_data(send_frame));
-    //console.log(send_frame);
+    console.log(send_frame);
     //console.log(code_send_data(send_frame))
 };
 
@@ -403,6 +403,10 @@ exports.rs_stopRED = function () {
 
 exports.rs_ind_sens = function () {
     return induc_sens;
+};
+
+exports.rs_line_ok = function () {
+    return line_ok;
 };
 
 exports.rs_phase_sens = function () {

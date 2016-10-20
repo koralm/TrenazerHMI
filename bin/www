@@ -181,12 +181,15 @@ io.on('connection', function (socket) {
 io.on('connection', function (socket) {
   setInterval( function() {
     socket.emit('induct_stat',rs232.rs_ind_sens());
+    socket.emit('line_ok',rs232.rs_line_ok());
     socket.emit('position',{pos: rs232.rs_positon_READ(), ind: rs232.rs_ind_sens()});
     socket.emit('stoper_time', stoper.stoper_time());
     socket.emit('phase_sens',rs232.rs_phase_sens());
     socket.emit('cycle_count',stoper.cycle_count());
   }, 10 );
 });
+
+
 
 //EXERCISE SETTINGSS---------------------------------------
 //save to file

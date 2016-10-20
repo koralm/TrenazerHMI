@@ -78,12 +78,18 @@ html(lang='pl')
             .modal-header.bg-danger
                 h1.text-center.text-danger UWAGA!!!
             .modal-body
-                h2#awstop_modal.text-center.text-danger !!
+                h2#awstop_modal.text-center.text-danger ZATRZYMANIE AWARYJNE
                 h3.text-center.text-danger  Został wciśnięty przycisk bezpieczeństwa lub zadziałał kontorler bezpieczeństwa !!!
                 h3.text-center.text-danger  sprawdź powód, a nasępnie
                 h3.text-center.text-danger  dezaktywuj przycisk i odświez aplikację
             .modal-footer
-                p.text-center
+                .row
+                    .col-lg-10.col-lg-offset-1
+                        button.btn.btn-danger#aw_conf.btn-lg.btn-block(type='button', data-dismiss='modal', disabled="true") Rozumiem
+                .row
+                    .col-lg-10.col-lg-offset-1
+                        button.btn.btn-danger#aw_conf_ref.btn-lg.btn-block(type='button', data-dismiss='modal', onclick='ref_red()') Odśwież
+                //p.text-center
                     button.btn.btn-danger#aw_conf(type='button', data-dismiss='modal', disabled="true") Rozumiem
                     button.btn.btn-danger#aw_conf_ref(type='button', data-dismiss='modal', onclick='ref_red()') Odśwież
 
@@ -109,7 +115,7 @@ html(lang='pl')
             var stop_flag = 0;
 
             socket.on('stop_RED', function (data) {
-                data = 1;
+                //data = 1;
                 if (data == 0 && stop_flag == 0) {
                     //alert("STOP Awaryjny  - Wyłącz Stop i odśwież stronę");
                     document.getElementById("aw_conf").disabled = true;

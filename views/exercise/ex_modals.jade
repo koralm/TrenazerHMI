@@ -20,7 +20,7 @@
       a(href='/')
         .row
             .col-lg-10.col-lg-offset-1
-                button.btn.btn-lg.btn-block(type='button') Wróć
+                button.btn.btn-lg.btn-block(type='button', onclick="back_reset()") Wróć
 
 
 //Modal Manual
@@ -66,13 +66,18 @@
     #fold_mod_head.modal-header
         h1.text-center Kalibracja liny
     .modal-body.text-center
-        h2 Jeśli lina znajduje się w złej pozycji szarpnij
-        h1#linaok.bg-danger Proszę wyciągnąć linę
-        button.btn.btn-lg.btn-warning#line_fold(type='button',data-toggle='modal', href='#modal_warning') Nawiń linę
-    .modal-footer
+        h3 Jeśli lina wciąż znajduje się w złej pozycji szarpnij
+        h1#linaok.bg-danger Po kliknięciu proszę wyciągnąć linę
+        //button.btn.btn-lg.btn-warning#line_fold(type='button',data-toggle='modal', href='#modal_warning') Nawiń linę
+    .modal-footer.text-center
         a(href='/')
+            .row
+                .col-lg-10.col-lg-offset-1
+                    button.btn.btn-lg.btn-block(type='button', onclick="back_reset()") Wróć
+
+        //a(href='/')
             button.btn.btn-lg(type='button') Wróć
-        button.btn.btn-lg.btn-primary#cal_mod_conf_last(type='button', data-dismiss='modal', onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
+        //button.btn.btn-lg.btn-primary#cal_mod_conf_last(type='button', data-dismiss='modal', onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
 
 //Modal auto
 #calibration_modal_3_auto.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
@@ -90,13 +95,17 @@
             .col-lg-4
                 h2#sett_interiam_auto Brak połączenia
         hr
-        h1#linaok_auto.bg-danger Proszę wyciągnąć linę
-        h2 Jeśli wciąż znajduje się w złej pozycji szarpnij !!
-        button.btn.btn-lg.btn-warning#line_fold_auto(type='button',data-toggle='modal', href='#modal_warning') Nawiń linę
-    .modal-footer
+        h1#linaok_auto.bg-danger Po kliknięciu proszę wyciągnąć linę
+        h3 Jeśli lina wciąż znajduje się w złej pozycji szarpnij !!
+        //button.btn.btn-lg.btn-warning#line_fold_auto(type='button',data-toggle='modal', href='#modal_warning') Nawiń linę
+    .modal-footer.text-center
         a(href='/')
+            .row
+                .col-lg-10.col-lg-offset-1
+                    button.btn.btn-lg.btn-block(type='button', onclick="back_reset()") Wróć
+        //a(href='/')
             button.btn.btn-lg(type='button') Wróć
-        button.btn.btn-lg.btn-primary#cal_mod_conf_last_auto(type='button', data-dismiss='modal', onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
+        //button.btn.btn-lg.btn-primary#cal_mod_conf_last_auto(type='button', data-dismiss='modal', onclick='calib_session_last(2)', disabled='true') Rozpocznij ćwiczenie
 
 
 #modal_waiting.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
@@ -113,7 +122,7 @@
         h1.text-center.text-danger UWAGA !!!
     .modal-body
         h2.text-center.text-danger Upewnij się, że lina nie jest naprężona !
-        h2.text-center.text-danger Teraz nastąpi nawinięcie liny !
+        h2.text-center.text-danger Zaraz nastąpi zwinięcie liny !
         p.text-center
             button#fold_confirm.btn.btn-lg.btn-danger(type='button', data-dismiss='modal', onclick='line_fold(1)', disabled="true")
                 .top-buffer
