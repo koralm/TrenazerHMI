@@ -112,7 +112,8 @@ script.
     function line_fold(data){
         socket.emit('status', 0);
         socket.emit('status', 4);
-        socket.emit('status', data);
+        socket.emit('status', 1);
+        socket.emit('status', 2);
         socket.emit('status', 2);
         $('#modal_waiting').modal('show');
         setTimeout(function () {
