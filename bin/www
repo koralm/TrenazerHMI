@@ -568,3 +568,4 @@ rs232.xyz.on("cykl", function () {
       });
   }
 });
+

@@ -117,6 +117,15 @@
                 | Nawijanie
     .modal-footer
 
+#modal_waiting1.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
+    .modal-header.bg-warning
+        h1 Test silnika...
+    .modal-body.text-center
+        .progress
+            #line_bar1.progress-bar.progress-bar-warning.progress-bar-striped.active(role='progressbar', style='width:100%')
+                | Test silnika
+    .modal-footer
+
 #modal_warning.modal.fade(tabindex='-1', data-backdrop='static', data-keyboard='false', style='display: none;')
     #warning_fold_mod.modal-header.bg-danger
         h1.text-center.text-danger UWAGA !!!

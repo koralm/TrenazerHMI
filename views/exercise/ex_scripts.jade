@@ -3,6 +3,8 @@
 
 //modal temp
 script(type='text/javascript').
+    var titleJSON = !{JSON.stringify(load_where)};
+
     if (sessionStorage.getItem('callib_modal') !== 'true') {
         $(window).load(function () {
             socket.emit('status', 0);
@@ -15,10 +17,14 @@ script(type='text/javascript').
             socket.emit('status', 7);
             socket.emit('status', 3);
             socket.emit('status', 0);
-            $('#calibration_modal_1').modal('show');
             $('.selectpicker').selectpicker();
             $('#disp2_sel').selectpicker('val', "4");
             $('.selectpicker').selectpicker('refresh');
+            if (titleJSON==0){
+                $('#calibration_modal_1').modal('show');}
+            if (titleJSON == 1) {
+                pull_request()
+            }
         });
     }
 
@@ -104,18 +110,22 @@ script.
         socket.emit('status', data);
         socket.emit('status', 4);
         socket.emit('status', 8);
-        $('#calibration_modal_3').modal('show');
+        $('#modal_waiting1').modal('show');
+        setTimeout(function () {
+            $('#modal_waiting1').modal('hide');
+            $('#calibration_modal_3').modal('show');
+        }, 1800);
     }
 //Line fold
 script.
     var workout_ready=0;
-    function line_fold(data){
+    function line_fold(){
+        $('#modal_waiting').modal('show');
         socket.emit('status', 0);
         socket.emit('status', 4);
         socket.emit('status', 1);
         socket.emit('status', 2);
         socket.emit('status', 2);
-        $('#modal_waiting').modal('show');
         setTimeout(function () {
             $('#modal_waiting').modal('hide');
             $('#calibration_modal_3_auto').modal('hide');
@@ -486,13 +496,13 @@ script.
             document.getElementById("linaok").className = "bg-danger";
             document.getElementById("fold_mod_head").className = "modal-header bg-danger";
             document.getElementById("warning_fold_mod").className = "modal-header bg-danger";
-            document.getElementById("linaok").innerHTML = "Po kliknięciu proszę wyciągnąć linę";
+            document.getElementById("linaok").innerHTML = "Proszę wyciągnąć linę";
             //document.getElementById("line_fold").disabled = true;
             document.getElementById("fold_confirm").disabled = true;
             document.getElementById("fold_confirm").className = "btn btn-lg btn-danger";
             document.getElementById("linaok_auto").className = "bg-danger";
             document.getElementById("fold_mod_head_auto").className = "modal-header bg-danger";
-            document.getElementById("linaok_auto").innerHTML = "Po kliknięciu proszę wyciągnąć linę";
+            document.getElementById("linaok_auto").innerHTML = "Proszę wyciągnąć linę";
             //document.getElementById("line_fold_auto").disabled = true;
             //document.getElementById("fold_confirm_auto").disabled = true;
             //document.getElementById("fold_confirm_auto").className = "btn btn-lg btn-danger";
@@ -557,7 +567,11 @@ script.
         socket.emit('damping_static', 0);
         socket.emit('line_length', 0);
         socket.emit('interia', 0);
-        $('#calibration_modal_3_auto').modal('show')
+        $('#modal_waiting1').modal('show');
+        setTimeout(function () {
+            $('#modal_waiting1').modal('hide');
+            $('#calibration_modal_3_auto').modal('show')
+        }, 1800);
     }
 
 script.
@@ -600,4 +614,9 @@ script.
 script.
     function auto_fold(){
         $('#modal_warning').modal('show');
+    }
+
+script.
+    socket.on('save_ok_exercise_read', function (data) {
+        alert(data)
     }
