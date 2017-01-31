@@ -9,6 +9,7 @@ var ee = new EventEmitter();
 /*
 * INITIALIZE VARIABLES AND COM
  */
+//DO pull origin dodnae
 //Port settings
 var COM_port = "COM4";
 var COM_baudrate = 1000000;
